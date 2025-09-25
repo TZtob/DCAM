@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新建系统 - DCAM</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .header h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+        }
+        
+        .required {
+            color: #dc3545;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #218838;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .help-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border: 1px solid #b3d7ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box .title {
+            font-weight: bold;
+            color: #0056b3;
+            margin-bottom: 8px;
+        }
+        
+        .info-box .content {
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .customer-display {
+            padding: 12px 15px;
+            background: #e7f3ff;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .customer-name {
+            font-weight: bold;
+            color: #0056b3;
+        }
+        
+        .customer-badge {
+            background: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>➕</span>
+                新建系统
+            </h1>
+        </div>
+        
+        <div class="content">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'error' if category == 'error' else 'success' }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="info-box">
+                <div class="title">💡 系统创建说明</div>
+                <div class="content">
+                    系统是DDN集群的管理单元。创建系统后，您可以：<br>
+                    • 导入exascaler.toml配置文件<br>
+                    • 上传SFA设备日志文件<br>
+                    • 自动生成详细的资产清单
+                </div>
+            </div>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label for="name">系统名称 <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                    <div class="help-text">输入DDN集群系统名称，如：production-cluster-01</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer_id">所属客户 <span class="required">*</span></label>
+                    {% if preselected_customer_id %}
+                        <!-- 从客户页面跳转过来，显示客户名称并隐藏选择框 -->
+                        <input type="hidden" id="customer_id" name="customer_id" value="{{ preselected_customer_id }}">
+                        <div class="customer-display">
+                            <span class="customer-name">{{ customers[preselected_customer_id].name }}</span>
+                            <span class="customer-badge">已选择</span>
+                        </div>
+                        <div class="help-text">系统将创建在客户 "{{ customers[preselected_customer_id].name }}" 下</div>
+                    {% else %}
+                        <!-- 常规创建，显示客户选择下拉框 -->
+                        <select id="customer_id" name="customer_id" required>
+                            <option value="">-- 请选择客户 --</option>
+                            {% for customer_id, customer in customers.items() %}
+                                <option value="{{ customer_id }}">{{ customer.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="help-text">选择该系统所属的客户</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">系统描述</label>
+                    <textarea id="description" name="description" placeholder="描述系统用途、环境类型等信息"></textarea>
+                    <div class="help-text">可选：系统用途、部署环境、备注等信息</div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <span>💾</span>
+                        创建系统
+                    </button>
+                    <a href="{{ url_for('systems_list') }}" class="btn btn-secondary">
+                        <span>↩️</span>
+                        取消
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

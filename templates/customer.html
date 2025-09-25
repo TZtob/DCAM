@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ customer_name }} - 查询选项</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .back-link {
+            color: #007bff;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .submit-btn {
+            background: #28a745;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background: #218838;
+        }
+        .query-description {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+        .optional-field {
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('index') }}" class="back-link">← 返回客户选择</a>
+        
+        <h1>{{ customer_name }} - 设备查询</h1>
+        
+        <div class="query-description">
+            <p><strong>说明：</strong>请选择要执行的查询类型，并根据需要选择过滤条件。</p>
+        </div>
+        
+        <form method="POST" action="{{ url_for('execute_query', customer_name=customer_name) }}">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="asset_owner">资产所有者 <span class="optional-field">(可选)</span>：</label>
+                    <select name="asset_owner" id="asset_owner" onchange="updateClusterNames()">
+                        <option value="">选择资产所有者（可选）</option>
+                        {% for owner in asset_owners %}
+                        <option value="{{ owner }}">{{ owner }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cluster_name">集群名称 <span class="optional-field">(可选)</span>：</label>
+                    <select name="cluster_name" id="cluster_name">
+                        <option value="所有集群">所有集群</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="query_type">查询类型：</label>
+                <select name="query_type" id="query_type" required>
+                    <option value="">请选择查询类型</option>
+                    {% for type_id, type_name in query_types.items() %}
+                    <option value="{{ type_id }}">{{ type_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit" class="submit-btn">执行查询</button>
+        </form>
+    </div>
+
+    <script>
+        function updateClusterNames() {
+            const assetOwner = document.getElementById('asset_owner').value;
+            const clusterNameSelect = document.getElementById('cluster_name');
+            
+            // 清空现有选项，但保留"所有集群"选项
+            clusterNameSelect.innerHTML = '<option value="所有集群">所有集群</option>';
+            
+            // 如果选择了资产所有者，获取对应的集群名称
+            if (assetOwner) {
+                fetch(`/api/cluster_names/{{ customer_name }}?asset_owner=${encodeURIComponent(assetOwner)}`)
+                    .then(response => response.json())
+                    .then(clusterNames => {
+                        // 跳过第一个"所有集群"选项，因为我们已经添加了
+                        clusterNames.slice(1).forEach(name => {
+                            const option = document.createElement('option');
+                            option.value = name;
+                            option.textContent = name;
+                            clusterNameSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('获取集群名称失败:', error);
+                    });
+            } else {
+                // 如果没有选择资产所有者，获取所有集群名称
+                fetch(`/api/cluster_names/{{ customer_name }}`)
+                    .then(response => response.json())
+                    .then(clusterNames => {
+                        // 跳过第一个"所有集群"选项，因为我们已经添加了
+                        clusterNames.slice(1).forEach(name => {
+                            const option = document.createElement('option');
+                            option.value = name;
+                            option.textContent = name;
+                            clusterNameSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('获取集群名称失败:', error);
+                    });
+            }
+        }
+        
+        // 页面加载时初始化集群名称选项
+        document.addEventListener('DOMContentLoaded', function() {
+            updateClusterNames();
+        });
+    </script>
+</body>
+</html>

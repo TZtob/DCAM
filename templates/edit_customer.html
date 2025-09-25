@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑客户 - DCAM</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .header h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-light {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-light:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .btn-primary {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #218838;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .form-description {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        .required {
+            color: #e74c3c;
+            margin-left: 5px;
+        }
+        
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>✏️</span>
+                编辑客户
+            </h1>
+            <div class="nav-buttons">
+                <a href="{{ url_for('customer_detail', customer_id=customer_id) }}" class="btn btn-light">
+                    <span>👥</span>
+                    返回客户详情
+                </a>
+                <a href="{{ url_for('customers_list') }}" class="btn btn-light">
+                    <span>🏢</span>
+                    客户列表
+                </a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'error' if category == 'error' else 'success' }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="form-description">
+                <p>修改客户信息。请注意，客户名称变更后将同步更新到所有关联的系统中。</p>
+            </div>
+            
+            <form method="POST">
+                <div class="form-group">
+                    <label for="name">客户名称<span class="required">*</span></label>
+                    <input type="text" id="name" name="name" value="{{ customer.name }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact">联系人</label>
+                    <input type="text" id="contact" name="contact" value="{{ customer.contact }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">联系邮箱</label>
+                    <input type="email" id="email" name="email" value="{{ customer.email }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">描述</label>
+                    <textarea id="description" name="description">{{ customer.description }}</textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <span>💾</span>
+                        保存修改
+                    </button>
+                    <a href="{{ url_for('customer_detail', customer_id=customer_id) }}" class="btn btn-light">
+                        <span>❌</span>
+                        取消
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

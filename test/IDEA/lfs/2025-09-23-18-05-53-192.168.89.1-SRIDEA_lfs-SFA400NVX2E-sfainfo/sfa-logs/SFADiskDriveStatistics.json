@@ -1,0 +1,3362 @@
+[
+ {
+  "Index": 1,
+  "OID": "0x20000001",
+  "ElementName": "DiskDrive_0001_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450030+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   128710714276,
+   125740799584
+  ],
+  "KBytesRead": [
+   104225171700,
+   100996284016
+  ],
+  "KBytesWritten": [
+   24485542576,
+   24744515568
+  ],
+  "TotalIOs": [
+   1522624659,
+   1120081529
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.110743167443487,
+  "TotalReadIOLatency": 2485737016138,
+  "ReadIOs": [
+   1321762778,
+   916141617
+  ],
+  "ReadIOLatencyBuckets": [
+   2211027014,
+   25823877,
+   908900,
+   109543,
+   28828,
+   5029,
+   981,
+   212,
+   11,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.983790474930036,
+  "TotalWriteIOLatency": 2017447320188,
+  "WriteIOs": [
+   200861881,
+   203939912
+  ],
+  "WriteIOLatencyBuckets": [
+   381147746,
+   3053333,
+   3517991,
+   3225909,
+   3940947,
+   5095142,
+   3694924,
+   1028058,
+   91310,
+   6433,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   573731002,
+   30174321,
+   10853974,
+   20998462,
+   24055300,
+   1578091336,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   8466386,
+   2797847,
+   2355387,
+   2542391,
+   3962556,
+   384677226,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=1, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1522624659, 1120081529])"
+ },
+ {
+  "Index": 2,
+  "OID": "0x20000002",
+  "ElementName": "DiskDrive_0002_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450036+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   129482924004,
+   126171148292
+  ],
+  "KBytesRead": [
+   105013530156,
+   101489386292
+  ],
+  "KBytesWritten": [
+   24469393848,
+   24681762000
+  ],
+  "TotalIOs": [
+   1424035557,
+   1121414312
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.158872294849599,
+  "TotalReadIOLatency": 2481176745349,
+  "ReadIOs": [
+   1222824537,
+   918202353
+  ],
+  "ReadIOLatencyBuckets": [
+   2114296705,
+   25699156,
+   886788,
+   108758,
+   29650,
+   4520,
+   1237,
+   75,
+   1,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 5.02048587269073,
+  "TotalWriteIOLatency": 2030399852661,
+  "WriteIOs": [
+   201211020,
+   203211959
+  ],
+  "WriteIOLatencyBuckets": [
+   380834555,
+   3177459,
+   3429779,
+   3214866,
+   3890037,
+   5006177,
+   3675845,
+   1083614,
+   104614,
+   5825,
+   208,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   465516280,
+   28319742,
+   10841976,
+   20713001,
+   24046076,
+   1591589815,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   8620080,
+   2878884,
+   2401074,
+   2551429,
+   3936274,
+   384035238,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=2, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1424035557, 1121414312])"
+ },
+ {
+  "Index": 3,
+  "OID": "0x20000003",
+  "ElementName": "DiskDrive_0003_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450040+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   155247205348,
+   139426372080
+  ],
+  "KBytesRead": [
+   116942661464,
+   111801296888
+  ],
+  "KBytesWritten": [
+   38304543884,
+   27625075192
+  ],
+  "TotalIOs": [
+   3976716182,
+   4368359212
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.41263386450077727,
+  "TotalReadIOLatency": 2768414135767,
+  "ReadIOs": [
+   2957046236,
+   3752083513
+  ],
+  "ReadIOLatencyBuckets": [
+   6686013439,
+   22246736,
+   801415,
+   42892,
+   17982,
+   5894,
+   1133,
+   258,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.7671542365009322,
+  "TotalWriteIOLatency": 1255022632247,
+  "WriteIOs": [
+   1019669946,
+   616275699
+  ],
+  "WriteIOLatencyBuckets": [
+   1610458385,
+   7139288,
+   6393398,
+   3737292,
+   3554265,
+   2735093,
+   1574629,
+   332426,
+   20708,
+   161,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4789408362,
+   163451222,
+   69935459,
+   46182355,
+   34859043,
+   1604760828,
+   0,
+   0,
+   532480,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   933634694,
+   138373153,
+   61684014,
+   28341738,
+   14053479,
+   459005763,
+   98349,
+   105904,
+   648551,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=3, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3976716182, 4368359212])"
+ },
+ {
+  "Index": 4,
+  "OID": "0x20000004",
+  "ElementName": "DiskDrive_0004_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450044+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   0,
+   0
+  ],
+  "KBytesRead": [
+   0,
+   0
+  ],
+  "KBytesWritten": [
+   0,
+   0
+  ],
+  "TotalIOs": [
+   0,
+   0
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.0,
+  "TotalReadIOLatency": 0,
+  "ReadIOs": [
+   0,
+   0
+  ],
+  "ReadIOLatencyBuckets": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.0,
+  "TotalWriteIOLatency": 0,
+  "WriteIOs": [
+   0,
+   0
+  ],
+  "WriteIOLatencyBuckets": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=4, StatisticTime='2025-09-23 18:05:31', TotalIOs=[0, 0])"
+ },
+ {
+  "Index": 5,
+  "OID": "0x20000005",
+  "ElementName": "DiskDrive_0005_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450048+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   127147128444,
+   126487278008
+  ],
+  "KBytesRead": [
+   103019777780,
+   101656923028
+  ],
+  "KBytesWritten": [
+   24127350664,
+   24830354980
+  ],
+  "TotalIOs": [
+   1143915471,
+   1131507741
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.3093246204554974,
+  "TotalReadIOLatency": 2451312662780,
+  "ReadIOs": [
+   944963216,
+   927233048
+  ],
+  "ReadIOLatencyBuckets": [
+   1846368698,
+   24815538,
+   878153,
+   102672,
+   24884,
+   5400,
+   773,
+   136,
+   10,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.841529562632307,
+  "TotalWriteIOLatency": 1952235189192,
+  "WriteIOs": [
+   198952255,
+   204274693
+  ],
+  "WriteIOLatencyBuckets": [
+   379858545,
+   2901634,
+   3696624,
+   3247715,
+   3937802,
+   5066724,
+   3441534,
+   978360,
+   92024,
+   5307,
+   679,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   199872282,
+   29009360,
+   11584181,
+   21698570,
+   24940877,
+   1585090994,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   8854600,
+   2912493,
+   2412894,
+   2566804,
+   3956963,
+   382523194,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=5, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1143915471, 1131507741])"
+ },
+ {
+  "Index": 6,
+  "OID": "0x20000006",
+  "ElementName": "DiskDrive_0006_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450051+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   127544513720,
+   126292224464
+  ],
+  "KBytesRead": [
+   103169781796,
+   101771816228
+  ],
+  "KBytesWritten": [
+   24374731924,
+   24520408236
+  ],
+  "TotalIOs": [
+   1152348296,
+   1120351075
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.314293920501029,
+  "TotalReadIOLatency": 2459437343371,
+  "ReadIOs": [
+   952574417,
+   918724921
+  ],
+  "ReadIOLatencyBuckets": [
+   1843965704,
+   26305555,
+   881139,
+   111569,
+   29278,
+   4919,
+   1022,
+   152,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.980015560292692,
+  "TotalWriteIOLatency": 1998978410242,
+  "WriteIOs": [
+   199773879,
+   201626154
+  ],
+  "WriteIOLatencyBuckets": [
+   377899244,
+   3068577,
+   3519631,
+   3231400,
+   3895523,
+   5056166,
+   3584651,
+   1044390,
+   96359,
+   4090,
+   2,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   203121556,
+   25518995,
+   10676782,
+   20721879,
+   23511975,
+   1587748151,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   7937990,
+   2642346,
+   2270636,
+   2491640,
+   3963038,
+   382094383,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=6, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1152348296, 1120351075])"
+ },
+ {
+  "Index": 7,
+  "OID": "0x20000007",
+  "ElementName": "DiskDrive_0007_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450055+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   156502103540,
+   138095239404
+  ],
+  "KBytesRead": [
+   117883930168,
+   110625475664
+  ],
+  "KBytesWritten": [
+   38618173372,
+   27469763740
+  ],
+  "TotalIOs": [
+   4012057652,
+   4439909004
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.4066264705149475,
+  "TotalReadIOLatency": 2759342395016,
+  "ReadIOs": [
+   2969038764,
+   3816900163
+  ],
+  "ReadIOLatencyBuckets": [
+   6764389282,
+   20689691,
+   793053,
+   43999,
+   15940,
+   5577,
+   1351,
+   34,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.7481140484265013,
+  "TotalWriteIOLatency": 1246378749133,
+  "WriteIOs": [
+   1043018888,
+   623008841
+  ],
+  "WriteIOLatencyBuckets": [
+   1640283288,
+   7304180,
+   6563604,
+   3756043,
+   3525148,
+   2725004,
+   1536342,
+   313576,
+   20424,
+   120,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4869719440,
+   162965499,
+   72150555,
+   47060834,
+   33575208,
+   1599926719,
+   0,
+   0,
+   540672,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   957590710,
+   140102954,
+   64306297,
+   29789350,
+   14611881,
+   458756458,
+   128696,
+   108466,
+   632917,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=7, StatisticTime='2025-09-23 18:05:31', TotalIOs=[4012057652, 4439909004])"
+ },
+ {
+  "Index": 8,
+  "OID": "0x20000008",
+  "ElementName": "DiskDrive_0008_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450058+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   126716084332,
+   126642698708
+  ],
+  "KBytesRead": [
+   102387318920,
+   101840452120
+  ],
+  "KBytesWritten": [
+   24328765412,
+   24802246588
+  ],
+  "TotalIOs": [
+   1237719870,
+   1134016533
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.2479797004029396,
+  "TotalReadIOLatency": 2456337403120,
+  "ReadIOs": [
+   1038591781,
+   929659307
+  ],
+  "ReadIOLatencyBuckets": [
+   1942002853,
+   25193131,
+   912558,
+   112084,
+   25566,
+   3828,
+   779,
+   260,
+   29,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.929486585272627,
+  "TotalWriteIOLatency": 1988975447647,
+  "WriteIOs": [
+   199128089,
+   204357226
+  ],
+  "WriteIOLatencyBuckets": [
+   380009174,
+   2755646,
+   3859327,
+   3247589,
+   3898908,
+   5040565,
+   3543962,
+   1025668,
+   99365,
+   5070,
+   41,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   303900632,
+   29000315,
+   10833196,
+   20882725,
+   25059610,
+   1578574610,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   8069362,
+   2727963,
+   2311292,
+   2514454,
+   3916159,
+   383946085,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=8, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1237719870, 1134016533])"
+ },
+ {
+  "Index": 9,
+  "OID": "0x20000009",
+  "ElementName": "DiskDrive_0009_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450062+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   155593939560,
+   142026593084
+  ],
+  "KBytesRead": [
+   117466800024,
+   114341125604
+  ],
+  "KBytesWritten": [
+   38127139536,
+   27685467480
+  ],
+  "TotalIOs": [
+   3958995086,
+   4546999016
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.4029149875772039,
+  "TotalReadIOLatency": 2767584251372,
+  "ReadIOs": [
+   2947139467,
+   3921764239
+  ],
+  "ReadIOLatencyBuckets": [
+   6847782205,
+   20269206,
+   781587,
+   44149,
+   17208,
+   7099,
+   2016,
+   236,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.7764095336003669,
+  "TotalWriteIOLatency": 1271052590820,
+  "WriteIOs": [
+   1011855619,
+   625234777
+  ],
+  "WriteIOLatencyBuckets": [
+   1610945075,
+   7296382,
+   6669407,
+   3847851,
+   3598626,
+   2823312,
+   1554934,
+   333474,
+   20938,
+   397,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4931870691,
+   161793614,
+   68864821,
+   46427480,
+   34985845,
+   1624420582,
+   1,
+   0,
+   540672,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   937648360,
+   136780453,
+   60803584,
+   28575483,
+   14394574,
+   458033489,
+   99603,
+   106508,
+   648342,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=9, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3958995086, 4546999016])"
+ },
+ {
+  "Index": 10,
+  "OID": "0x2000000a",
+  "ElementName": "DiskDrive_0010_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450066+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   126303653512,
+   125662833924
+  ],
+  "KBytesRead": [
+   101876329280,
+   100963705368
+  ],
+  "KBytesWritten": [
+   24427324232,
+   24699128556
+  ],
+  "TotalIOs": [
+   1094248891,
+   1119123100
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.3555996307017402,
+  "TotalReadIOLatency": 2453806203548,
+  "ReadIOs": [
+   893569217,
+   916556832
+  ],
+  "ReadIOLatencyBuckets": [
+   1782627646,
+   26409053,
+   924375,
+   128504,
+   29548,
+   5016,
+   1604,
+   303,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.945097759902566,
+  "TotalWriteIOLatency": 1994090604474,
+  "WriteIOs": [
+   200679674,
+   202566268
+  ],
+  "WriteIOLatencyBuckets": [
+   379548822,
+   2767495,
+   3933936,
+   3266090,
+   3973105,
+   5185636,
+   3435543,
+   1021476,
+   109160,
+   4521,
+   158,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   150801514,
+   29059436,
+   11433573,
+   21668857,
+   24366693,
+   1572795976,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   7919726,
+   2691501,
+   2295301,
+   2494298,
+   3935960,
+   383909156,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=10, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1094248891, 1119123100])"
+ },
+ {
+  "Index": 11,
+  "OID": "0x2000000b",
+  "ElementName": "DiskDrive_0011_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450069+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   154853300920,
+   136639334464
+  ],
+  "KBytesRead": [
+   116796501500,
+   109794731652
+  ],
+  "KBytesWritten": [
+   38056799420,
+   26844602812
+  ],
+  "TotalIOs": [
+   3917567207,
+   4301336104
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.4114461491556649,
+  "TotalReadIOLatency": 2739921407701,
+  "ReadIOs": [
+   2931034062,
+   3728212630
+  ],
+  "ReadIOLatencyBuckets": [
+   6638044040,
+   20372232,
+   754836,
+   49482,
+   18560,
+   5754,
+   1319,
+   469,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.7866019402037366,
+  "TotalWriteIOLatency": 1226828922557,
+  "WriteIOs": [
+   986533145,
+   573123474
+  ],
+  "WriteIOLatencyBuckets": [
+   1534016979,
+   7134857,
+   6476064,
+   3814565,
+   3621730,
+   2832797,
+   1440207,
+   299028,
+   20392,
+   0,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4790818410,
+   143439810,
+   59724955,
+   41882003,
+   31928095,
+   1590912746,
+   1,
+   0,
+   540672,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   893381365,
+   120487283,
+   52060675,
+   24720689,
+   12795202,
+   455360013,
+   99702,
+   106298,
+   645392,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=11, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3917567207, 4301336104])"
+ },
+ {
+  "Index": 12,
+  "OID": "0x2000000c",
+  "ElementName": "DiskDrive_0012_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450537+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   154345095000,
+   137899389712
+  ],
+  "KBytesRead": [
+   116006358156,
+   110827974344
+  ],
+  "KBytesWritten": [
+   38338736844,
+   27071415368
+  ],
+  "TotalIOs": [
+   3833566469,
+   4254525796
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.41660623011817577,
+  "TotalReadIOLatency": 2732813412485,
+  "ReadIOs": [
+   2881851352,
+   3677852308
+  ],
+  "ReadIOLatencyBuckets": [
+   6538426819,
+   20434732,
+   776689,
+   44362,
+   14384,
+   5484,
+   1187,
+   3,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.8167599351756486,
+  "TotalWriteIOLatency": 1248326577943,
+  "WriteIOs": [
+   951715117,
+   576673488
+  ],
+  "WriteIOLatencyBuckets": [
+   1503191141,
+   6903230,
+   6351851,
+   3675228,
+   3505285,
+   2853395,
+   1543400,
+   344918,
+   20008,
+   149,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4698503443,
+   132209639,
+   59163998,
+   41737787,
+   31201426,
+   1596346695,
+   0,
+   0,
+   540672,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   863984866,
+   112664064,
+   51747876,
+   25157334,
+   13429055,
+   460564841,
+   99204,
+   109750,
+   631615,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=12, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3833566469, 4254525796])"
+ },
+ {
+  "Index": 13,
+  "OID": "0x2000000d",
+  "ElementName": "DiskDrive_0013_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450541+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   152238914284,
+   133952270196
+  ],
+  "KBytesRead": [
+   114371318520,
+   109774797136
+  ],
+  "KBytesWritten": [
+   37867595764,
+   24177473060
+  ],
+  "TotalIOs": [
+   3845187721,
+   4237122591
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.41468355049199396,
+  "TotalReadIOLatency": 2728224762075,
+  "ReadIOs": [
+   2877091281,
+   3701961008
+  ],
+  "ReadIOLatencyBuckets": [
+   6557630922,
+   20576242,
+   760252,
+   54836,
+   19218,
+   7362,
+   2994,
+   459,
+   4,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.8370996572396141,
+  "TotalWriteIOLatency": 1258376775796,
+  "WriteIOs": [
+   968096440,
+   535161583
+  ],
+  "WriteIOLatencyBuckets": [
+   1479370078,
+   5885658,
+   5743622,
+   3657009,
+   3605495,
+   2965097,
+   1664722,
+   341587,
+   23830,
+   925,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4724538004,
+   143365216,
+   61708736,
+   42656320,
+   32721179,
+   1573524242,
+   0,
+   0,
+   538592,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   856699692,
+   120082064,
+   53609502,
+   25548421,
+   12504025,
+   433974278,
+   99398,
+   109440,
+   631203,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=13, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3845187721, 4237122591])"
+ },
+ {
+  "Index": 14,
+  "OID": "0x2000000e",
+  "ElementName": "DiskDrive_0014_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450544+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   155597082380,
+   140589122664
+  ],
+  "KBytesRead": [
+   117683541068,
+   112992511768
+  ],
+  "KBytesWritten": [
+   37913541312,
+   27596610896
+  ],
+  "TotalIOs": [
+   3832500672,
+   4688016958
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.39953106529052795,
+  "TotalReadIOLatency": 2770688046485,
+  "ReadIOs": [
+   2893226441,
+   4041623655
+  ],
+  "ReadIOLatencyBuckets": [
+   6913500123,
+   20478632,
+   786281,
+   57428,
+   20103,
+   6161,
+   1355,
+   13,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.7886068902246944,
+  "TotalWriteIOLatency": 1250468342918,
+  "WriteIOs": [
+   939274231,
+   646393303
+  ],
+  "WriteIOLatencyBuckets": [
+   1560476145,
+   7059096,
+   6270804,
+   3609029,
+   3530260,
+   2844510,
+   1530304,
+   327850,
+   19496,
+   40,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   5050150202,
+   136559716,
+   58814093,
+   41476487,
+   31853892,
+   1615457114,
+   0,
+   0,
+   538592,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   921471431,
+   114396698,
+   51176985,
+   24851286,
+   13212340,
+   459722697,
+   98627,
+   108574,
+   628896,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=14, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3832500672, 4688016958])"
+ },
+ {
+  "Index": 15,
+  "OID": "0x2000000f",
+  "ElementName": "DiskDrive_0015_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450547+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   153738463228,
+   143153287564
+  ],
+  "KBytesRead": [
+   115122515916,
+   115805067908
+  ],
+  "KBytesWritten": [
+   38615947312,
+   27348219656
+  ],
+  "TotalIOs": [
+   4046202965,
+   4466503365
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.4043495782227253,
+  "TotalReadIOLatency": 2769976106773,
+  "ReadIOs": [
+   2993146082,
+   3857302777
+  ],
+  "ReadIOLatencyBuckets": [
+   6828791752,
+   20827146,
+   767412,
+   42071,
+   14521,
+   4612,
+   1114,
+   231,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.7373664669906002,
+  "TotalWriteIOLatency": 1225692918620,
+  "WriteIOs": [
+   1053056883,
+   609200588
+  ],
+  "WriteIOLatencyBuckets": [
+   1636674169,
+   7260708,
+   6489034,
+   3772609,
+   3538116,
+   2750550,
+   1455525,
+   301155,
+   15500,
+   105,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4917513172,
+   163848089,
+   71744103,
+   46442162,
+   32887757,
+   1617481096,
+   0,
+   0,
+   532480,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   953523460,
+   142177583,
+   63853664,
+   29556622,
+   14497050,
+   457796288,
+   98349,
+   105904,
+   648551,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=15, StatisticTime='2025-09-23 18:05:31', TotalIOs=[4046202965, 4466503365])"
+ },
+ {
+  "Index": 16,
+  "OID": "0x20000010",
+  "ElementName": "DiskDrive_0016_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450550+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   129110681700,
+   126496120056
+  ],
+  "KBytesRead": [
+   104555057324,
+   101608586752
+  ],
+  "KBytesWritten": [
+   24555624376,
+   24887533304
+  ],
+  "TotalIOs": [
+   1254432153,
+   1124816310
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.2539172183298875,
+  "TotalReadIOLatency": 2474506113234,
+  "ReadIOs": [
+   1052366145,
+   921054490
+  ],
+  "ReadIOLatencyBuckets": [
+   1946179483,
+   26200825,
+   902367,
+   104580,
+   27124,
+   4877,
+   1090,
+   289,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.974288145730608,
+  "TotalWriteIOLatency": 2018704554028,
+  "WriteIOs": [
+   202066008,
+   203761820
+  ],
+  "WriteIOLatencyBuckets": [
+   382277210,
+   3134725,
+   3470672,
+   3214429,
+   3878128,
+   5043560,
+   3621105,
+   1088487,
+   95428,
+   4051,
+   33,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   294872039,
+   28680488,
+   10904547,
+   20611218,
+   23956238,
+   1594396105,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   7985015,
+   2693005,
+   2335348,
+   2530297,
+   3935328,
+   386348835,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=16, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1254432153, 1124816310])"
+ },
+ {
+  "Index": 17,
+  "OID": "0x20000011",
+  "ElementName": "DiskDrive_0017_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450554+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   145995732844,
+   139250216712
+  ],
+  "KBytesRead": [
+   116098517352,
+   111648237260
+  ],
+  "KBytesWritten": [
+   29897215492,
+   27601979452
+  ],
+  "TotalIOs": [
+   3953819010,
+   4219450346
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.4150094693334655,
+  "TotalReadIOLatency": 2740907957144,
+  "ReadIOs": [
+   2990136210,
+   3614310579
+  ],
+  "ReadIOLatencyBuckets": [
+   6584617516,
+   18966516,
+   750568,
+   72676,
+   26262,
+   10249,
+   2722,
+   272,
+   8,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.866458002787641,
+  "TotalWriteIOLatency": 1359318868131,
+  "WriteIOs": [
+   963682800,
+   605139767
+  ],
+  "WriteIOLatencyBuckets": [
+   1544989422,
+   6033608,
+   5224573,
+   3270359,
+   3685369,
+   3326384,
+   1850706,
+   411185,
+   29877,
+   1084,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4688156448,
+   166141235,
+   70826018,
+   45397562,
+   33666481,
+   1599718373,
+   0,
+   0,
+   540672,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   930911165,
+   140301116,
+   62531108,
+   28097601,
+   13079015,
+   393059708,
+   100158,
+   108776,
+   633920,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=17, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3953819010, 4219450346])"
+ },
+ {
+  "Index": 18,
+  "OID": "0x20000012",
+  "ElementName": "DiskDrive_0018_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450557+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   128349683964,
+   126877559188
+  ],
+  "KBytesRead": [
+   103956775076,
+   102012324364
+  ],
+  "KBytesWritten": [
+   24392908888,
+   24865234824
+  ],
+  "TotalIOs": [
+   1270995331,
+   1130963979
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.2362007190790263,
+  "TotalReadIOLatency": 2468346573707,
+  "ReadIOs": [
+   1070691081,
+   926028817
+  ],
+  "ReadIOLatencyBuckets": [
+   1969938768,
+   25744218,
+   890517,
+   116618,
+   25969,
+   3291,
+   440,
+   76,
+   1,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.897415153805425,
+  "TotalWriteIOLatency": 1984625637248,
+  "WriteIOs": [
+   200304250,
+   204935162
+  ],
+  "WriteIOLatencyBuckets": [
+   381729546,
+   3001981,
+   3586256,
+   3227232,
+   3909556,
+   5089179,
+   3595298,
+   1016619,
+   79051,
+   4149,
+   545,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   318513579,
+   29739775,
+   11052628,
+   21405307,
+   24252530,
+   1591756079,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   8577110,
+   2864002,
+   2429495,
+   2555106,
+   3953800,
+   384859899,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=18, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1270995331, 1130963979])"
+ },
+ {
+  "Index": 19,
+  "OID": "0x20000013",
+  "ElementName": "DiskDrive_0019_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450560+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   128725152552,
+   124636775744
+  ],
+  "KBytesRead": [
+   104627117912,
+   100252527296
+  ],
+  "KBytesWritten": [
+   24098034640,
+   24384248448
+  ],
+  "TotalIOs": [
+   1315953130,
+   1112132571
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.2135350264703548,
+  "TotalReadIOLatency": 2462289840481,
+  "ReadIOs": [
+   1117816258,
+   911206215
+  ],
+  "ReadIOLatencyBuckets": [
+   2002919810,
+   25076823,
+   877767,
+   115910,
+   26981,
+   4050,
+   806,
+   249,
+   77,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.713631020586041,
+  "TotalWriteIOLatency": 1881036810676,
+  "WriteIOs": [
+   198136872,
+   200926356
+  ],
+  "WriteIOLatencyBuckets": [
+   376080778,
+   2582131,
+   3819416,
+   3335041,
+   3956693,
+   5095902,
+   3197540,
+   903097,
+   85669,
+   6741,
+   220,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   361617017,
+   28217057,
+   10965196,
+   21751850,
+   24565868,
+   1581905485,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   8508038,
+   2841777,
+   2390809,
+   2545355,
+   3950288,
+   378826961,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=19, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1315953130, 1112132571])"
+ },
+ {
+  "Index": 20,
+  "OID": "0x20000014",
+  "ElementName": "DiskDrive_0020_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450563+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   143805136700,
+   139072285076
+  ],
+  "KBytesRead": [
+   114516378348,
+   111527100112
+  ],
+  "KBytesWritten": [
+   29288758352,
+   27545184964
+  ],
+  "TotalIOs": [
+   3864189274,
+   4588092453
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.4022709611470249,
+  "TotalReadIOLatency": 2762105873726,
+  "ReadIOs": [
+   2914940036,
+   3951341999
+  ],
+  "ReadIOLatencyBuckets": [
+   6846265898,
+   19146039,
+   764126,
+   66932,
+   27451,
+   8609,
+   2752,
+   228,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.8655657254358408,
+  "TotalWriteIOLatency": 1372786973947,
+  "WriteIOs": [
+   949249238,
+   636750454
+  ],
+  "WriteIOLatencyBuckets": [
+   1562245701,
+   6432690,
+   4669341,
+   3237852,
+   3713383,
+   3306456,
+   1937324,
+   428545,
+   28091,
+   309,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4973878086,
+   164235827,
+   70738068,
+   46252461,
+   33102437,
+   1577534482,
+   2,
+   0,
+   540672,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   955207891,
+   138807709,
+   62619786,
+   28493148,
+   12974080,
+   387055997,
+   99931,
+   107879,
+   633271,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=20, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3864189274, 4588092453])"
+ },
+ {
+  "Index": 21,
+  "OID": "0x20000015",
+  "ElementName": "DiskDrive_0021_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450567+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   153864109096,
+   137516349628
+  ],
+  "KBytesRead": [
+   115505651428,
+   110263765440
+  ],
+  "KBytesWritten": [
+   38358457668,
+   27252584188
+  ],
+  "TotalIOs": [
+   3943786958,
+   4087377019
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.4234913118450336,
+  "TotalReadIOLatency": 2735548099667,
+  "ReadIOs": [
+   2936090433,
+   3523423666
+  ],
+  "ReadIOLatencyBuckets": [
+   6437276650,
+   21373683,
+   786959,
+   54662,
+   16048,
+   4790,
+   1178,
+   129,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.8030333729450396,
+  "TotalWriteIOLatency": 1262087302619,
+  "WriteIOs": [
+   1007696525,
+   563953353
+  ],
+  "WriteIOLatencyBuckets": [
+   1546078182,
+   6993969,
+   6368041,
+   3780523,
+   3609718,
+   2887823,
+   1593133,
+   321395,
+   17075,
+   19,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4562986488,
+   157873078,
+   69792416,
+   45708914,
+   33554515,
+   1589058016,
+   0,
+   0,
+   540672,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   874691587,
+   133318637,
+   61829193,
+   28525416,
+   13864571,
+   458571520,
+   98120,
+   106021,
+   644813,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=21, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3943786958, 4087377019])"
+ },
+ {
+  "Index": 22,
+  "OID": "0x20000016",
+  "ElementName": "DiskDrive_0022_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450570+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   153723573316,
+   134205891160
+  ],
+  "KBytesRead": [
+   115095650828,
+   109323043784
+  ],
+  "KBytesWritten": [
+   38627922488,
+   24882847376
+  ],
+  "TotalIOs": [
+   3999161338,
+   4194686064
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 0.415503042830106,
+  "TotalReadIOLatency": 2736526994245,
+  "ReadIOs": [
+   2974070114,
+   3611987537
+  ],
+  "ReadIOLatencyBuckets": [
+   6565180253,
+   20045659,
+   754250,
+   48646,
+   19602,
+   7449,
+   1785,
+   7,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 0.7920855906426287,
+  "TotalWriteIOLatency": 1273507094550,
+  "WriteIOs": [
+   1025091224,
+   582698527
+  ],
+  "WriteIOLatencyBuckets": [
+   1583652762,
+   6161030,
+   5770789,
+   3602128,
+   3585255,
+   2984108,
+   1657462,
+   356103,
+   19872,
+   242,
+   0,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   4711389354,
+   155581322,
+   67611499,
+   44219110,
+   32467332,
+   1574248361,
+   1,
+   0,
+   540672,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   931154550,
+   133153284,
+   60048250,
+   28098198,
+   13869909,
+   440585900,
+   128225,
+   107480,
+   643955,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=22, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3999161338, 4194686064])"
+ },
+ {
+  "Index": 23,
+  "OID": "0x20000017",
+  "ElementName": "DiskDrive_0023_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450748+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   127472993604,
+   125430515232
+  ],
+  "KBytesRead": [
+   102976584692,
+   101187863240
+  ],
+  "KBytesWritten": [
+   24496408912,
+   24242651992
+  ],
+  "TotalIOs": [
+   1160395065,
+   1114837390
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.310304397195624,
+  "TotalReadIOLatency": 2455322589865,
+  "ReadIOs": [
+   959021159,
+   914835477
+  ],
+  "ReadIOLatencyBuckets": [
+   1847500933,
+   25309346,
+   907245,
+   105410,
+   27139,
+   5025,
+   914,
+   550,
+   17,
+   57,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.900429841006441,
+  "TotalWriteIOLatency": 1966914040886,
+  "WriteIOs": [
+   201373906,
+   200001913
+  ],
+  "WriteIOLatencyBuckets": [
+   377933970,
+   2737869,
+   3836611,
+   3274718,
+   3947120,
+   5078193,
+   3472775,
+   999040,
+   88414,
+   6963,
+   146,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   211742804,
+   25919246,
+   11203406,
+   20670637,
+   23026034,
+   1581294509,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   8728997,
+   2884503,
+   2426353,
+   2569891,
+   3970359,
+   380795716,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=23, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1160395065, 1114837390])"
+ },
+ {
+  "Index": 24,
+  "OID": "0x20000018",
+  "ElementName": "DiskDrive_0024_Statistics",
+  "ElementType": "PHYSICAL_DISK_STATISTICS",
+  "FilterMask": 0,
+  "StartStatisticTime": "2025-01-18T15:53:47.214931+08:00",
+  "StatisticTime": "2025-09-23T18:05:31.450752+08:00",
+  "UnknownStatisticType": null,
+  "KBytesTransferred": [
+   127262781484,
+   126193311600
+  ],
+  "KBytesRead": [
+   102826999444,
+   101395866116
+  ],
+  "KBytesWritten": [
+   24435782040,
+   24797445484
+  ],
+  "TotalIOs": [
+   1180175759,
+   1121150011
+  ],
+  "IOLatencyIndexLabels": [
+   "<=4ms",
+   "<=8ms",
+   "<=16ms",
+   "<=32ms",
+   "<=64ms",
+   "<=128ms",
+   "<=256ms",
+   "<=512ms",
+   "<=1s",
+   "<=2s",
+   "<=4s",
+   ">4s"
+  ],
+  "TotalIOLatencyModifier": -6,
+  "AverageReadIOLatency": 1.29239578894425,
+  "TotalReadIOLatency": 2452558343792,
+  "ReadIOs": [
+   979960876,
+   917722763
+  ],
+  "ReadIOLatencyBuckets": [
+   1871068141,
+   25582740,
+   889361,
+   110106,
+   27527,
+   4640,
+   1102,
+   22,
+   0,
+   0,
+   0,
+   0
+  ],
+  "AverageWriteIOLatency": 4.936097309116129,
+  "TotalWriteIOLatency": 1992416836675,
+  "WriteIOs": [
+   200214883,
+   203427248
+  ],
+  "WriteIOLatencyBuckets": [
+   380206386,
+   2881526,
+   3666649,
+   3216808,
+   3913066,
+   5061372,
+   3568373,
+   1024631,
+   98258,
+   4772,
+   290,
+   0
+  ],
+  "IOSizeIndexLabels": [
+   "<=4KiB",
+   "<=8KiB",
+   "<=16KiB",
+   "<=32KiB",
+   "<=64KiB",
+   "<=128KiB",
+   "<=256KiB",
+   "<=512KiB",
+   "<=1MiB",
+   "<=2MiB",
+   "<=4MiB",
+   ">4MiB"
+  ],
+  "ReadIOSizeBuckets": [
+   233659706,
+   26516126,
+   10901349,
+   21279743,
+   24819319,
+   1580507396,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "WriteIOSizeBuckets": [
+   7656150,
+   2572367,
+   2227316,
+   2464970,
+   3932168,
+   384789160,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatistics(Index=24, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1180175759, 1121150011])"
+ }
+]

@@ -1,0 +1,21 @@
+[
+ {
+  "CollectorVersion": "2.3.1",
+  "SFAAPIVersion": "12.5.0",
+  "uuid": "60001ff8003590000000000030000000",
+  "CaseNumber": "IDEA_lfs",
+  "Customer": "IDEA",
+  "ContactName": "IDEA",
+  "ContactEmail": "tozhang@ddn.com",
+  "ClusterName": "lfs",
+  "BundleType": "manual",
+  "Platform": "SFA400NVX2E",
+  "Description": "1- SS200NVX2(head only) with 0 missing enclosures (AUTOMATIC Selection).",
+  "Licenses": [],
+  "LicenseNeeded": true,
+  "DateAndTime": "2025-09-23T18:05:29.848191+08:00",
+  "TimeZone": "Asia/Shanghai",
+  "Controller0Serial": "F1002CTH115AG271004",
+  "Controller1Serial": "F1002CTH115AG271005"
+ }
+]

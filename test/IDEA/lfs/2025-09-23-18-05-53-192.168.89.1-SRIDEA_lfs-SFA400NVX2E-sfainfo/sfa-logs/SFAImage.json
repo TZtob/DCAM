@@ -1,0 +1,94 @@
+[
+ {
+  "Index": 0,
+  "Format": "FORMAT_RAW",
+  "Name": "vm00.img",
+  "Path": "vm00.img",
+  "OID": "0x40260000",
+  "PercentComplete": [
+   0,
+   0
+  ],
+  "Size": 131072,
+  "SnapshotCount": 0,
+  "SnapshotInformation": [],
+  "Status": [
+   "Good",
+   "Not Assigned"
+  ],
+  "State": [
+   "STATE_GOOD",
+   "STATE_NOT_ASSIGNED"
+  ],
+  "instance": "SFAImage(Index=0, Path='vm00.img', Format='RAW', State=['GOOD', 'NOT_ASSIGNED'])"
+ },
+ {
+  "Index": 1,
+  "Format": "FORMAT_RAW",
+  "Name": "vm02.img",
+  "Path": "vm02.img",
+  "OID": "0x40270001",
+  "PercentComplete": [
+   0,
+   0
+  ],
+  "Size": 131072,
+  "SnapshotCount": 0,
+  "SnapshotInformation": [],
+  "Status": [
+   "Good",
+   "Not Assigned"
+  ],
+  "State": [
+   "STATE_GOOD",
+   "STATE_NOT_ASSIGNED"
+  ],
+  "instance": "SFAImage(Index=1, Path='vm02.img', Format='RAW', State=['GOOD', 'NOT_ASSIGNED'])"
+ },
+ {
+  "Index": 2,
+  "Format": "FORMAT_RAW",
+  "Name": "vm01.img",
+  "Path": "vm01.img",
+  "OID": "0x40280002",
+  "PercentComplete": [
+   0,
+   0
+  ],
+  "Size": 131072,
+  "SnapshotCount": 0,
+  "SnapshotInformation": [],
+  "Status": [
+   "Not Assigned",
+   "Good"
+  ],
+  "State": [
+   "STATE_NOT_ASSIGNED",
+   "STATE_GOOD"
+  ],
+  "instance": "SFAImage(Index=2, Path='vm01.img', Format='RAW', State=['NOT_ASSIGNED', 'GOOD'])"
+ },
+ {
+  "Index": 3,
+  "Format": "FORMAT_RAW",
+  "Name": "vm03.img",
+  "Path": "vm03.img",
+  "OID": "0x40290003",
+  "PercentComplete": [
+   0,
+   0
+  ],
+  "Size": 131072,
+  "SnapshotCount": 0,
+  "SnapshotInformation": [],
+  "Status": [
+   "Not Assigned",
+   "Good"
+  ],
+  "State": [
+   "STATE_NOT_ASSIGNED",
+   "STATE_GOOD"
+  ],
+  "instance": "SFAImage(Index=3, Path='vm03.img', Format='RAW', State=['NOT_ASSIGNED', 'GOOD'])"
+ }
+]

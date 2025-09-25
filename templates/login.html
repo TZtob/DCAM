@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - DCAM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .logo-container {
+            margin-bottom: 2rem;
+        }
+        
+        .ddn-logo {
+            height: 60px;
+            width: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .login-title {
+            color: #2d3748;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+            color: #4a5568;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #cf2e2e;
+            background: white;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, #cf2e2e 0%, #b02525 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(207, 46, 46, 0.3);
+        }
+        
+        .flash-messages {
+            margin-bottom: 1rem;
+        }
+        
+        .alert {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .alert-error {
+            background: #fed7d7;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+        }
+        
+        .alert-success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+        
+        .alert-info {
+            background: #bee3f8;
+            color: #2c5282;
+            border: 1px solid #90cdf4;
+        }
+        
+        .default-credentials {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+        
+        .default-credentials h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .credentials-info {
+            font-family: 'Courier New', monospace;
+            background: #edf2f7;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 1rem;
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='DDN-main-logo.svg') }}" alt="DDN Logo" class="ddn-logo">
+            <h1 class="login-title">DCAM 登录</h1>
+            <p class="login-subtitle">DDN客户资产管理系统</p>
+        </div>
+        
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'error' if category == 'error' else category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="username" class="form-label">用户名</label>
+                <input type="text" id="username" name="username" class="form-input" required autofocus>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">密码</label>
+                <input type="password" id="password" name="password" class="form-input" required>
+            </div>
+            
+            <button type="submit" class="login-btn">登录</button>
+        </form>
+        
+        <div class="default-credentials">
+            <h4>🔑 默认管理员账户</h4>
+            <p>首次使用请使用以下默认凭证：</p>
+            <div class="credentials-info">
+                用户名: admin<br>
+                密码: admin123
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #718096;">
+                登录后请及时修改密码
+            </p>
+        </div>
+    </div>
+</body>
+</html>

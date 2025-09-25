@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户管理 - DCAM</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .header h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-light {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-light:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .btn-primary {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #218838;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .customers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .customer-card {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .customer-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .customer-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            cursor: pointer;
+        }
+        
+        .customer-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .customer-info {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .customer-meta {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9em;
+            color: #999;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .customer-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .action-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .action-btn-edit {
+            background: #3498db;
+        }
+        
+        .action-btn-edit:hover {
+            background: #2980b9;
+        }
+        
+        .action-btn-delete {
+            background: #e74c3c;
+        }
+        
+        .action-btn-delete:hover {
+            background: #c0392b;
+        }
+        
+        .action-btn-systems {
+            background: #667eea;
+        }
+        
+        .action-btn-systems:hover {
+            background: #5a6fd8;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        /* 模态对话框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            width: 80%;
+            max-width: 500px;
+            animation: modalopen 0.3s;
+        }
+        
+        @keyframes modalopen {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-header {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .modal-title {
+            margin: 0;
+            color: #e74c3c;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .modal-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .modal-close:hover,
+        .modal-close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .modal-btn {
+            padding: 8px 16px;
+            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .modal-btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .modal-btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .modal-btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .checkbox-container {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checkbox-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>👥</span>
+                客户管理
+            </h1>
+            <div class="nav-buttons">
+                <a href="{{ url_for('index') }}" class="btn btn-light">
+                    <span>🏠</span>
+                    返回首页
+                </a>
+                <a href="{{ url_for('new_customer') }}" class="btn btn-primary">
+                    <span>➕</span>
+                    新建客户
+                </a>
+                <a href="{{ url_for('systems_list') }}" class="btn btn-light">
+                    <span>🖥️</span>
+                    系统管理
+                </a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'error' if category == 'error' else 'success' }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            {% if customers %}
+                <div class="customers-grid">
+                    {% for customer_id, customer in customers.items() %}
+                        <div class="customer-card">
+                            <a href="{{ url_for('customer_detail', customer_id=customer_id) }}" class="customer-link"></a>
+                            <div class="customer-name">{{ customer.name }}</div>
+                            <div class="customer-info">
+                                {% if customer.contact %}
+                                    <div><strong>联系人:</strong> {{ customer.contact }}</div>
+                                {% endif %}
+                                {% if customer.email %}
+                                    <div><strong>邮箱:</strong> {{ customer.email }}</div>
+                                {% endif %}
+                                {% if customer.description %}
+                                    <div><strong>描述:</strong> {{ customer.description | truncate(100) }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="customer-meta">
+                                <div>创建时间: {{ customer.created_at | datetime }}</div>
+                            </div>
+                            <div class="customer-actions">
+                                <a href="{{ url_for('edit_customer', customer_id=customer_id) }}" class="action-btn action-btn-edit">编辑</a>
+                                <button class="action-btn action-btn-delete" onclick="showDeleteModal('{{ customer_id }}', '{{ customer.name }}', {{ systems_count.get(customer_id, 0) }})">删除</button>
+                                <a href="{{ url_for('customer_detail', customer_id=customer_id) }}" class="action-btn action-btn-systems">查看系统</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="icon">🏢</div>
+                    <h3>暂无客户</h3>
+                    <p>还没有创建任何客户，点击上方"新建客户"按钮开始添加。</p>
+                    <a href="{{ url_for('new_customer') }}" class="btn btn-primary">
+                        <span>➕</span>
+                        新建客户
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- 删除确认模态框 -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <span>⚠️</span>
+                    确认删除客户
+                </h3>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>您确定要删除客户「<span id="customerName"></span>」吗？</p>
+                <p id="systemsWarning" style="color: #e74c3c; font-weight: bold;"></p>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="confirmDelete" required>
+                    <label for="confirmDelete">我理解此操作不可撤销，并且会删除所有关联的系统数据</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="cancelDelete">取消</button>
+                <form id="deleteForm" method="POST">
+                    <button type="submit" class="modal-btn modal-btn-danger" id="confirmDeleteBtn" disabled>确认删除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 显示删除确认模态框
+        function showDeleteModal(customerId, customerName, systemsCount) {
+            const modal = document.getElementById('deleteModal');
+            const customerNameEl = document.getElementById('customerName');
+            const systemsWarningEl = document.getElementById('systemsWarning');
+            const confirmCheckbox = document.getElementById('confirmDelete');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            const deleteForm = document.getElementById('deleteForm');
+            
+            // 设置客户名称
+            customerNameEl.textContent = customerName;
+            
+            // 设置关联系统警告
+            if (systemsCount > 0) {
+                systemsWarningEl.textContent = `此客户下有 ${systemsCount} 个系统，删除客户将同时删除所有系统！`;
+            } else {
+                systemsWarningEl.textContent = '此客户下没有关联系统。';
+            }
+            
+            // 设置表单提交地址
+            deleteForm.action = `/customers/${customerId}/delete`;
+            
+            // 显示模态框
+            modal.style.display = 'block';
+            
+            // 重置复选框
+            confirmCheckbox.checked = false;
+            confirmBtn.disabled = true;
+            
+            // 复选框事件监听
+            confirmCheckbox.addEventListener('change', function() {
+                confirmBtn.disabled = !this.checked;
+            });
+            
+            // 关闭按钮事件
+            document.querySelector('.modal-close').addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // 取消按钮事件
+            document.getElementById('cancelDelete').addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // 点击模态框外部关闭
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

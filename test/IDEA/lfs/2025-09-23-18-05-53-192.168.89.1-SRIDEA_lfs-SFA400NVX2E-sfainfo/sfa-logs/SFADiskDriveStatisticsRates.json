@@ -1,0 +1,1106 @@
+[
+ {
+  "Index": 1,
+  "ElementName": null,
+  "KBytesRead": [
+   104225171700,
+   100996284016
+  ],
+  "KBytesTransferred": [
+   128710714276,
+   125740799584
+  ],
+  "KBytesWritten": [
+   24485542576,
+   24744515568
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523577+08:00",
+  "TotalIOs": [
+   1522624659,
+   1120081529
+  ],
+  "ReadIOs": [
+   1321762778,
+   916141617
+  ],
+  "WriteIOs": [
+   200861881,
+   203939912
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=1, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1522624659, 1120081529])"
+ },
+ {
+  "Index": 2,
+  "ElementName": null,
+  "KBytesRead": [
+   105013530156,
+   101489386292
+  ],
+  "KBytesTransferred": [
+   129482924004,
+   126171148292
+  ],
+  "KBytesWritten": [
+   24469393848,
+   24681762000
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523577+08:00",
+  "TotalIOs": [
+   1424035557,
+   1121414312
+  ],
+  "ReadIOs": [
+   1222824537,
+   918202353
+  ],
+  "WriteIOs": [
+   201211020,
+   203211959
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=2, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1424035557, 1121414312])"
+ },
+ {
+  "Index": 3,
+  "ElementName": null,
+  "KBytesRead": [
+   116942661464,
+   111801296896
+  ],
+  "KBytesTransferred": [
+   155247205348,
+   139426372088
+  ],
+  "KBytesWritten": [
+   38304543884,
+   27625075192
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523578+08:00",
+  "TotalIOs": [
+   3976716182,
+   4368359214
+  ],
+  "ReadIOs": [
+   2957046236,
+   3752083515
+  ],
+  "WriteIOs": [
+   1019669946,
+   616275699
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=3, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3976716182, 4368359214])"
+ },
+ {
+  "Index": 4,
+  "ElementName": null,
+  "KBytesRead": [
+   0,
+   0
+  ],
+  "KBytesTransferred": [
+   0,
+   0
+  ],
+  "KBytesWritten": [
+   0,
+   0
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523578+08:00",
+  "TotalIOs": [
+   0,
+   0
+  ],
+  "ReadIOs": [
+   0,
+   0
+  ],
+  "WriteIOs": [
+   0,
+   0
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=4, StatisticTime='2025-09-23 18:05:31', TotalIOs=[0, 0])"
+ },
+ {
+  "Index": 5,
+  "ElementName": null,
+  "KBytesRead": [
+   103019777872,
+   101656923028
+  ],
+  "KBytesTransferred": [
+   127147128536,
+   126487278008
+  ],
+  "KBytesWritten": [
+   24127350664,
+   24830354980
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523578+08:00",
+  "TotalIOs": [
+   1143915474,
+   1131507741
+  ],
+  "ReadIOs": [
+   944963219,
+   927233048
+  ],
+  "WriteIOs": [
+   198952255,
+   204274693
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=5, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1143915474, 1131507741])"
+ },
+ {
+  "Index": 6,
+  "ElementName": null,
+  "KBytesRead": [
+   103169781796,
+   101771816228
+  ],
+  "KBytesTransferred": [
+   127544513720,
+   126292224464
+  ],
+  "KBytesWritten": [
+   24374731924,
+   24520408236
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523579+08:00",
+  "TotalIOs": [
+   1152348296,
+   1120351075
+  ],
+  "ReadIOs": [
+   952574417,
+   918724921
+  ],
+  "WriteIOs": [
+   199773879,
+   201626154
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=6, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1152348296, 1120351075])"
+ },
+ {
+  "Index": 7,
+  "ElementName": null,
+  "KBytesRead": [
+   117883930168,
+   110625475808
+  ],
+  "KBytesTransferred": [
+   156502103540,
+   138095239548
+  ],
+  "KBytesWritten": [
+   38618173372,
+   27469763740
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523579+08:00",
+  "TotalIOs": [
+   4012057652,
+   4439909040
+  ],
+  "ReadIOs": [
+   2969038764,
+   3816900199
+  ],
+  "WriteIOs": [
+   1043018888,
+   623008841
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=7, StatisticTime='2025-09-23 18:05:31', TotalIOs=[4012057652, 4439909040])"
+ },
+ {
+  "Index": 8,
+  "ElementName": null,
+  "KBytesRead": [
+   102387318920,
+   101840452120
+  ],
+  "KBytesTransferred": [
+   126716084332,
+   126642698708
+  ],
+  "KBytesWritten": [
+   24328765412,
+   24802246588
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523579+08:00",
+  "TotalIOs": [
+   1237719870,
+   1134016533
+  ],
+  "ReadIOs": [
+   1038591781,
+   929659307
+  ],
+  "WriteIOs": [
+   199128089,
+   204357226
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=8, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1237719870, 1134016533])"
+ },
+ {
+  "Index": 9,
+  "ElementName": null,
+  "KBytesRead": [
+   117466800024,
+   114341125608
+  ],
+  "KBytesTransferred": [
+   155593939560,
+   142026593088
+  ],
+  "KBytesWritten": [
+   38127139536,
+   27685467480
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523579+08:00",
+  "TotalIOs": [
+   3958995086,
+   4546999017
+  ],
+  "ReadIOs": [
+   2947139467,
+   3921764240
+  ],
+  "WriteIOs": [
+   1011855619,
+   625234777
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=9, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3958995086, 4546999017])"
+ },
+ {
+  "Index": 10,
+  "ElementName": null,
+  "KBytesRead": [
+   101876329280,
+   100963705368
+  ],
+  "KBytesTransferred": [
+   126303653512,
+   125662833924
+  ],
+  "KBytesWritten": [
+   24427324232,
+   24699128556
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523580+08:00",
+  "TotalIOs": [
+   1094248891,
+   1119123100
+  ],
+  "ReadIOs": [
+   893569217,
+   916556832
+  ],
+  "WriteIOs": [
+   200679674,
+   202566268
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=10, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1094248891, 1119123100])"
+ },
+ {
+  "Index": 11,
+  "ElementName": null,
+  "KBytesRead": [
+   116796501572,
+   109794731720
+  ],
+  "KBytesTransferred": [
+   154853300992,
+   136639334532
+  ],
+  "KBytesWritten": [
+   38056799420,
+   26844602812
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523580+08:00",
+  "TotalIOs": [
+   3917567208,
+   4301336109
+  ],
+  "ReadIOs": [
+   2931034063,
+   3728212635
+  ],
+  "WriteIOs": [
+   986533145,
+   573123474
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=11, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3917567208, 4301336109])"
+ },
+ {
+  "Index": 12,
+  "ElementName": null,
+  "KBytesRead": [
+   116006358196,
+   110827974356
+  ],
+  "KBytesTransferred": [
+   154345095040,
+   137899389724
+  ],
+  "KBytesWritten": [
+   38338736844,
+   27071415368
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523581+08:00",
+  "TotalIOs": [
+   3833566470,
+   4254525799
+  ],
+  "ReadIOs": [
+   2881851353,
+   3677852311
+  ],
+  "WriteIOs": [
+   951715117,
+   576673488
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=12, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3833566470, 4254525799])"
+ },
+ {
+  "Index": 13,
+  "ElementName": null,
+  "KBytesRead": [
+   114371318520,
+   109774797140
+  ],
+  "KBytesTransferred": [
+   152238914284,
+   133952270200
+  ],
+  "KBytesWritten": [
+   37867595764,
+   24177473060
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523581+08:00",
+  "TotalIOs": [
+   3845187721,
+   4237122592
+  ],
+  "ReadIOs": [
+   2877091281,
+   3701961009
+  ],
+  "WriteIOs": [
+   968096440,
+   535161583
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=13, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3845187721, 4237122592])"
+ },
+ {
+  "Index": 14,
+  "ElementName": null,
+  "KBytesRead": [
+   117683541068,
+   112992512032
+  ],
+  "KBytesTransferred": [
+   155597082380,
+   140589122928
+  ],
+  "KBytesWritten": [
+   37913541312,
+   27596610896
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523581+08:00",
+  "TotalIOs": [
+   3832500672,
+   4688017024
+  ],
+  "ReadIOs": [
+   2893226441,
+   4041623721
+  ],
+  "WriteIOs": [
+   939274231,
+   646393303
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=14, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3832500672, 4688017024])"
+ },
+ {
+  "Index": 15,
+  "ElementName": null,
+  "KBytesRead": [
+   115122515916,
+   115805068056
+  ],
+  "KBytesTransferred": [
+   153738463228,
+   143153287712
+  ],
+  "KBytesWritten": [
+   38615947312,
+   27348219656
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523582+08:00",
+  "TotalIOs": [
+   4046202965,
+   4466503402
+  ],
+  "ReadIOs": [
+   2993146082,
+   3857302814
+  ],
+  "WriteIOs": [
+   1053056883,
+   609200588
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=15, StatisticTime='2025-09-23 18:05:31', TotalIOs=[4046202965, 4466503402])"
+ },
+ {
+  "Index": 16,
+  "ElementName": null,
+  "KBytesRead": [
+   104555057324,
+   101608586752
+  ],
+  "KBytesTransferred": [
+   129110681700,
+   126496120056
+  ],
+  "KBytesWritten": [
+   24555624376,
+   24887533304
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523582+08:00",
+  "TotalIOs": [
+   1254432153,
+   1124816310
+  ],
+  "ReadIOs": [
+   1052366145,
+   921054490
+  ],
+  "WriteIOs": [
+   202066008,
+   203761820
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=16, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1254432153, 1124816310])"
+ },
+ {
+  "Index": 17,
+  "ElementName": null,
+  "KBytesRead": [
+   116098517412,
+   111648237392
+  ],
+  "KBytesTransferred": [
+   145995732904,
+   139250216844
+  ],
+  "KBytesWritten": [
+   29897215492,
+   27601979452
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523583+08:00",
+  "TotalIOs": [
+   3953819013,
+   4219450379
+  ],
+  "ReadIOs": [
+   2990136213,
+   3614310612
+  ],
+  "WriteIOs": [
+   963682800,
+   605139767
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=17, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3953819013, 4219450379])"
+ },
+ {
+  "Index": 18,
+  "ElementName": null,
+  "KBytesRead": [
+   103956775076,
+   102012324428
+  ],
+  "KBytesTransferred": [
+   128349683964,
+   126877559252
+  ],
+  "KBytesWritten": [
+   24392908888,
+   24865234824
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523583+08:00",
+  "TotalIOs": [
+   1270995331,
+   1130963981
+  ],
+  "ReadIOs": [
+   1070691081,
+   926028819
+  ],
+  "WriteIOs": [
+   200304250,
+   204935162
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=18, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1270995331, 1130963981])"
+ },
+ {
+  "Index": 19,
+  "ElementName": null,
+  "KBytesRead": [
+   104627117912,
+   100252527296
+  ],
+  "KBytesTransferred": [
+   128725152552,
+   124636775744
+  ],
+  "KBytesWritten": [
+   24098034640,
+   24384248448
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523583+08:00",
+  "TotalIOs": [
+   1315953130,
+   1112132571
+  ],
+  "ReadIOs": [
+   1117816258,
+   911206215
+  ],
+  "WriteIOs": [
+   198136872,
+   200926356
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=19, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1315953130, 1112132571])"
+ },
+ {
+  "Index": 20,
+  "ElementName": null,
+  "KBytesRead": [
+   114516378348,
+   111527100112
+  ],
+  "KBytesTransferred": [
+   143805136700,
+   139072285076
+  ],
+  "KBytesWritten": [
+   29288758352,
+   27545184964
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523584+08:00",
+  "TotalIOs": [
+   3864189274,
+   4588092453
+  ],
+  "ReadIOs": [
+   2914940036,
+   3951341999
+  ],
+  "WriteIOs": [
+   949249238,
+   636750454
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=20, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3864189274, 4588092453])"
+ },
+ {
+  "Index": 21,
+  "ElementName": null,
+  "KBytesRead": [
+   115505651428,
+   110263765444
+  ],
+  "KBytesTransferred": [
+   153864109096,
+   137516349632
+  ],
+  "KBytesWritten": [
+   38358457668,
+   27252584188
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523584+08:00",
+  "TotalIOs": [
+   3943786958,
+   4087377020
+  ],
+  "ReadIOs": [
+   2936090433,
+   3523423667
+  ],
+  "WriteIOs": [
+   1007696525,
+   563953353
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=21, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3943786958, 4087377020])"
+ },
+ {
+  "Index": 22,
+  "ElementName": null,
+  "KBytesRead": [
+   115095650828,
+   109323043792
+  ],
+  "KBytesTransferred": [
+   153723573316,
+   134205891168
+  ],
+  "KBytesWritten": [
+   38627922488,
+   24882847376
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523584+08:00",
+  "TotalIOs": [
+   3999161338,
+   4194686066
+  ],
+  "ReadIOs": [
+   2974070114,
+   3611987539
+  ],
+  "WriteIOs": [
+   1025091224,
+   582698527
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=22, StatisticTime='2025-09-23 18:05:31', TotalIOs=[3999161338, 4194686066])"
+ },
+ {
+  "Index": 23,
+  "ElementName": null,
+  "KBytesRead": [
+   102976584692,
+   101187863240
+  ],
+  "KBytesTransferred": [
+   127472993604,
+   125430515232
+  ],
+  "KBytesWritten": [
+   24496408912,
+   24242651992
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523585+08:00",
+  "TotalIOs": [
+   1160395065,
+   1114837390
+  ],
+  "ReadIOs": [
+   959021159,
+   914835477
+  ],
+  "WriteIOs": [
+   201373906,
+   200001913
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=23, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1160395065, 1114837390])"
+ },
+ {
+  "Index": 24,
+  "ElementName": null,
+  "KBytesRead": [
+   102826999444,
+   101395866116
+  ],
+  "KBytesTransferred": [
+   127262781484,
+   126193311600
+  ],
+  "KBytesWritten": [
+   24435782040,
+   24797445484
+  ],
+  "StatisticTime": "2025-09-23T18:05:31.523585+08:00",
+  "TotalIOs": [
+   1180175759,
+   1121150011
+  ],
+  "ReadIOs": [
+   979960876,
+   917722763
+  ],
+  "WriteIOs": [
+   200214883,
+   203427248
+  ],
+  "ForwardedIOs": [
+   0,
+   0
+  ],
+  "KBytesForwarded": [
+   0,
+   0
+  ],
+  "KBytesUnmapped": [
+   0,
+   0
+  ],
+  "UnmapIOs": [
+   0,
+   0
+  ],
+  "instance": "SFADiskDriveStatisticsRates(Index=24, StatisticTime='2025-09-23 18:05:31', TotalIOs=[1180175759, 1121150011])"
+ }
+]

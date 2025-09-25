@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ customer_name }} - 查询结果</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .back-link {
+            color: #007bff;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .query-info {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #f5c6cb;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .json-output {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .summary {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('customer_page', customer_name=customer_name) }}" class="back-link">← 返回查询选项</a>
+        
+        <h1>{{ customer_name }} - 查询结果</h1>
+        
+        <div class="query-info">
+            <strong>查询类型：</strong> {{ query_type }}
+        </div>
+        
+        {% if result.error %}
+            <div class="error">
+                <strong>错误：</strong> {{ result.error }}
+            </div>
+        {% else %}
+            {% if result.total_devices is defined %}
+                <div class="summary">
+                    <strong>总设备数：</strong> {{ result.total_devices }}
+                </div>
+            {% endif %}
+            
+            {% if result.version_summary is defined %}
+                <div class="summary">
+                    <strong>版本统计：</strong>
+                    {% for version, count in result.version_summary.items() %}
+                        {{ version }}: {{ count }} 个 &nbsp;&nbsp;
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <!-- 表格显示结果 -->
+            {% if result.clusters is defined %}
+                <table>
+                    <thead>
+                        <tr>
+                            {% if result.clusters[0] %}
+                                {% for key in result.clusters[0].keys() %}
+                                    {% if key != 'devices' %}
+                                        <th>{{ key.replace('_', ' ').title() }}</th>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cluster in result.clusters %}
+                            <tr>
+                                {% for key, value in cluster.items() %}
+                                    {% if key != 'devices' %}
+                                        <td>{{ value if value is not none else 'N/A' }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            
+            {% if result.devices is defined %}
+                <table>
+                    <thead>
+                        <tr>
+                            {% if result.devices[0] %}
+                                {% for key in result.devices[0].keys() %}
+                                    {% if key != 'hosts' %}
+                                        <th>{{ key.replace('_', ' ').title() }}</th>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for device in result.devices %}
+                            <tr>
+                                {% for key, value in device.items() %}
+                                    {% if key != 'hosts' %}
+                                        <td>{{ value if value is not none else 'N/A' }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            
+            <!-- 原始 JSON 输出（调试用） -->
+            <details>
+                <summary>查看原始数据</summary>
+                <div class="json-output">{{ result | tojson(indent=2) }}</div>
+            </details>
+        {% endif %}
+    </div>
+</body>
+</html>

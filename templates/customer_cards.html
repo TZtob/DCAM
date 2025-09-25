@@ -1,0 +1,22 @@
+<!-- 客户选择部分 -->
+<div style="margin-top: 30px; border-top: 2px solid #4299e1; padding-top: 20px; position: relative;">
+    <div style="position: absolute; top: -1px; left: 0; width: 60px; height: 2px; background: #1a202c;"></div>
+    <h3 style="margin-bottom: 15px; font-size: 1.2em; color: #2d3748; font-weight: 600;">
+        <span style="color: #4299e1;">●</span> 客户快速查询
+    </h3>
+    
+    <div class="customer-card-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+        {% if customers %}
+            {% for customer_name, yaml_file in customers.items() %}
+                <a href="{{ url_for('customer_page', customer_name=customer_name) }}" 
+                   style="background: #4299e1; color: white; padding: 20px; border-radius: 8px; text-decoration: none; text-align: center; transition: all 0.3s ease;">
+                    <h3 style="margin: 0; font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ customer_name }}</h3>
+                </a>
+            {% endfor %}
+        {% else %}
+            <div style="grid-column: span 3; text-align: center; padding: 20px; background: #f7fafc; border-radius: 8px; color: #718096;">
+                暂无客户数据，请添加客户
+            </div>
+        {% endif %}
+    </div>
+</div>

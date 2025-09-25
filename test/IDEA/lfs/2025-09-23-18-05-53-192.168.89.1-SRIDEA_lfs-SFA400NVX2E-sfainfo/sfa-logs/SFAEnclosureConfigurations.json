@@ -1,0 +1,26 @@
+[
+ {
+  "Index": 0,
+  "ConfigurationStatus": "Valid configuration found.",
+  "ConfigurationDescription": "1- SS200NVX2(head only)",
+  "ElementName": "EnclosureConfigurations",
+  "MissingEnclosures": 0,
+  "SelectedConfiguration": 1,
+  "SelectionMechanism": "SELECTION_AUTOMATIC",
+  "SupportedConfigurations": [
+   "Automatic",
+   "1- SS200NVX2(head only)",
+   "5- SS200NVX2(head + 4-SS9012)",
+   "3- SS200NVX2(head + 2-SS9024)",
+   "5- SS200NVX2(head + 4-SS9024)",
+   "6- SS200NVX2(head + 5-SS9024)",
+   "9- SS200NVX2(head + 8-SS9024)",
+   "11- SS200NVX2(head + 10-SS9024)",
+   "6- SS200NVX2(head + 5-SE2420)",
+   "3- SS200NVX2(head + 2-SE2420)",
+   "5- SS200NVX2(head + 4-SE2420)"
+  ],
+  "TotalConfigurations": 10,
+  "instance": "SFAEnclosureConfigurations(SelectedConfig='1- SS200NVX2(head only)', Selection='AUTOMATIC'))"
+ }
+]

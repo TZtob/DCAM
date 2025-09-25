@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索结果 - DCAM</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+            padding: 1.5rem 0;
+            color: #2d3748;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 2.2em;
+        }
+        
+        h2 {
+            color: #2d3748;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            color: #4a5568;
+            font-size: 1.1em;
+        }
+        
+        .back-link {
+            color: #667eea;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .results-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .results-section {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .results-count {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 1rem;
+        }
+        
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .result-table th, .result-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .result-table th {
+            background: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+        }
+        
+        .result-table tbody tr:hover {
+            background: #f7fafc;
+        }
+        
+        .result-table a {
+            color: #3182ce;
+            text-decoration: none;
+        }
+        
+        .result-table a:hover {
+            text-decoration: underline;
+        }
+        
+        .empty-results {
+            text-align: center;
+            padding: 2rem;
+            color: #a0aec0;
+        }
+        
+        .highlight {
+            background: #ffffcc;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏢 DCAM</h1>
+        <p class="subtitle">DDN客户资产管理系统</p>
+    </div>
+    
+    <div class="container">
+        <div class="search-header">
+            <h2>搜索结果: "{{ query }}"</h2>
+            <a href="{{ url_for('index') }}" class="back-link">← 返回首页</a>
+        </div>
+        
+        <div class="results-container">
+            <!-- 客户搜索结果 -->
+            <div class="results-section">
+                <h3>客户</h3>
+                <p class="results-count">找到 {{ customer_results|length }} 个结果</p>
+                
+                {% if customer_results %}
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>客户名称</th>
+                                <th>联系人</th>
+                                <th>邮箱</th>
+                                <th>创建时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for customer in customer_results %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ url_for('customer_detail', customer_id=customer.id) }}">
+                                            {{ customer.name|replace(query, '<span class="highlight">' + query + '</span>')|safe }}
+                                        </a>
+                                    </td>
+                                    <td>{{ customer.contact }}</td>
+                                    <td>{{ customer.email }}</td>
+                                    <td>{{ customer.created_at|datetime }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="empty-results">
+                        没有找到匹配的客户
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- 系统搜索结果 -->
+            <div class="results-section">
+                <h3>系统</h3>
+                <p class="results-count">找到 {{ system_results|length }} 个结果</p>
+                
+                {% if system_results %}
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>系统名称</th>
+                                <th>所属客户</th>
+                                <th>状态</th>
+                                <th>创建时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for system in system_results %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ url_for('system_detail', system_id=system.id) }}">
+                                            {{ system.name|replace(query, '<span class="highlight">' + query + '</span>')|safe if query in system.name.lower() else system.name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('customer_detail', customer_id=system.customer_id) }}">
+                                            {{ system.customer_name|replace(query, '<span class="highlight">' + query + '</span>')|safe if query in system.customer_name.lower() else system.customer_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {% if system.status == 'created' %}
+                                            <span style="color: #718096;">已创建</span>
+                                        {% elif system.status == 'imported' %}
+                                            <span style="color: #38a169;">已导入</span>
+                                        {% else %}
+                                            <span>{{ system.status }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ system.created_at|datetime }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <div class="empty-results">
+                        没有找到匹配的系统
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 日期格式化函数
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateElements = document.querySelectorAll('[data-datetime]');
+            dateElements.forEach(element => {
+                const dateStr = element.dataset.datetime;
+                if (dateStr) {
+                    try {
+                        const date = new Date(dateStr);
+                        element.textContent = date.toLocaleDateString('zh-CN');
+                    } catch (e) {
+                        console.error('日期格式化错误', e);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+version = "2025062800"
+
+[global]
+name = "ES7990"
+id = "cfed7e39-3e43-470e-b530-637396b8f8eb"
+timezone = "Asia/Shanghai"
+ntp_list = ["45.79.82.45"]
+
+[global.mgt]
+list = ["es79-vm00", "es79-vm01"]
+size = "2G"
+mount_opts = "max_sectors_kb=0"
+device_path = "/dev/ddn"
+mmp_interval = "5s"
+failback = true
+
+[sfa.es7990]
+controllers = ["192.168.137.139", "192.168.137.140"]
+halink = true
+
+[HA]
+groups = [["es79-vm00", "es79-vm01"]]
+ifspeed = true
+pingd = true
+secauth = true
+start_on_boot = true
+
+[fs.hpcfs.mdt]
+list = ["es79-vm00", "es79-vm01"]
+size = "90%"
+mke2fs_opts = "-m1 -E lazy_itable_init=0,lazy_journal_init=0,nodiscard -O project"
+device_path = "/dev/ddn"
+failback = true
+
+[fs.hpcfs.ost]
+list = ["es79-vm00", "es79-vm01"]
+mke2fs_opts = "-m1 -i 131072 -E lazy_itable_init=0,lazy_journal_init=0,nodiscard -O project"
+mke2fs_opts_conditional = [
+  "for size > 128000000000000 apply '-E lazy_itable_init=1,nodiscard -N 1073741824 -O project'",
+]
+mount_opts = "max_sectors_kb=0"
+device_path = "/dev/ddn"
+mmp_interval = "5s"
+failback = true
+
+[host_defaults]
+corosync_links = ["mgmt0", "mlxib0"]
+grub_args = "spectre_v2=off nopti"
+lnets = ["o2ib0(mlxib0,mlxib1)"]
+
+[host_defaults.stonith]
+type = "sfa_vm"
+timeout = "5m"
+
+[host_defaults.nic.mgmt0]
+dad_timeout = 3000
+type = "ethernet"
+netmask = "255.255.255.0"
+gateway = "192.168.137.1"
+
+[host_defaults.nic.mlxib0]
+dad_timeout = 3000
+type = "ethernet"
+netmask = "255.255.255.0"
+
+[host_defaults.nic.mlxib1]
+dad_timeout = 3000
+type = "ethernet"
+netmask = "255.255.255.0"
+
+[host_defaults.sysctl]
+"vm.min_free_kbytes" = 2097152
+"net.ipv4.conf.all.rp_filter" = 0
+"net.ipv4.conf.all.arp_announce" = 2
+"net.ipv4.conf.all.arp_ignore" = 1
+"net.ipv4.conf.default.rp_filter" = 2
+"net.ipv4.conf.default.arp_announce" = 2
+"net.ipv4.conf.default.arp_ignore" = 1
+
+[set_param_tunings]
+jobid_name = "%e:%u:%h"
+jobid_var = "SLURM_JOB_ID"
+'obdfilter.*.brw_size' = 16
+'osc.*.max_pages_per_rpc' = "16M"
+'osc.*.max_rpcs_in_flight' = 16
+'osc.*.max_dirty_mb' = 512
+'llite.*.max_read_ahead_mb' = 2048
+'mdt.*.identity_upcall' = "NONE"
+
+[host.es79-vm00]
+oid = "0x10000000"
+sfa = "es7990"
+
+[host.es79-vm00.overrides]
+peers = ["es79-vm01"]
+
+[host.es79-vm00.fs.hpcfs]
+mdt_list = [0]
+ost_list = [0, 1]
+
+[host.es79-vm00.nic.mgmt0]
+type = "ethernet"
+ip = "192.168.137.65"
+
+[host.es79-vm00.nic.mlxib0]
+type = "infiniband"
+ip = "192.168.0.65"
+
+[host.es79-vm00.nic.mlxib1]
+type = "infiniband"
+ip = "192.168.0.165"
+
+[host.es79-vm00.modprobe_cfg.lnet]
+lnet_peer_discovery_disabled = 1
+
+[host.es79-vm01]
+oid = "0x10008000"
+sfa = "es7990"
+
+[host.es79-vm01.overrides]
+peers = ["es79-vm00"]
+
+[host.es79-vm01.fs.hpcfs]
+mdt_list = [1]
+ost_list = [2, 3]
+
+[host.es79-vm01.nic.mgmt0]
+type = "ethernet"
+ip = "192.168.137.66"
+
+[host.es79-vm01.nic.mlxib0]
+type = "infiniband"
+ip = "192.168.0.66"
+
+[host.es79-vm01.nic.mlxib1]
+type = "infiniband"
+ip = "192.168.0.166"
+
+[host.es79-vm01.modprobe_cfg.lnet]
+lnet_peer_discovery_disabled = 1
+
+[EMF]
+ip = "192.168.137.67"
+nic = "mgmt0"
+size = "80.0GiB"
+
+[EMF.health]
+group = ["es79-vm00", "es79-vm01"]
+scrape_interval = 20
+evaluation_interval = 20
+
+[[EMF.health.notification.msteams.configs]]
+api_url = "https://oapi.dingtalk.com/robot/send?access_token=9cd14c672220cee56c01b9a1c8dfe5e1ade071c1201882989d3555a5e05c2ead"

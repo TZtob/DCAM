@@ -1,0 +1,62 @@
+[
+ {
+  "Index": 0,
+  "OID": "0xd8000000",
+  "Capabilities": "CAPABILITIES_NONE",
+  "CertificateFile": null,
+  "KeyFile": null,
+  "HealthState": "HEALTH_OK",
+  "HealthStateReason": "",
+  "IPAddress": "",
+  "IPPort": 0,
+  "Protocol": null,
+  "TrustedFile": null,
+  "Status": null,
+  "instance": "SFAKMIPServer(Index=0, IPAddress='', IPPort=0, Capabilities='NONE', Status='')"
+ },
+ {
+  "Index": 1,
+  "OID": "0xd8000001",
+  "Capabilities": "CAPABILITIES_NONE",
+  "CertificateFile": null,
+  "KeyFile": null,
+  "HealthState": "HEALTH_OK",
+  "HealthStateReason": "",
+  "IPAddress": "",
+  "IPPort": 0,
+  "Protocol": null,
+  "TrustedFile": null,
+  "Status": null,
+  "instance": "SFAKMIPServer(Index=1, IPAddress='', IPPort=0, Capabilities='NONE', Status='')"
+ },
+ {
+  "Index": 2,
+  "OID": "0xd8000002",
+  "Capabilities": "CAPABILITIES_NONE",
+  "CertificateFile": null,
+  "KeyFile": null,
+  "HealthState": "HEALTH_OK",
+  "HealthStateReason": "",
+  "IPAddress": "",
+  "IPPort": 0,
+  "Protocol": null,
+  "TrustedFile": null,
+  "Status": null,
+  "instance": "SFAKMIPServer(Index=2, IPAddress='', IPPort=0, Capabilities='NONE', Status='')"
+ },
+ {
+  "Index": 3,
+  "OID": "0xd8000003",
+  "Capabilities": "CAPABILITIES_NONE",
+  "CertificateFile": null,
+  "KeyFile": null,
+  "HealthState": "HEALTH_OK",
+  "HealthStateReason": "",
+  "IPAddress": "",
+  "IPPort": 0,
+  "Protocol": null,
+  "TrustedFile": null,
+  "Status": null,
+  "instance": "SFAKMIPServer(Index=3, IPAddress='', IPPort=0, Capabilities='NONE', Status='')"
+ }
+]

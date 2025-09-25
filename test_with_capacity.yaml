@@ -1,0 +1,150 @@
+clusters:
+  - Cluster_name: idea_cluster_test
+    EXA version: 6.3.2-2024122100
+    Capacity: 2526246076416
+    Network_type: null
+    Network_port_type: null
+    EMF_IP: 192.168.89.132
+    Support_status: null
+    Asset_owner: null
+    devices:
+      - Device_name: ES400X2-1
+        type: null
+        SFA version: null
+        Capacity: null
+        Controller_c0_ip: 192.168.89.1
+        Controller_c1_ip: 192.168.89.2
+        Controller_c0_serial_number: null
+        Controller_c1_serial_number: null
+        BBU1_Mfg_Date: null
+        BBU2_Mfg_Date: null
+        Hosts:
+          - hostname: vm00
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.65
+              lnet1_network: 10.10.64.1
+              lnet2_network: null
+          - hostname: vm01
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.66
+              lnet1_network: 10.10.64.2
+              lnet2_network: null
+          - hostname: vm02
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.67
+              lnet1_network: 10.10.64.3
+              lnet2_network: null
+          - hostname: vm03
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.68
+              lnet1_network: 10.10.64.4
+              lnet2_network: null
+      - Device_name: ES400X2-2
+        type: null
+        SFA version: null
+        Capacity: null
+        Controller_c0_ip: 192.168.89.3
+        Controller_c1_ip: 192.168.89.4
+        Controller_c0_serial_number: null
+        Controller_c1_serial_number: null
+        BBU1_Mfg_Date: null
+        BBU2_Mfg_Date: null
+        Hosts:
+          - hostname: vm04
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.69
+              lnet1_network: 10.10.64.5
+              lnet2_network: null
+          - hostname: vm05
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.70
+              lnet1_network: 10.10.64.6
+              lnet2_network: null
+          - hostname: vm06
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.71
+              lnet1_network: 10.10.64.7
+              lnet2_network: null
+          - hostname: vm07
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.72
+              lnet1_network: 10.10.64.8
+              lnet2_network: null
+      - Device_name: ES400X2-3
+        type: null
+        SFA version: null
+        Capacity: null
+        Controller_c0_ip: 192.168.89.5
+        Controller_c1_ip: 192.168.89.6
+        Controller_c0_serial_number: null
+        Controller_c1_serial_number: null
+        BBU1_Mfg_Date: null
+        BBU2_Mfg_Date: null
+        Hosts:
+          - hostname: vm08
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.73
+              lnet1_network: 10.10.64.9
+              lnet2_network: null
+          - hostname: vm09
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.74
+              lnet1_network: 10.10.64.10
+              lnet2_network: null
+          - hostname: vm10
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.75
+              lnet1_network: 10.10.64.11
+              lnet2_network: null
+          - hostname: vm11
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.76
+              lnet1_network: 10.10.64.12
+              lnet2_network: null
+      - Device_name: ES400X2-4
+        type: null
+        SFA version: null
+        Capacity: null
+        Controller_c0_ip: 192.168.89.7
+        Controller_c1_ip: 192.168.89.8
+        Controller_c0_serial_number: null
+        Controller_c1_serial_number: null
+        BBU1_Mfg_Date: null
+        BBU2_Mfg_Date: null
+        Hosts:
+          - hostname: vm12
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.77
+              lnet1_network: 10.10.64.13
+              lnet2_network: null
+          - hostname: vm13
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.78
+              lnet1_network: 10.10.64.14
+              lnet2_network: null
+          - hostname: vm14
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.79
+              lnet1_network: 10.10.64.15
+              lnet2_network: null
+          - hostname: vm15
+            role: MDS/OSS
+            ip:
+              management: 192.168.89.80
+              lnet1_network: 10.10.64.16
+              lnet2_network: null

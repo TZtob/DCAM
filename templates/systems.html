@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统管理 - DCAM</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .header h1 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-light {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-light:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.9em;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        /* 客户过滤 */
+        .filters {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-item {
+            background: #f1f5f9;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            color: #4a5568;
+            border: 1px solid transparent;
+        }
+        
+        .filter-item:hover {
+            background: #e2e8f0;
+        }
+        
+        .filter-item.active {
+            background: #28a745;
+            color: white;
+        }
+        
+        .customer-badge {
+            background: #ebfbf0;
+            color: #28a745;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.85em;
+            display: inline-block;
+            white-space: nowrap;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .systems-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .systems-table th,
+        .systems-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .systems-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .systems-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status-created {
+            background: #ffeaa7;
+            color: #d63031;
+        }
+        
+        .status-configured {
+            background: #74b9ff;
+            color: white;
+        }
+        
+        .status-imported {
+            background: #00b894;
+            color: white;
+        }
+        
+        .status-deployed {
+            background: #6c5ce7;
+            color: white;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state .icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        
+        .alert {
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .system-actions {
+            display: flex;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>🖥️</span>
+                系统管理
+            </h1>
+            <div class="nav-buttons">
+                <a href="{{ url_for('index') }}" class="btn btn-light">
+                    <span>🏠</span>
+                    返回首页
+                </a>
+                <a href="{{ url_for('new_system') }}" class="btn btn-primary">
+                    <span>➕</span>
+                    新建系统
+                </a>
+                <a href="{{ url_for('customers_list') }}" class="btn btn-light">
+                    <span>👥</span>
+                    客户管理
+                </a>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'error' if category == 'error' else 'success' }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <!-- 快速查询接口 -->
+            <div style="margin-bottom: 30px; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef;">
+                <h3 style="margin-bottom: 15px; font-size: 1.2em; color: #4a5568;">
+                    <span>🔍</span>
+                    快速查询
+                </h3>
+                
+                <form id="globalQueryForm" style="margin-bottom: 20px;">
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <label style="display: block; margin-bottom: 8px; color: #4a5568;">客户</label>
+                            <select id="customer_id" name="customer_id" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0;" onchange="updateSystemListByCustomer()">
+                                <option value="">所有客户</option>
+                                <!-- 将由JavaScript动态填充 -->
+                            </select>
+                        </div>
+                        
+                        <div style="flex: 1; min-width: 200px;">
+                            <label style="display: block; margin-bottom: 8px; color: #4a5568;">系统</label>
+                            <select id="system_id" name="system_id" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                                <option value="">所有系统</option>
+                                <!-- 将由JavaScript动态填充 -->
+                            </select>
+                        </div>
+                        
+                        <div style="flex: 1; min-width: 200px;">
+                            <label style="display: block; margin-bottom: 8px; color: #4a5568;">查询类型</label>
+                            <select id="query_type" name="query_type" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                                <option value="">请选择查询类型</option>
+                                <option value="0">所有查询</option>
+                                <option value="1">设备数量统计</option>
+                                <option value="2">SFA版本详情</option>
+                                <option value="3">EXA版本详情</option>
+                                <option value="4">系统配置详情</option>
+                                <option value="5">节点详细信息</option>
+                                <option value="6">磁盘详情</option>
+                                <option value="7">内存详情</option>
+                                <option value="8">网络配置详情</option>
+                                <option value="9">防火墙配置详情</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; align-items: flex-end;">
+                        <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+                            <span>🚀</span>
+                            执行查询
+                        </button>
+                        <button type="button" onclick="resetForm()" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                            <span>🔄</span>
+                            重置
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- 查询结果区域 -->
+                <div id="queryResults" style="display: none; margin-top: 20px; padding: 15px; background: white; border-radius: 6px; border: 1px solid #e2e8f0;">
+                    <h4 style="margin-top: 0; color: #28a745;">查询结果</h4>
+                    <div id="resultsContent"></div>
+                </div>
+            </div>
+            
+            {% if systems %}
+                <!-- 客户过滤器 -->
+                <div class="filters">
+                    <div class="filter-item active" data-customer="all">全部客户</div>
+                    {% for customer_id, customer in customers.items() %}
+                        <div class="filter-item" data-customer="{{ customer_id }}">{{ customer.name }}</div>
+                    {% endfor %}
+                </div>
+                
+                <table class="systems-table">
+                    <thead>
+                        <tr>
+                            <th>系统名称</th>
+                            <th>客户</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for system_id, system in systems.items() %}
+                            <tr class="system-row" data-customer="{{ system.customer_id }}">
+                                <td>
+                                    <strong>{{ system.name }}</strong>
+                                    {% if system.description %}
+                                        <br><small style="color: #666;">{{ system.description }}</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('customer_detail', customer_id=system.customer_id) }}" class="customer-badge">
+                                        {{ system.customer_name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-{{ system.status }}">
+                                        {% if system.status == 'created' %}
+                                            已创建
+                                        {% elif system.status == 'configured' %}
+                                            已配置
+                                        {% elif system.status == 'imported' %}
+                                            已导入
+                                        {% elif system.status == 'deployed' %}
+                                            已部署
+                                        {% else %}
+                                            {{ system.status }}
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                <td>{{ system.created_at | datetime }}</td>
+                                <td>
+                                    <div class="system-actions">
+                                        <a href="{{ url_for('system_detail', system_id=system_id) }}" class="btn btn-primary btn-sm">
+                                            <span>👁️</span>
+                                            查看
+                                        </a>
+                                        {% if system.status == 'created' %}
+                                            <a href="{{ url_for('import_config', system_id=system_id) }}" class="btn btn-primary btn-sm">
+                                                <span>📁</span>
+                                                导入配置
+                                            </a>
+                                        {% endif %}
+                                        {% if system.archived %}
+                                            <span class="status-badge status-archived" style="background:#adb5bd;color:#fff;">已归档</span>
+                                            {% if session.username and get_user(session.username).role == 'admin' %}
+                                            <form method="post" action="{{ url_for('unarchive_system', system_id=system_id) }}" style="display:inline;">
+                                                <button type="submit" class="btn btn-sm btn-light" style="background:#ffc107;color:#333;">解除归档</button>
+                                            </form>
+                                            {% endif %}
+                                        {% else %}
+                                            {% if session.username and get_user(session.username).role == 'admin' %}
+                                            <form method="post" action="{{ url_for('archive_system', system_id=system_id) }}" style="display:inline;">
+                                                <button type="submit" class="btn btn-sm btn-light" style="background:#adb5bd;color:#fff;">归档系统</button>
+                                            </form>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+                <!-- 客户过滤器脚本和快速查询功能 -->
+                <script>
+                    // 根据客户更新系统下拉菜单 - 全局函数
+                    function updateSystemListByCustomer() {
+                        const customerSelect = document.getElementById('customer_id');
+                        const customerId = customerSelect ? customerSelect.value : '';
+                        console.log('updateSystemListByCustomer 被调用');
+                        console.log('客户选择元素:', customerSelect);
+                        console.log('更新系统列表, 客户ID:', customerId);
+                        
+                        // 如果没有选择客户或选择了"所有客户"，显示所有系统
+                        const url = (customerId && customerId !== '') 
+                            ? `/api/systems_by_customer?customer_id=${encodeURIComponent(customerId)}`
+                            : `/api/all_systems`;
+                            
+                        console.log('请求系统列表URL:', url);
+                        fetch(url)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('网络响应不正常');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log('获取到系统列表:', data);
+                                const select = document.getElementById('system_id');
+                                // 清除现有选项，保留第一个"所有系统"选项
+                                while (select.options.length > 1) {
+                                    select.remove(1);
+                                }
+                                
+                                // 添加新选项
+                                if (Array.isArray(data)) {
+                                    data.forEach(system => {
+                                        console.log('处理系统:', system);
+                                        const option = document.createElement('option');
+                                        option.value = system.id;
+                                        option.textContent = `${system.name} (${system.customer_name || 'Unknown Customer'})`;
+                                        console.log('选项文本:', option.textContent);
+                                        select.appendChild(option);
+                                    });
+                                } else {
+                                    console.error('返回的系统列表数据格式错误:', data);
+                                }
+                            })
+                            .catch(error => console.error('加载系统列表失败:', error));
+                    }
+
+                    // 重置表单
+                    function resetForm() {
+                        document.getElementById('globalQueryForm').reset();
+                        document.getElementById('queryResults').style.display = 'none';
+                        // 重新加载系统列表
+                        updateSystemListByCustomer();
+                    }
+
+                    // 执行查询 - 全局函数
+                    function executeQuery(customerId, systemId, queryType) {
+                        console.log('执行查询:', { customerId, systemId, queryType });
+                        
+                        const resultsDiv = document.getElementById('queryResults');
+                        const contentDiv = document.getElementById('resultsContent');
+                        
+                        // 显示加载状态
+                        resultsDiv.style.display = 'block';
+                        contentDiv.innerHTML = '<div style="text-align: center; padding: 20px;"><span style="font-size: 24px;">⏳</span><br>正在查询中...</div>';
+                        
+                        // 构建查询参数
+                        const params = new URLSearchParams();
+                        if (customerId) params.append('customer_id', customerId);
+                        if (systemId) params.append('system_id', systemId);
+                        params.append('query_type', queryType);
+                        
+                        const queryUrl = `/query?${params.toString()}`;
+                        console.log('查询URL:', queryUrl);
+                        
+                        fetch(queryUrl)
+                            .then(response => response.text())
+                            .then(html => {
+                                // 解析返回的HTML，提取查询结果
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(html, 'text/html');
+                                const resultContent = doc.querySelector('.query-results');
+                                
+                                if (resultContent) {
+                                    contentDiv.innerHTML = resultContent.innerHTML;
+                                } else {
+                                    contentDiv.innerHTML = '<div style="color: #dc3545;">查询结果格式错误</div>';
+                                }
+                            })
+                            .catch(error => {
+                                console.error('查询失败:', error);
+                                contentDiv.innerHTML = '<div style="color: #dc3545;">查询失败: ' + error.message + '</div>';
+                            });
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const filterItems = document.querySelectorAll('.filter-item');
+                        const systemRows = document.querySelectorAll('.system-row');
+                        
+                        // 客户过滤器功能
+                        filterItems.forEach(item => {
+                            item.addEventListener('click', function() {
+                                // 移除所有活动状态
+                                filterItems.forEach(el => el.classList.remove('active'));
+                                
+                                // 设置当前项为活动状态
+                                this.classList.add('active');
+                                
+                                const customerId = this.getAttribute('data-customer');
+                                
+                                // 过滤系统行
+                                systemRows.forEach(row => {
+                                    if (customerId === 'all') {
+                                        row.style.display = 'table-row';
+                                    } else {
+                                        if (row.getAttribute('data-customer') === customerId) {
+                                            row.style.display = 'table-row';
+                                        } else {
+                                            row.style.display = 'none';
+                                        }
+                                    }
+                                });
+                            });
+                        });
+
+                        // 初始化快速查询功能
+                        console.log('初始化快速查询功能...');
+                        loadCustomers();
+
+                        // 快速查询表单提交处理
+                        const queryForm = document.getElementById('globalQueryForm');
+                        if (queryForm) {
+                            queryForm.addEventListener('submit', function(e) {
+                                e.preventDefault();
+                                
+                                const formData = new FormData(this);
+                                const customerId = formData.get('customer_id');
+                                const systemId = formData.get('system_id');
+                                const queryType = formData.get('query_type');
+                                
+                                if (!queryType) {
+                                    alert('请选择查询类型');
+                                    return;
+                                }
+                                
+                                executeQuery(customerId, systemId, queryType);
+                            });
+                        }
+
+                        // 加载客户列表
+                        function loadCustomers() {
+                            console.log('加载客户列表...');
+                            fetch('/api/customers_list')
+                                .then(response => {
+                                    if (!response.ok) {
+                                        throw new Error('网络响应不正常');
+                                    }
+                                    return response.json();
+                                })
+                                .then(data => {
+                                    console.log('获取到客户列表:', data);
+                                    const select = document.getElementById('customer_id');
+                                    // 清除现有选项，保留第一个"所有客户"选项
+                                    while (select.options.length > 1) {
+                                        select.remove(1);
+                                    }
+                                    
+                                    // 添加新选项
+                                    if (Array.isArray(data)) {
+                                        data.forEach(customer => {
+                                            const option = document.createElement('option');
+                                            option.value = customer.id;
+                                            option.textContent = customer.name;
+                                            select.appendChild(option);
+                                        });
+                                    } else {
+                                        console.error('返回的客户数据格式错误:', data);
+                                    }
+                                    
+                                    // 初始化系统列表
+                                    updateSystemListByCustomer();
+                                })
+                                .catch(error => console.error('加载客户列表失败:', error));
+                        }
+                    });
+                </script>
+            {% else %}
+                <div class="empty-state">
+                    <div class="icon">🖥️</div>
+                    <h3>暂无系统</h3>
+                    <p>还没有创建任何系统，点击上方"新建系统"按钮开始添加。</p>
+                    <a href="{{ url_for('new_system') }}" class="btn btn-primary">
+                        <span>➕</span>
+                        新建系统
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

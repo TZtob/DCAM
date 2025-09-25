@@ -1,0 +1,10 @@
+[
+ {
+  "Index": 0,
+  "SecurityExtensions": "SECURITY_ENABLED_ALLOW_DOWNGRADE",
+  "DomainNames": [],
+  "Enabled": false,
+  "IPAddresses": [],
+  "instance": "SFADNSAgent(Enabled=False, IPAddresses=[])"
+ }
+]

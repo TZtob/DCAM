@@ -1,0 +1,768 @@
+customer: 比亚迪
+clusters:
+- Asset_owner: BYD
+  Capacity: 500TB
+  Cluster_name: D1_Cluster
+  EMF_IP: 10.17.208.108
+  EXA version: 6.3.3
+  Network_port_type: HDR200
+  Network_type: Infiniband
+  Support_status: BSOS-Active
+  devices:
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 500TB
+    Controller_c0_ip: 10.17.208.100
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.17.208.101
+    Controller_c1_serial_number: null
+    Device_name: BYD-AI400X2-2
+    Hosts:
+    - hostname: ai400-001
+      ip:
+        lnet1_network: 100.1.2.1
+        lnet2_network: 100.1.2.2
+        management: 10.17.208.104
+      role: MDS/OSS
+    - hostname: ai400-002
+      ip:
+        lnet1_network: 100.1.2.3
+        lnet2_network: 100.1.2.4
+        management: 10.17.208.105
+      role: MDS/OSS
+    - hostname: ai400-003
+      ip:
+        lnet1_network: 100.1.2.5
+        lnet2_network: 100.1.2.6
+        management: 10.17.208.106
+      role: MDS/OSS
+    - hostname: ai400-004
+      ip:
+        lnet1_network: 100.1.2.7
+        lnet2_network: 100.1.2.8
+        management: 10.17.208.107
+      role: MDS/OSS
+    SFA version: 12.7.0
+    type: 400NVX2
+- Asset_owner: BYD
+  Capacity: 1PB
+  Cluster_name: D2_Cluster
+  EMF_IP: 10.17.209.225
+  EXA version: 6.3.3
+  Network_port_type: HDR200
+  Network_type: Infiniband
+  Support_status: BSOS-Active
+  devices:
+  - BBU1_Mfg_Date: 8/17/2023
+    BBU2_Mfg_Date: 8/17/2023
+    Capacity: 500TB
+    Controller_c0_ip: 10.17.209.217
+    Controller_c0_serial_number: F1002CTH120AG3CC016
+    Controller_c1_ip: 10.17.209.218
+    Controller_c1_serial_number: F1002CTH120AG3CC018
+    Device_name: BYD-AI400X2-1
+    Hosts:
+    - hostname: byd-aifs-vm00
+      ip:
+        lnet1_network: 100.65.1.1
+        lnet2_network: 100.65.1.2
+        management: 10.17.209.221
+      role: MDS/OSS
+    - hostname: byd-aifs-vm01
+      ip:
+        lnet1_network: 100.65.1.3
+        lnet2_network: 100.65.1.4
+        management: 10.17.209.222
+      role: MDS/OSS
+    - hostname: byd-aifs-vm02
+      ip:
+        lnet1_network: 100.65.1.5
+        lnet2_network: 100.65.1.6
+        management: 10.17.209.223
+      role: MDS/OSS
+    - hostname: byd-aifs-vm03
+      ip:
+        lnet1_network: 100.65.1.7
+        lnet2_network: 100.65.1.8
+        management: 10.17.209.224
+      role: MDS/OSS
+    SFA version: 12.7.0
+    type: 400NVX2
+  - BBU1_Mfg_Date: 4/11/2024
+    BBU2_Mfg_Date: 4/11/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.17.209.226
+    Controller_c0_serial_number: F1002CTH122AG46N017
+    Controller_c1_ip: 10.17.209.227
+    Controller_c1_serial_number: F1002CTH122AG46N016
+    Device_name: BYD-AI400X2T-2
+    Hosts:
+    - hostname: byd-aifs-vm04
+      ip:
+        lnet1_network: 100.65.1.9
+        lnet2_network: 100.65.1.10
+        management: 10.17.209.230
+      role: MDS/OSS
+    - hostname: byd-aifs-vm05
+      ip:
+        lnet1_network: 100.65.1.11
+        lnet2_network: 100.65.1.12
+        management: 10.17.209.231
+      role: MDS/OSS
+    - hostname: byd-aifs-vm06
+      ip:
+        lnet1_network: 100.65.1.13
+        lnet2_network: 100.65.1.14
+        management: 10.17.209.232
+      role: MDS/OSS
+    - hostname: byd-aifs-vm07
+      ip:
+        lnet1_network: 100.65.1.15
+        lnet2_network: 100.65.1.16
+        management: 10.17.209.233
+      role: MDS/OSS
+    SFA version: 12.7.0
+    type: 400NVX2T
+- Asset_owner: BYD
+  Capacity: 1PB
+  Cluster_name: F1_Cluster
+  EMF_IP: 10.0.198.107
+  EXA version: 6.3.1
+  Network_port_type: HDR200
+  Network_type: Infiniband
+  Support_status: BSOS-Active
+  devices:
+  - BBU1_Mfg_Date: 9/27/2023
+    BBU2_Mfg_Date: 9/27/2023
+    Capacity: 500TB
+    Controller_c0_ip: 10.0.198.101
+    Controller_c0_serial_number: F1002CTH122AG42M00Y
+    Controller_c1_ip: 10.0.198.102
+    Controller_c1_serial_number: F1002CTH122AG42M00X
+    Device_name: BYD-AI400X2-1
+    Hosts:
+    - hostname: bydaifs00
+      ip:
+        lnet1_network: 100.1.2.1
+        lnet2_network: 100.1.2.2
+        management: 10.0.198.103
+      role: MDS/OSS
+    - hostname: bydaifs01
+      ip:
+        lnet1_network: 100.1.2.3
+        lnet2_network: 100.1.2.4
+        management: 10.0.198.104
+      role: MDS/OSS
+    - hostname: bydaifs02
+      ip:
+        lnet1_network: 100.1.2.5
+        lnet2_network: 100.1.2.6
+        management: 10.0.198.105
+      role: MDS/OSS
+    - hostname: bydaifs03
+      ip:
+        lnet1_network: 100.1.2.7
+        lnet2_network: 100.1.2.8
+        management: 10.0.198.106
+      role: MDS/OSS
+    SFA version: 12.5.0
+    type: 400NVX2
+  - BBU1_Mfg_Date: 4/11/2024
+    BBU2_Mfg_Date: 4/11/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.0.198.108
+    Controller_c0_serial_number: F1002CTH122AG46N010
+    Controller_c1_ip: 10.0.198.109
+    Controller_c1_serial_number: F1002CTH122AG46N011
+    Device_name: BYD-AI400X2T-2
+    Hosts:
+    - hostname: bydaifs04
+      ip:
+        lnet1_network: 100.1.2.9
+        lnet2_network: 100.1.2.10
+        management: 10.0.198.110
+      role: MDS/OSS
+    - hostname: bydaifs05
+      ip:
+        lnet1_network: 100.1.2.11
+        lnet2_network: 100.1.2.12
+        management: 10.0.198.111
+      role: MDS/OSS
+    - hostname: bydaifs06
+      ip:
+        lnet1_network: 100.1.2.13
+        lnet2_network: 100.1.2.14
+        management: 10.0.198.112
+      role: MDS/OSS
+    - hostname: bydaifs07
+      ip:
+        lnet1_network: 100.1.2.15
+        lnet2_network: 100.1.2.16
+        management: 10.0.198.113
+      role: MDS/OSS
+    SFA version: 12.6.0.1
+    type: 400NVX2T
+- Asset_owner: BYD
+  Capacity: 2.5PB
+  Cluster_name: F3_Cluster
+  EMF_IP: 10.138.254.59
+  EXA version: 6.3.3
+  Network_port_type: HDR200
+  Network_type: Infiniband
+  Support_status: BSOS-Active
+  devices:
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.254.11
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.138.254.12
+    Controller_c1_serial_number: null
+    Device_name: X2T-4F3D05-000
+    Hosts:
+    - hostname: bydfsd5-vm00
+      ip:
+        lnet1_network: 100.71.24.1
+        lnet2_network: 100.71.24.2
+        management: 10.138.254.35
+      role: MDS/OSS
+    - hostname: bydfsd5-vm01
+      ip:
+        lnet1_network: 100.71.24.3
+        lnet2_network: 100.71.24.4
+        management: 10.138.254.36
+      role: MDS/OSS
+    - hostname: bydfsd5-vm02
+      ip:
+        lnet1_network: 100.71.24.5
+        lnet2_network: 100.71.24.6
+        management: 10.138.254.37
+      role: MDS/OSS
+    - hostname: bydfsd5-vm03
+      ip:
+        lnet1_network: 100.71.24.7
+        lnet2_network: 100.71.24.8
+        management: 10.138.254.38
+      role: MDS/OSS
+    SFA version: 12.7.0
+    type: 400NVX2T
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.254.13
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.138.254.14
+    Controller_c1_serial_number: null
+    Device_name: X2T-4F3D05-001
+    Hosts:
+    - hostname: bydfsd5-vm04
+      ip:
+        lnet1_network: 100.71.24.9
+        lnet2_network: 100.71.24.10
+        management: 10.138.254.39
+      role: MDS/OSS
+    - hostname: bydfsd5-vm05
+      ip:
+        lnet1_network: 100.71.24.11
+        lnet2_network: 100.71.24.12
+        management: 10.138.254.40
+      role: MDS/OSS
+    - hostname: bydfsd5-vm06
+      ip:
+        lnet1_network: 100.71.24.13
+        lnet2_network: 100.71.24.14
+        management: 10.138.254.41
+      role: MDS/OSS
+    - hostname: bydfsd5-vm07
+      ip:
+        lnet1_network: 100.71.24.15
+        lnet2_network: 100.71.24.16
+        management: 10.138.254.42
+      role: MDS/OSS
+    SFA version: 12.7.0
+    type: 400NVX2T
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.254.15
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.138.254.16
+    Controller_c1_serial_number: null
+    Device_name: X2T-4F3D05-002
+    Hosts:
+    - hostname: bydfsd5-vm08
+      ip:
+        lnet1_network: 100.71.24.17
+        lnet2_network: 100.71.24.18
+        management: 10.138.254.43
+      role: MDS/OSS
+    - hostname: bydfsd5-vm09
+      ip:
+        lnet1_network: 100.71.24.19
+        lnet2_network: 100.71.24.20
+        management: 10.138.254.44
+      role: MDS/OSS
+    - hostname: bydfsd5-vm10
+      ip:
+        lnet1_network: 100.71.24.21
+        lnet2_network: 100.71.24.22
+        management: 10.138.254.45
+      role: MDS/OSS
+    - hostname: bydfsd5-vm11
+      ip:
+        lnet1_network: 100.71.24.23
+        lnet2_network: 100.71.24.24
+        management: 10.138.254.46
+      role: MDS/OSS
+    SFA version: 12.7.0
+    type: 400NVX2T
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.254.17
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.138.254.18
+    Controller_c1_serial_number: null
+    Device_name: X2T-4F3D05-003
+    Hosts:
+    - hostname: bydfsd5-vm12
+      ip:
+        lnet1_network: 100.71.24.25
+        lnet2_network: 100.71.24.26
+        management: 10.138.254.47
+      role: MDS/OSS
+    - hostname: bydfsd5-vm13
+      ip:
+        lnet1_network: 100.71.24.27
+        lnet2_network: 100.71.24.28
+        management: 10.138.254.48
+      role: MDS/OSS
+    - hostname: bydfsd5-vm14
+      ip:
+        lnet1_network: 100.71.24.29
+        lnet2_network: 100.71.24.30
+        management: 10.138.254.49
+      role: MDS/OSS
+    - hostname: bydfsd5-vm15
+      ip:
+        lnet1_network: 100.71.24.31
+        lnet2_network: 100.71.24.32
+        management: 10.138.254.50
+      role: MDS/OSS
+    SFA version: 12.7.0
+    type: 400NVX2T
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.254.19
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.138.254.20
+    Controller_c1_serial_number: null
+    Device_name: X2T-4F3D05-004
+    Hosts:
+    - hostname: bydfsd5-vm16
+      ip:
+        lnet1_network: 100.71.24.33
+        lnet2_network: 100.71.24.34
+        management: 10.138.254.51
+      role: MDS/OSS
+    - hostname: bydfsd5-vm17
+      ip:
+        lnet1_network: 100.71.24.35
+        lnet2_network: 100.71.24.36
+        management: 10.138.254.52
+      role: MDS/OSS
+    - hostname: bydfsd5-vm18
+      ip:
+        lnet1_network: 100.71.24.37
+        lnet2_network: 100.71.24.38
+        management: 10.138.254.53
+      role: MDS/OSS
+    - hostname: bydfsd5-vm19
+      ip:
+        lnet1_network: 100.71.24.39
+        lnet2_network: 100.71.24.40
+        management: 10.138.254.54
+      role: MDS/OSS
+    SFA version: 12.7.0
+    type: 400NVX2T
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.254.41
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.138.254.42
+    Controller_c1_serial_number: null
+    Device_name: X2T-4F3D05-005
+    Hosts:
+    - hostname: bydfsd5-vm20
+      ip:
+        lnet1_network: 100.71.24.41
+        lnet2_network: 100.71.24.42
+        management: 10.138.254.55
+      role: MDS/OSS
+    - hostname: bydfsd5-vm21
+      ip:
+        lnet1_network: 100.71.24.43
+        lnet2_network: 100.71.24.44
+        management: 10.138.254.56
+      role: MDS/OSS
+    - hostname: bydfsd5-vm22
+      ip:
+        lnet1_network: 100.71.24.45
+        lnet2_network: 100.71.24.46
+        management: 10.138.254.57
+      role: MDS/OSS
+    - hostname: bydfsd5-vm23
+      ip:
+        lnet1_network: 100.71.24.47
+        lnet2_network: 100.71.24.48
+        management: 10.138.254.58
+      role: MDS/OSS
+    SFA version: 12.7.0
+    type: 400NVX2T
+- Asset_owner: BYD
+  Capacity: 20PB
+  Cluster_name: D2_object
+  EMF_IP: 10.17.210.29
+  EXA version: 6.3.1
+  Network_port_type: HDR200
+  Network_type: Infiniband
+  Support_status: BSOS-Active
+  devices:
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 26TB
+    Controller_c0_ip: 10.17.210.11
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.17.210.12
+    Controller_c1_serial_number: null
+    Device_name: BYDS3-1
+    Hosts:
+    - hostname: byds3-mds00
+      ip:
+        lnet1_network: 100.1.3.1
+        lnet2_network: 100.1.3.2
+        management: 10.17.210.17
+      role: MDS
+    - hostname: byds3-mds01
+      ip:
+        lnet1_network: 100.1.3.3
+        lnet2_network: 100.1.3.4
+        management: 10.17.210.18
+      role: MDS
+    - hostname: byds3-mds02
+      ip:
+        lnet1_network: 100.1.3.5
+        lnet2_network: 100.1.3.6
+        management: 10.17.210.19
+      role: MDS
+    - hostname: byds3-mds03
+      ip:
+        lnet1_network: 100.1.3.7
+        lnet2_network: 100.1.3.8
+        management: 10.17.210.20
+      role: MDS
+    SFA version: 12.5.0
+    type: 400NVX2
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 10PB
+    Controller_c0_ip: 10.17.210.13
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.17.210.14
+    Controller_c1_serial_number: null
+    Device_name: BYDS3-2
+    Expansion_enclosure_number: 8
+    Expansion_enclosure_type: SS9024
+    Hosts:
+    - hostname: byds3-oss00
+      ip:
+        lnet1_network: 100.1.3.9
+        lnet2_network: 100.1.3.10
+        management: 10.17.210.21
+      role: OSS
+    - hostname: byds3-oss01
+      ip:
+        lnet1_network: 100.1.3.11
+        lnet2_network: 100.1.3.12
+        management: 10.17.210.22
+      role: OSS
+    - hostname: byds3-oss02
+      ip:
+        lnet1_network: 100.1.3.13
+        lnet2_network: 100.1.3.14
+        management: 10.17.210.23
+      role: OSS
+    - hostname: byds3-oss03
+      ip:
+        lnet1_network: 100.1.3.15
+        lnet2_network: 100.1.3.16
+        management: 10.17.210.24
+      role: OSS
+    SFA version: 12.5.0
+    type: 400NVX2
+  - BBU1_Mfg_Date: null
+    BBU2_Mfg_Date: null
+    Capacity: 10PB
+    Controller_c0_ip: 10.17.210.15
+    Controller_c0_serial_number: null
+    Controller_c1_ip: 10.17.210.16
+    Controller_c1_serial_number: null
+    Device_name: BYDS3-3
+    Expansion_enclosure_number: 8
+    Expansion_enclosure_type: SS9024
+    Hosts:
+    - hostname: byds3-oss04
+      ip:
+        lnet1_network: 100.1.3.17
+        lnet2_network: 100.1.3.18
+        management: 10.17.210.25
+      role: OSS
+    - hostname: byds3-oss05
+      ip:
+        lnet1_network: 100.1.3.19
+        lnet2_network: 100.1.3.20
+        management: 10.17.210.26
+      role: OSS
+    - hostname: byds3-oss06
+      ip:
+        lnet1_network: 100.1.3.21
+        lnet2_network: 100.1.3.22
+        management: 10.17.210.27
+      role: OSS
+    - hostname: byds3-oss07
+      ip:
+        lnet1_network: 100.1.3.23
+        lnet2_network: 100.1.3.24
+        management: 10.17.210.28
+      role: OSS
+    SFA version: 12.5.0
+    type: 400NVX2
+- Asset_owner: BYD
+  Capacity: 3.0PB
+  Cluster_name: F4_Cluster
+  EMF_IP: 10.138.242.124
+  EXA version: 6.3.4-20250814
+  Network_port_type: NDR200
+  Network_type: Infiniband
+  Support_status: BSOS-Active
+  devices:
+  - BBU1_Mfg_Date: 11/16/2024
+    BBU2_Mfg_Date: 11/16/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.242.100
+    Controller_c0_serial_number: F1001CMY102AT534023
+    Controller_c1_ip: 10.138.254.101
+    Controller_c1_serial_number: F1001CMY102AT53H052
+    Device_name: X3-4F4-000
+    Hosts:
+    - hostname: bydfs-v4f4-vm00
+      ip:
+        lnet1_network: 100.71.5.1
+        lnet2_network: 100.71.5.2
+        lnet3_network: 100.71.5.3
+        lnet4_network: 100.71.5.4
+        management: 10.138.242.112
+      role: MDS/OSS
+    - hostname: bydfs-v4f4-vm01
+      ip:
+        lnet1_network: 100.71.5.5
+        lnet2_network: 100.71.5.6
+        lnet3_network: 100.71.5.7
+        lnet4_network: 100.71.5.8
+        management: 10.138.242.113
+      role: MDS/OSS
+    SFA version: 12.7.0.2
+    type: 400X3
+  - BBU1_Mfg_Date: 11/16/2024
+    BBU2_Mfg_Date: 11/16/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.242.102
+    Controller_c0_serial_number: F1001CMY102AT53H089
+    Controller_c1_ip: 10.138.254.103
+    Controller_c1_serial_number: F1001CMY102AT53H090
+    Device_name: X3-4F4-001
+    Hosts:
+    - hostname: bydfs-v4f4-vm02
+      ip:
+        lnet1_network: 100.71.5.9
+        lnet2_network: 100.71.5.10
+        lnet3_network: 100.71.5.11
+        lnet4_network: 100.71.5.12
+        management: 10.138.242.114
+      role: MDS/OSS
+    - hostname: bydfs-v4f4-vm03
+      ip:
+        lnet1_network: 100.71.5.13
+        lnet2_network: 100.71.5.14
+        lnet3_network: 100.71.5.15
+        lnet4_network: 100.71.5.16
+        management: 10.138.242.115
+      role: MDS/OSS
+    SFA version: 12.7.0.2
+    type: 400X3
+  - BBU1_Mfg_Date: 11/16/2024
+    BBU2_Mfg_Date: 11/16/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.242.104
+    Controller_c0_serial_number: F1001CMY102AT53H106
+    Controller_c1_ip: 10.138.254.105
+    Controller_c1_serial_number: F1001CMY102AT53H085
+    Device_name: X3-4F4-002
+    Hosts:
+    - hostname: bydfs-v4f4-vm04
+      ip:
+        lnet1_network: 100.71.5.17
+        lnet2_network: 100.71.5.18
+        lnet3_network: 100.71.5.19
+        lnet4_network: 100.71.5.20
+        management: 10.138.242.116
+      role: MDS/OSS
+    - hostname: bydfs-v4f4-vm05
+      ip:
+        lnet1_network: 100.71.5.21
+        lnet2_network: 100.71.5.22
+        lnet3_network: 100.71.5.23
+        lnet4_network: 100.71.5.24
+        management: 10.138.242.117
+      role: MDS/OSS
+    SFA version: 12.7.0.2
+    type: 400X3
+  - BBU1_Mfg_Date: 11/16/2024
+    BBU2_Mfg_Date: 11/16/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.242.106
+    Controller_c0_serial_number: F9001CMY127AG4B8012
+    Controller_c1_ip: 10.138.254.107
+    Controller_c1_serial_number: F1001CMY102AT53H229
+    Device_name: X3-4F4-003
+    Hosts:
+    - hostname: bydfs-v4f4-vm06
+      ip:
+        lnet1_network: 100.71.5.25
+        lnet2_network: 100.71.5.26
+        lnet3_network: 100.71.5.27
+        lnet4_network: 100.71.5.28
+        management: 10.138.242.118
+      role: MDS/OSS
+    - hostname: bydfs-4f4-vm07
+      ip:
+        lnet1_network: 100.71.5.29
+        lnet2_network: 100.71.5.30
+        lnet3_network: 100.71.5.31
+        lnet4_network: 100.71.5.32
+        management: 10.138.242.119
+      role: MDS/OSS
+    SFA version: 12.7.0.2
+    type: 400X3
+  - BBU1_Mfg_Date: 11/16/2024
+    BBU2_Mfg_Date: 11/16/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.242.108
+    Controller_c0_serial_number: F1001CMY102AT53H155
+    Controller_c1_ip: 10.138.254.109
+    Controller_c1_serial_number: F1001CMY102AT542036
+    Device_name: X3-4F4-004
+    Hosts:
+    - hostname: bydfs-v4f4-vm08
+      ip:
+        lnet1_network: 100.71.5.33
+        lnet2_network: 100.71.5.34
+        lnet3_network: 100.71.5.35
+        lnet4_network: 100.71.5.36
+        management: 10.138.242.120
+      role: MDS/OSS
+    - hostname: bydfs-v4f4-vm09
+      ip:
+        lnet1_network: 100.71.5.37
+        lnet2_network: 100.71.5.38
+        lnet3_network: 100.71.5.39
+        lnet4_network: 100.71.5.40
+        management: 10.138.242.121
+      role: MDS/OSS
+    SFA version: 12.7.0.2
+    type: 400X3
+  - BBU1_Mfg_Date: 11/16/2024
+    BBU2_Mfg_Date: 11/16/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.242.110
+    Controller_c0_serial_number: F1001CMY102AT53H205
+    Controller_c1_ip: 10.138.254.111
+    Controller_c1_serial_number: F1001CMY102AT53H161
+    Device_name: X3-4F4-005
+    Hosts:
+    - hostname: bydfs-v4f4-vm10
+      ip:
+        lnet1_network: 100.71.5.41
+        lnet2_network: 100.71.5.42
+        lnet3_network: 100.71.5.43
+        lnet4_network: 100.71.5.44
+        management: 10.138.242.122
+      role: MDS/OSS
+    - hostname: bydfs-v4f4-vm11
+      ip:
+        lnet1_network: 100.71.5.45
+        lnet2_network: 100.71.5.46
+        lnet3_network: 100.71.5.47
+        lnet4_network: 100.71.5.48
+        management: 10.138.242.123
+      role: MDS/OSS
+    SFA version: 12.7.0.2
+    type: 400X3
+- Asset_owner: BYD
+  Capacity: 500TB
+  Cluster_name: F3-2_Cluster
+  EMF_IP: 10.138.254.129
+  EXA version: '2025081400'
+  Network_port_type: NDR200
+  Network_type: Infiniband
+  Support_status: BSOS-Active
+  devices:
+  - BBU1_Mfg_Date: 11/16/2024
+    BBU2_Mfg_Date: 11/16/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.254.130
+    Controller_c0_serial_number: F1001CMY102AT53H155
+    Controller_c1_ip: 10.138.254.131
+    Controller_c1_serial_number: F1001CMY102AT542036
+    Device_name: X3-4F3-2-000
+    Hosts:
+    - hostname: bydfs4f3-2-vm00
+      ip:
+        lnet1_network: 100.71.24.50
+        lnet2_network: 100.71.24.51
+        management: 10.138.254.134
+      role: MDS/OSS
+    - hostname: bydfs4f3-2-vm01
+      ip:
+        lnet1_network: 100.71.24.54
+        lnet2_network: 100.71.24.55
+        management: 10.138.254.135
+      role: MDS/OSS
+    SFA version: 12.7.0.2
+    type: 400X3
+  - BBU1_Mfg_Date: 11/16/2024
+    BBU2_Mfg_Date: 11/16/2024
+    Capacity: 500TB
+    Controller_c0_ip: 10.138.254.132
+    Controller_c0_serial_number: F1001CMY102AT53H205
+    Controller_c1_ip: 10.138.254.133
+    Controller_c1_serial_number: F1001CMY102AT53H161
+    Device_name: X3-4F3-2-001
+    Hosts:
+    - hostname: bydfs4f3-2-vm02
+      ip:
+        lnet1_network: 100.71.24.58
+        lnet2_network: 100.71.24.59
+        management: 10.138.254.136
+      role: MDS/OSS
+    - hostname: bydfs4f3-2-vm03
+      ip:
+        lnet1_network: 100.71.24.62
+        lnet2_network: 100.71.24.63
+        management: 10.138.254.137
+      role: MDS/OSS
+    SFA version: 12.7.0.2
+    type: 400X3
+customer: 比亚迪

@@ -1,0 +1,15 @@
+[
+ {
+  "Index": 65535,
+  "OID": "0x1800ffff",
+  "Type": "POOL_TYPE_UNASSIGNED",
+  "Capacity": 0,
+  "FailedCapacity": 0,
+  "NumDisks": 0,
+  "BlockSize": "BLOCK_512",
+  "HealthState": "HEALTH_OK",
+  "HealthStateReason": "",
+  "ChildHealthState": "HEALTH_OK",
+  "instance": "SFAUnassignedPool(NumDisks=0, Capacity=0 512-blks (0 B))"
+ }
+]
