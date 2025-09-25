@@ -156,30 +156,20 @@
             color: #333;
             line-height: 1.5;
         }
-        
-        .customer-display {
-            padding: 12px 15px;
-            background: #e7f3ff;
-            border: 2px solid #28a745;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .customer-name {
-            font-weight: bold;
-            color: #0056b3;
-        }
-        
-        .customer-badge {
-            background: #28a745;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-        }
     </style>
+    <script>
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 如果有预选的客户ID，设置下拉框的值
+            const urlParams = new URLSearchParams(window.location.search);
+            const preselectedCustomerId = urlParams.get('customer_id');
+            
+            if (preselectedCustomerId) {
+                const customerSelect = document.getElementById('customer_id');
+                customerSelect.value = preselectedCustomerId;
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -223,24 +213,13 @@
                 
                 <div class="form-group">
                     <label for="customer_id">所属客户 <span class="required">*</span></label>
-                    {% if preselected_customer_id %}
-                        <!-- 从客户页面跳转过来，显示客户名称并隐藏选择框 -->
-                        <input type="hidden" id="customer_id" name="customer_id" value="{{ preselected_customer_id }}">
-                        <div class="customer-display">
-                            <span class="customer-name">{{ customers[preselected_customer_id].name }}</span>
-                            <span class="customer-badge">已选择</span>
-                        </div>
-                        <div class="help-text">系统将创建在客户 "{{ customers[preselected_customer_id].name }}" 下</div>
-                    {% else %}
-                        <!-- 常规创建，显示客户选择下拉框 -->
-                        <select id="customer_id" name="customer_id" required>
-                            <option value="">-- 请选择客户 --</option>
-                            {% for customer_id, customer in customers.items() %}
-                                <option value="{{ customer_id }}">{{ customer.name }}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="help-text">选择该系统所属的客户</div>
-                    {% endif %}
+                    <select id="customer_id" name="customer_id" required>
+                        <option value="">-- 请选择客户 --</option>
+                        {% for customer_id, customer in customers.items() %}
+                            <option value="{{ customer_id }}" {% if selected_customer_id == customer_id %}selected{% endif %}>{{ customer.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="help-text">选择该系统所属的客户</div>
                 </div>
                 
                 <div class="form-group">

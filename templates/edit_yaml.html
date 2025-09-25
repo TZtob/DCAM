@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统数据编辑 - {{ system.name }}</title>
+    <!-- 加载CodeMirror库，用于代码编辑器 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/theme/monokai.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/mode/yaml/yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/addon/edit/matchbrackets.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/addon/fold/foldcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/addon/fold/foldgutter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/addon/fold/indent-fold.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/addon/fold/yaml-fold.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.3/addon/fold/foldgutter.min.css">
+    
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+            color: #2d3748;
+            padding: 30px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        /* CodeMirror样式覆盖 */
+        .CodeMirror {
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .yaml-info {
+            background: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .yaml-info p {
+            margin: 0;
+            color: #4a5568;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .editor-tips {
+            background: #fffde7;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffd600;
+            color: #5d4037;
+        }
+        
+        .editor-actions {
+            margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            background: #e9ecef;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .action-btn:hover {
+            background: #dee2e6;
+        }
+        
+        .help-icon {
+            margin-left: 5px;
+            color: #007bff;
+            cursor: help;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span>📝</span>
+                系统数据编辑 - {{ system.name }}
+            </h1>
+            <a href="{{ url_for('system_detail', system_id=system_id) }}" class="btn btn-secondary">
+                <span>↩️</span>
+                返回详情页
+            </a>
+        </div>
+        
+        <div class="content">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <div class="yaml-info">
+                <p>
+                    <strong>文件路径：</strong> {{ system.yaml_file }}
+                    <span class="tooltip">ℹ️
+                        <span class="tooltiptext">修改此文件将直接影响系统资产信息的显示</span>
+                    </span>
+                </p>
+            </div>
+            
+            <div class="editor-tips">
+                <p><strong>💡 编辑提示：</strong></p>
+                <ul>
+                    <li>YAML格式对缩进非常敏感，请确保保持正确的缩进</li>
+                    <li>如需修改EXA版本，找到对应集群下的"EXA version"字段进行修改</li>
+                    <li>编辑器支持语法高亮和自动缩进，可以点击行号左侧图标折叠/展开代码块</li>
+                </ul>
+            </div>
+            
+            <div class="editor-actions">
+                <button type="button" class="action-btn" onclick="formatYaml()">格式化YAML</button>
+                <button type="button" class="action-btn" onclick="findInEditor()">查找(Ctrl+F)</button>
+                <button type="button" class="action-btn" onclick="toggleFolding()">全部折叠/展开</button>
+            </div>
+            
+            <form method="POST" id="yamlForm">
+                <div class="form-group">
+                    <textarea name="yaml_content" id="yaml_content" required>{{ yaml_content }}</textarea>
+                </div>
+                
+                <div class="actions">
+                    <a href="{{ url_for('system_detail', system_id=system_id) }}" class="btn btn-secondary">取消</a>
+                    <button type="submit" class="btn btn-primary">
+                        <span>💾</span>
+                        保存更改
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // 初始化CodeMirror编辑器
+        let editor = CodeMirror.fromTextArea(document.getElementById("yaml_content"), {
+            mode: "yaml",
+            theme: "monokai",
+            lineNumbers: true,
+            matchBrackets: true,
+            indentUnit: 2,
+            tabSize: 2,
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+            extraKeys: {
+                "Tab": function(cm) {
+                    var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+                    cm.replaceSelection(spaces);
+                }
+            }
+        });
+        
+        // 设置表单提交时从编辑器获取内容
+        document.getElementById('yamlForm').onsubmit = function() {
+            document.getElementById('yaml_content').value = editor.getValue();
+            return true;
+        };
+        
+        // 格式化YAML功能
+        function formatYaml() {
+            try {
+                // 获取编辑器内容并尝试解析
+                const yamlContent = editor.getValue();
+                // 使用js-yaml库解析和格式化会更好，但这里我们使用简单的方法
+                
+                // 提示用户格式化可能会改变YAML结构
+                if (confirm("格式化可能会改变YAML的缩进结构。确定要继续吗？")) {
+                    // 简单的格式化：移除多余空行，保持缩进
+                    let lines = yamlContent.split('\n');
+                    let formattedLines = [];
+                    let lastLineEmpty = false;
+                    
+                    for (let line of lines) {
+                        if (line.trim() === '') {
+                            if (!lastLineEmpty) {
+                                formattedLines.push('');
+                                lastLineEmpty = true;
+                            }
+                        } else {
+                            formattedLines.push(line);
+                            lastLineEmpty = false;
+                        }
+                    }
+                    
+                    editor.setValue(formattedLines.join('\n'));
+                    alert('格式化完成，请检查YAML结构是否正确。');
+                }
+            } catch (e) {
+                alert('格式化失败：' + e.message);
+            }
+        }
+        
+        // 查找功能
+        function findInEditor() {
+            editor.execCommand('find');
+        }
+        
+        // 折叠/展开所有代码
+        let allFolded = false;
+        function toggleFolding() {
+            if (allFolded) {
+                // 展开所有折叠的代码
+                editor.operation(function() {
+                    for (let i = 0; i < editor.lineCount(); i++) {
+                        editor.foldCode({line: i, ch: 0}, null, "unfold");
+                    }
+                });
+                allFolded = false;
+            } else {
+                // 折叠所有可折叠的代码
+                editor.operation(function() {
+                    for (let i = 0; i < editor.lineCount(); i++) {
+                        editor.foldCode({line: i, ch: 0});
+                    }
+                });
+                allFolded = true;
+            }
+        }
+    </script>
+</body>
+</html>

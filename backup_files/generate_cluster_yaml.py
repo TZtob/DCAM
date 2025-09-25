@@ -206,13 +206,27 @@ def extract_device_info_from_sfainfo(sfainfo_file):
                         
                         # 检查是否是OST卷（通常名称包含'OST'）
                         if 'OST' in disk_name.upper():
-                            # 从instance字段解析容量 (支持IDEA和AION格式)
-                            capacity = parse_capacity_from_capacity_field(disk.get('instance', ''))
+                            capacity = 0
+                            
+                            # 优先从instance字段解析容量，因为这包含真实的OST容量
+                            instance_str = disk.get('instance', '')
+                            if instance_str:
+                                # AION系统的instance中包含类似 "Capacity='713.8 TiB'" 的信息
+                                if 'Capacity=' in instance_str:
+                                    capacity = parse_capacity_from_instance_with_capacity_field(instance_str)
+                                else:
+                                    # IDEA系统的instance中包含 "Cap=15.4 TiB" 的信息
+                                    capacity = parse_capacity_from_instance(instance_str)
+                            
+                            # 如果instance解析失败，尝试从Capacity字段解析
+                            if capacity == 0 and disk.get('Capacity'):
+                                capacity = parse_capacity_from_capacity_field(disk.get('Capacity', ''))
+                            
                             if capacity > 0:
                                 total_capacity += capacity
                                 print(f"    OST卷: {disk_name}, 容量: {capacity} 字节 ({format_capacity(capacity)})")
                             else:
-                                print(f"    OST卷: {disk_name}, 无法解析容量")
+                                print(f"    OST卷: {disk_name}, 无法解析容量 (instance: {disk.get('instance', 'N/A')[:100]}...)")
                     
                     device_info['capacity'] = total_capacity
                     print(f"  设备总容量: {total_capacity} 字节 ({format_capacity(total_capacity)})")
@@ -288,26 +302,96 @@ def parse_capacity_from_instance(instance_str):
         print(f"    警告: 解析容量时出错: {e}, 原始字符串: {instance_str}")
         return 0
 
+def parse_capacity_from_capacity_field(capacity_value):
+    """
+    从 Capacity 字段中解析容量值并转换为字节 (AION系统格式)
+    支持两种格式:
+    1. 字符串格式: "'713.8 TiB'" -> 字节数
+    2. 整数格式: 191595806720 -> 直接是字节数
+    """
+    if capacity_value is None:
+        return 0
+    
+    try:
+        # 如果已经是整数（字节数），直接返回
+        if isinstance(capacity_value, (int, float)):
+            return int(capacity_value)
+        
+        # 如果是字符串，解析单位
+        if isinstance(capacity_value, str):
+            # 去掉引号并分割
+            capacity_clean = capacity_value.strip().strip("'\"")
+            parts = capacity_clean.split()
+            
+            if len(parts) >= 2:
+                value = float(parts[0])
+                unit = parts[1].upper()
+                
+                # 转换为字节
+                if unit == 'GIB':
+                    return int(value * 1024**3)
+                elif unit == 'TIB':
+                    return int(value * 1024**4)
+                elif unit == 'MIB':
+                    return int(value * 1024**2)
+                elif unit == 'KIB':
+                    return int(value * 1024)
+                elif unit == 'B':
+                    return int(value)
+                else:
+                    print(f"    警告: 未知单位 {unit}, 原始值: {capacity_clean}")
+                    return 0
+            else:
+                print(f"    警告: 无法解析容量格式: {capacity_clean}")
+                return 0
+        else:
+            print(f"    警告: 未知的Capacity数据类型: {type(capacity_value)}")
+            return 0
+            
+    except Exception as e:
+        print(f"    警告: 解析Capacity字段时出错: {e}, 原始值: {capacity_value} (类型: {type(capacity_value)})")
+        return 0
+
 def parse_capacity_from_instance_with_capacity_field(instance_str):
     """
-    从 instance 字符串中解析 Capacity 值并转换为字节 (适用于 AION 系统)
-    例如: "Capacity='11.26 TiB'" -> 字节数
+    从AION系统的instance字段中解析Capacity值并转换为字节
+    例如: "SFAVirtualDisk(..., Capacity='713.8 TiB', ...)" -> 字节数
     """
     if not instance_str or 'Capacity=' not in instance_str:
         return 0
     
     try:
-        # 提取 Capacity= 后面的值，处理可能的引号
-        capacity_part = instance_str.split('Capacity=')[1].split(',')[0].strip()
+        # 提取 Capacity= 后面的值，需要提取到引号内的完整内容
+        start_idx = instance_str.find('Capacity=')
+        if start_idx == -1:
+            return 0
         
-        # 移除引号（单引号或双引号）
-        if capacity_part.startswith("'") and capacity_part.endswith("'"):
-            capacity_part = capacity_part[1:-1]
-        elif capacity_part.startswith('"') and capacity_part.endswith('"'):
-            capacity_part = capacity_part[1:-1]
+        # 从Capacity=之后开始，寻找引号
+        after_equal = instance_str[start_idx + len('Capacity='):]
+        
+        # 查找开始引号
+        quote_start = -1
+        for i, char in enumerate(after_equal):
+            if char in ["'", '"']:
+                quote_start = i
+                quote_char = char
+                break
+        
+        if quote_start == -1:
+            print(f"    警告: 未找到Capacity值的引号，原始字符串: {after_equal[:50]}...")
+            return 0
+        
+        # 查找结束引号
+        quote_end = after_equal.find(quote_char, quote_start + 1)
+        if quote_end == -1:
+            print(f"    警告: 未找到结束引号，原始字符串: {after_equal[:50]}...")
+            return 0
+        
+        # 提取引号内的内容
+        capacity_value = after_equal[quote_start + 1:quote_end].strip()
         
         # 解析数值和单位
-        parts = capacity_part.split()
+        parts = capacity_value.split()
         if len(parts) >= 2:
             value = float(parts[0])
             unit = parts[1].upper()
@@ -324,29 +408,14 @@ def parse_capacity_from_instance_with_capacity_field(instance_str):
             elif unit == 'B':
                 return int(value)
             else:
-                print(f"    警告: 未知单位 {unit}, 原始值: {capacity_part}")
+                print(f"    警告: 未知单位 {unit}, 从instance解析的值: {capacity_value}")
                 return 0
         else:
-            print(f"    警告: 无法解析容量格式: {capacity_part}")
+            print(f"    警告: 无法解析从instance提取的容量格式: '{capacity_value}' (分割后: {parts})")
             return 0
-            
     except Exception as e:
-        print(f"    警告: 解析AION容量时出错: {e}, 原始字符串: {instance_str}")
+        print(f"    警告: 从instance解析Capacity字段时出错: {e}, 原始instance: {instance_str[:100]}...")
         return 0
-
-def parse_capacity_from_capacity_field(instance_str):
-    """
-    通用容量解析函数，尝试多种格式
-    首先尝试 IDEA 格式 (Cap=)，然后尝试 AION 格式 (Capacity=)
-    """
-    # 尝试 IDEA 格式
-    capacity = parse_capacity_from_instance(instance_str)
-    if capacity > 0:
-        return capacity
-    
-    # 尝试 AION 格式
-    capacity = parse_capacity_from_instance_with_capacity_field(instance_str)
-    return capacity
 
 def get_total_cluster_capacity(sfainfo_tar_list):
     """
@@ -413,11 +482,11 @@ def generate_cluster_yaml(toml_path, cluster_name, sfainfo_paths=None, output_pa
     # 构建集群基础信息
     cluster = {
         "Cluster_name": cluster_name,  # 由参数传入
-        "EXA version": toml_data.get("version") or "自动获取失败",
-        "Capacity": format_capacity(total_cluster_capacity) if total_cluster_capacity > 0 else "自动获取失败",  # 从 sfainfo 压缩包计算得出
-        "Network_Description": network_description or "自动获取失败",  # 从sfainfo文件提取的Mellanox网络描述
-        "Network_port_type": network_port_types or "自动获取失败",  # 从sfainfo文件提取
-        "EMF_IP": toml_data.get("EMF", {}).get("ip") or "自动获取失败",
+        "EXA version": toml_data.get("version"),
+        "Capacity": format_capacity(total_cluster_capacity) if total_cluster_capacity > 0 else None,  # 从 sfainfo 压缩包计算得出
+        "Network_Description": network_description,  # 从sfainfo文件提取的Mellanox网络描述
+        "Network_port_type": network_port_types,  # 从sfainfo文件提取
+        "EMF_IP": toml_data.get("EMF", {}).get("ip"),
         "Support_status": "待填入",
         "Asset_owner": customer_name if customer_name else "待选择Customer",
         "devices": []
@@ -444,15 +513,15 @@ def generate_cluster_yaml(toml_path, cluster_name, sfainfo_paths=None, output_pa
         # 构建设备信息，优先使用从sfainfo提取的信息
         device = {
             "Device_name": sfa_name,
-            "type": device_info['type'] if device_info and device_info['type'] else "自动获取失败",
-            "SFA version": device_info['sfa_version'] if device_info and device_info['sfa_version'] else "自动获取失败",
-            "Capacity": format_capacity(device_info['capacity']) if device_info and device_info['capacity'] > 0 else "自动获取失败",
-            "Controller_c0_ip": controller_c0_ip or "自动获取失败",
-            "Controller_c1_ip": controller_c1_ip or "自动获取失败",
-            "Controller_c0_serial_number": device_info['controller_c0_serial'] if device_info and device_info['controller_c0_serial'] else "自动获取失败",
-            "Controller_c1_serial_number": device_info['controller_c1_serial'] if device_info and device_info['controller_c1_serial'] else "自动获取失败",
-            "BBU1_Expired_Date": device_info['bbu1_expired_date'] if device_info and device_info['bbu1_expired_date'] else "自动获取失败",
-            "BBU2_Expired_Date": device_info['bbu2_expired_date'] if device_info and device_info['bbu2_expired_date'] else "自动获取失败",
+            "type": device_info['type'] if device_info else None,
+            "SFA version": device_info['sfa_version'] if device_info else None,
+            "Capacity": format_capacity(device_info['capacity']) if device_info and device_info['capacity'] > 0 else None,
+            "Controller_c0_ip": controller_c0_ip,
+            "Controller_c1_ip": controller_c1_ip,
+            "Controller_c0_serial_number": device_info['controller_c0_serial'] if device_info else None,
+            "Controller_c1_serial_number": device_info['controller_c1_serial'] if device_info else None,
+            "BBU1_Expired_Date": device_info['bbu1_expired_date'] if device_info else None,
+            "BBU2_Expired_Date": device_info['bbu2_expired_date'] if device_info else None,
             "Hosts": []
         }
         

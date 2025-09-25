@@ -765,8 +765,8 @@ def new_system():
     """新建系统"""
     customers = get_customers()
     
-    # 检查是否从客户页面跳转过来，获取预设的客户ID
-    preselected_customer_id = request.args.get('customer_id')
+    # 从URL参数中获取预选的客户ID
+    selected_customer_id = request.args.get('customer_id', '')
     
     if request.method == 'POST':
         name = request.form.get('name')
@@ -775,11 +775,11 @@ def new_system():
         
         if not name or not customer_id:
             flash('系统名称和客户不能为空', 'error')
-            return render_template('new_system.html', customers=customers, preselected_customer_id=preselected_customer_id)
+            return render_template('new_system.html', customers=customers, selected_customer_id=selected_customer_id)
         
         if customer_id not in customers:
             flash('选择的客户不存在', 'error')
-            return render_template('new_system.html', customers=customers, preselected_customer_id=preselected_customer_id)
+            return render_template('new_system.html', customers=customers, selected_customer_id=selected_customer_id)
         
         systems = get_systems()
         
@@ -788,7 +788,7 @@ def new_system():
             if (existing_system.get('name') == name and 
                 existing_system.get('customer_id') == customer_id):
                 flash(f'客户 {customers[customer_id]["name"]} 下已存在名为 "{name}" 的系统，请使用其他名称', 'error')
-                return render_template('new_system.html', customers=customers, preselected_customer_id=preselected_customer_id)
+                return render_template('new_system.html', customers=customers)
         
         system_id = str(len(systems) + 1)
         customer_name = customers[customer_id]['name']
@@ -816,7 +816,7 @@ def new_system():
         flash(f'系统 {name} 创建成功！YAML文件将使用: {yaml_filename}', 'success')
         return redirect(url_for('systems_list'))
     
-    return render_template('new_system.html', customers=customers, preselected_customer_id=preselected_customer_id)
+    return render_template('new_system.html', customers=customers, selected_customer_id=selected_customer_id)
 
 @app.route('/systems/<system_id>/import', methods=['GET', 'POST'])
 @login_required
@@ -842,51 +842,27 @@ def import_config(system_id):
             flash('请选择至少一个SFA log文件', 'error')
             return render_template('import_config.html', system=system)
         
-        # 保存上传的文件到系统专用目录
+        # 保存上传的文件
         import tempfile
         import os
-        import shutil
-        from datetime import datetime
         
         try:
-            # 创建临时目录用于处理
+            # 创建临时目录
             temp_dir = tempfile.mkdtemp()
             
-            # 创建系统专用的uploads目录
-            customer_name = system.get('customer_name')
-            system_uploads_dir = f"data/customers/{customer_name}/{system['name']}/uploads"
-            os.makedirs(system_uploads_dir, exist_ok=True)
-            
-            # 生成时间戳用于文件归档
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            
-            # 保存TOML文件到临时目录和永久目录
+            # 保存TOML文件
             toml_filename = secure_filename(toml_file.filename)
             toml_path = os.path.join(temp_dir, toml_filename)
             toml_file.save(toml_path)
             
-            # 同时保存到系统uploads目录，添加时间戳
-            permanent_toml_filename = f"{timestamp}_{toml_filename}"
-            permanent_toml_path = os.path.join(system_uploads_dir, permanent_toml_filename)
-            shutil.copy2(toml_path, permanent_toml_path)
-            print(f"📁 TOML文件已保存到: {permanent_toml_path}")
-            
-            # 保存SFA文件到临时目录和永久目录
+            # 保存SFA文件
             sfa_paths = []
-            permanent_sfa_paths = []
             for sfa_file in sfa_files:
                 if sfa_file.filename != '':
                     sfa_filename = secure_filename(sfa_file.filename)
                     sfa_path = os.path.join(temp_dir, sfa_filename)
                     sfa_file.save(sfa_path)
                     sfa_paths.append(sfa_path)
-                    
-                    # 同时保存到系统uploads目录，添加时间戳
-                    permanent_sfa_filename = f"{timestamp}_{sfa_filename}"
-                    permanent_sfa_path = os.path.join(system_uploads_dir, permanent_sfa_filename)
-                    shutil.copy2(sfa_path, permanent_sfa_path)
-                    permanent_sfa_paths.append(permanent_sfa_path)
-                    print(f"📁 SFA文件已保存到: {permanent_sfa_path}")
             
             # 调用generate_cluster_yaml处理
             cluster_name = request.form.get('cluster_name', system['name'])
@@ -904,28 +880,43 @@ def import_config(system_id):
             output_dir = os.path.dirname(output_filename)
             os.makedirs(output_dir, exist_ok=True)
             
+            # 创建系统专用的uploads目录
+            system_uploads_dir = f"data/customers/{customer_name}/{system['name']}/uploads"
+            os.makedirs(system_uploads_dir, exist_ok=True)
+            
             output_path = os.path.join(os.path.dirname(__file__), output_filename)
             
             # 执行生成
             generate_cluster_yaml(toml_path, cluster_name, sfa_paths, output_path, customer_name)
             
-            # 更新系统状态，记录导入文件信息
+            # 更新系统状态
             systems[system_id]['status'] = 'imported'
             systems[system_id]['yaml_file'] = output_filename
             systems[system_id]['cluster_name'] = cluster_name
             systems[system_id]['imported_at'] = datetime.now().isoformat()
-            systems[system_id]['toml_file'] = permanent_toml_path
-            systems[system_id]['sfa_files'] = permanent_sfa_paths
-            systems[system_id]['import_files_count'] = {
-                'toml': 1,
-                'sfa': len(permanent_sfa_paths)
-            }
             save_json_db(SYSTEMS_DB, systems)
+            
+            # 归档上传的文件
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            
+            # 归档 TOML 文件
+            permanent_toml_filename = f"{timestamp}_{toml_filename}"
+            permanent_toml_path = os.path.join(system_uploads_dir, permanent_toml_filename)
+            shutil.copy2(toml_path, permanent_toml_path)
+            app.logger.info(f"TOML文件已归档至 {permanent_toml_path}")
+            
+            # 归档 SFA 文件
+            for i, sfa_path in enumerate(sfa_paths):
+                sfa_filename = os.path.basename(sfa_path)
+                permanent_sfa_filename = f"{timestamp}_{i+1}_{sfa_filename}"
+                permanent_sfa_path = os.path.join(system_uploads_dir, permanent_sfa_filename)
+                shutil.copy2(sfa_path, permanent_sfa_path)
+                app.logger.info(f"SFA文件已归档至 {permanent_sfa_path}")
             
             # 清理临时文件
             shutil.rmtree(temp_dir)
             
-            flash(f'配置导入成功！文件已保存到系统目录，生成的YAML文件：{output_filename}', 'success')
+            flash(f'配置导入成功！生成的YAML文件：{output_filename}', 'success')
             return redirect(url_for('system_detail', system_id=system_id))
             
         except Exception as e:
@@ -1345,18 +1336,36 @@ def global_query_api():
                         result = asset_analyze.query_assets(system['yaml_file'], qt, asset_owner)
                         # 将结果整合到该查询类型的结果中
                         for key, value in result.items():
+                            # 跳过可能导致问题的特殊键
+                            if key in ['query_type', 'error']:
+                                continue
+                                
                             if key not in qt_results:
                                 qt_results[key] = value
-                            elif isinstance(value, list):
-                                if key not in qt_results:
-                                    qt_results[key] = []
-                                qt_results[key].extend(value)
-                            elif isinstance(value, dict):
-                                if key not in qt_results:
-                                    qt_results[key] = {}
-                                qt_results[key].update(value)
-                            elif isinstance(value, (int, float)):
-                                qt_results[key] = qt_results.get(key, 0) + value
+                            elif isinstance(value, list) and isinstance(qt_results[key], list):
+                                # 安全地合并列表，确保数据类型兼容
+                                try:
+                                    qt_results[key].extend(value)
+                                except Exception as e:
+                                    app.logger.warning(f"列表合并失败，键: {key}, 错误: {str(e)}")
+                                    qt_results[key] = value
+                            elif isinstance(value, dict) and isinstance(qt_results[key], dict):
+                                # 安全地合并字典
+                                try:
+                                    qt_results[key].update(value)
+                                except Exception as e:
+                                    app.logger.warning(f"字典合并失败，键: {key}, 错误: {str(e)}")
+                                    qt_results[key] = value
+                            elif isinstance(value, (int, float)) and isinstance(qt_results[key], (int, float)):
+                                # 安全地合并数字
+                                try:
+                                    qt_results[key] = qt_results.get(key, 0) + value
+                                except Exception as e:
+                                    app.logger.warning(f"数字合并失败，键: {key}, 错误: {str(e)}")
+                                    qt_results[key] = value
+                            else:
+                                # 类型不匹配时，使用新值覆盖
+                                qt_results[key] = value
                     except Exception as e:
                         app.logger.error(f"处理系统 {sys_id} 查询类型 {qt} 失败: {str(e)}")
                 
@@ -1376,20 +1385,33 @@ def global_query_api():
                         elif isinstance(value, list):
                             if key not in combined_results:
                                 combined_results[key] = []
-                            combined_results[key].extend(value)
+                            # 确保类型匹配再扩展
+                            if isinstance(combined_results[key], list):
+                                combined_results[key].extend(value)
+                            else:
+                                combined_results[key] = value
                         elif isinstance(value, dict):
                             if key not in combined_results:
                                 combined_results[key] = {}
-                            combined_results[key].update(value)
+                            if isinstance(combined_results[key], dict):
+                                combined_results[key].update(value)
+                            else:
+                                combined_results[key] = value
                         elif isinstance(value, (int, float)):
-                            combined_results[key] = combined_results.get(key, 0) + value
+                            if key in combined_results and isinstance(combined_results[key], (int, float)):
+                                combined_results[key] = combined_results.get(key, 0) + value
+                            else:
+                                combined_results[key] = value
                 except Exception as e:
                     app.logger.error(f"处理系统 {sys_id} 查询失败: {str(e)}")
             
             combined_results['query_type'] = query_type
         return jsonify(combined_results)
     except Exception as e:
+        import traceback
+        tb_str = traceback.format_exc()
         app.logger.error(f"执行全局资产查询失败: {str(e)}")
+        app.logger.error(f"详细错误信息: {tb_str}")
         return jsonify({"error": f"查询失败: {str(e)}"})
 
 @app.route('/api/asset_owners_list')
@@ -1527,6 +1549,54 @@ def test_system_detail_query():
     """测试系统详情页面快速查询功能"""
     with open('test_system_detail_query.html', 'r', encoding='utf-8') as f:
         return f.read()
+
+@app.route('/systems/<system_id>/edit_yaml', methods=['GET', 'POST'])
+@login_required
+def edit_yaml(system_id):
+    """编辑系统YAML文件"""
+    systems = get_systems()
+    if system_id not in systems:
+        flash('系统不存在', 'error')
+        return redirect(url_for('systems_list'))
+    
+    system = systems[system_id]
+    
+    # 检查YAML文件是否存在
+    if not system.get('yaml_file') or not os.path.exists(system['yaml_file']):
+        flash('系统没有YAML文件或文件不存在', 'error')
+        return redirect(url_for('system_detail', system_id=system_id))
+    
+    # 读取YAML文件内容
+    try:
+        with open(system['yaml_file'], 'r', encoding='utf-8') as f:
+            yaml_content = f.read()
+    except Exception as e:
+        flash(f'读取YAML文件失败: {str(e)}', 'error')
+        return redirect(url_for('system_detail', system_id=system_id))
+    
+    # 处理表单提交
+    if request.method == 'POST':
+        new_yaml_content = request.form.get('yaml_content')
+        if not new_yaml_content:
+            flash('YAML内容不能为空', 'error')
+        else:
+            try:
+                # 验证YAML格式
+                yaml_data = yaml.safe_load(new_yaml_content)
+                
+                # 保存到文件
+                with open(system['yaml_file'], 'w', encoding='utf-8') as f:
+                    f.write(new_yaml_content)
+                
+                flash('YAML文件已成功更新', 'success')
+                return redirect(url_for('system_detail', system_id=system_id))
+            except Exception as e:
+                flash(f'保存YAML失败: {str(e)}', 'error')
+    
+    return render_template('edit_yaml.html', 
+                         system=system,
+                         system_id=system_id,
+                         yaml_content=yaml_content)
 
 if __name__ == '__main__':
     # 初始化默认用户

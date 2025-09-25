@@ -132,15 +132,6 @@
             color: #2d3748;
         }
         
-        .file-count {
-            display: inline-block;
-            margin-right: 15px;
-            padding: 4px 8px;
-            background: #f1f3f5;
-            border-radius: 4px;
-            font-size: 0.9em;
-        }
-        
         .nav-buttons {
             margin-top: 20px;
             display: flex;
@@ -738,15 +729,6 @@
                     <div class="meta-value">{{ system.imported_at[:19].replace('T', ' ') }}</div>
                 </div>
                 {% endif %}
-                {% if system.import_files_count %}
-                <div class="meta-item">
-                    <div class="meta-label">导入文件</div>
-                    <div class="meta-value">
-                        <span class="file-count">📄 TOML: {{ system.import_files_count.toml }}个</span>
-                        <span class="file-count">📦 SFA: {{ system.import_files_count.sfa }}个</span>
-                    </div>
-                </div>
-                {% endif %}
             </div>
             <div class="nav-buttons">
                 <a href="{{ url_for('systems_list') }}" class="btn btn-light">
@@ -838,15 +820,20 @@
                     {% endif %}
                 </div>
                 
-                <!-- 资产查询功能卡片 -->
+                <!-- 系统数据编辑功能卡片 -->
                 {% if system.status == 'imported' and system.yaml_file %}
                 <div class="info-card">
                     <h3>
-                        <span>🔍</span>
-                        资产查询
+                        <span>�</span>
+                        系统数据编辑
                     </h3>
-                    <p>使用DCAM查询功能分析此系统的资产数据</p>
-                    <!-- 移除了开始查询按钮，因为快速查询接口现在默认显示 -->
+                    <p>直接编辑系统的YAML数据文件，可以修改无法从配置文件获取的信息（如EXA版本）</p>
+                    <div style="margin-top: 10px;">
+                        <a href="{{ url_for('edit_yaml', system_id=system_id) }}" class="btn btn-primary">
+                            <span>📄</span>
+                            编辑系统数据
+                        </a>
+                    </div>
                 </div>
                 {% endif %}
             </div>
