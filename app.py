@@ -42,7 +42,7 @@ def log_request_info():
 
 # 配置上传文件夹
 UPLOAD_FOLDER = 'data/uploads'
-ALLOWED_EXTENSIONS = {'toml', 'gz', 'tar.gz'}
+ALLOWED_EXTENSIONS = {'toml', 'conf', 'gz', 'tar.gz'}
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -104,9 +104,28 @@ def get_systems(customer_id=None):
     """获取系统列表，可选择按客户过滤"""
     systems_data = load_json_db(SYSTEMS_DB)
     # 兼容旧数据，补充archived字段
-    for sys in systems_data.values():
+    for system_id, sys in systems_data.items():
         if 'archived' not in sys:
             sys['archived'] = False
+        
+        # 计算SFA设备数量
+        sfa_device_count = 0
+        yaml_file = sys.get('yaml_file')
+        if yaml_file and os.path.exists(yaml_file):
+            try:
+                with open(yaml_file, 'r', encoding='utf-8') as f:
+                    yaml_data = yaml.safe_load(f)
+                    # 如果YAML文件中有clusters数据，计算SFA设备总数
+                    if yaml_data and 'clusters' in yaml_data:
+                        for cluster in yaml_data['clusters']:
+                            if 'devices' in cluster:
+                                sfa_device_count += len(cluster['devices'])
+            except Exception as e:
+                print(f"计算系统 {system_id} 的SFA设备数量出错: {str(e)}")
+        
+        # 添加SFA设备数量
+        sys['sfa_device_count'] = sfa_device_count
+        
     if customer_id:
         return {k: v for k, v in systems_data.items() if v.get('customer_id') == customer_id}
     return systems_data
@@ -179,6 +198,81 @@ def sync_customer_name_to_yaml(system_id):
     except Exception as e:
         logging.error(f"同步客户名时出错: {str(e)}")
         return False
+
+def convert_conf_to_toml(conf_file_path, toml_file_path):
+    """将 exascaler.conf 格式转换为 exascaler.toml 格式"""
+    try:
+        import configparser
+        import toml
+        
+        # 创建configparser实例，允许重复的选项名
+        config = configparser.ConfigParser(allow_no_value=True)
+        config.optionxform = str  # 保持键的大小写
+        config.read(conf_file_path, encoding='utf-8')
+        
+        # 转换为字典结构
+        toml_data = {}
+        
+        for section_name in config.sections():
+            section = config[section_name]
+            section_dict = {}
+            
+            for key, value in section.items():
+                if value is None:
+                    section_dict[key] = True  # 无值的配置项作为布尔值处理
+                    continue
+                    
+                # 处理不同类型的值
+                # 尝试转换为数字
+                try:
+                    if '.' in value:
+                        section_dict[key] = float(value)
+                    else:
+                        section_dict[key] = int(value)
+                except ValueError:
+                    # 处理布尔值
+                    if value.lower() in ('true', 'yes', '1', 'on'):
+                        section_dict[key] = True
+                    elif value.lower() in ('false', 'no', '0', 'off'):
+                        section_dict[key] = False
+                    else:
+                        # 处理字符串值，移除引号
+                        section_dict[key] = value.strip('"\'')
+            
+            # 处理特殊的节名格式（如 sfa SFA_NAME）
+            if section_name.startswith('sfa '):
+                # EXAScaler 格式: [sfa SFA_NAME] -> ["sfa SFA_NAME"]
+                toml_data[section_name] = section_dict
+            else:
+                # 普通节名
+                toml_data[section_name] = section_dict
+        
+        # 后处理：确保生成的TOML符合EXAScaler期望的格式
+        # 如果有SFA相关的节，确保它们的格式正确
+        processed_data = {}
+        for key, value in toml_data.items():
+            if key.startswith('sfa '):
+                # 确保SFA节有正确的controllers格式
+                if 'controllers' in value and isinstance(value['controllers'], str):
+                    # 如果controllers是空格分隔的字符串，转换为正确格式
+                    controllers = value['controllers'].split()
+                    if len(controllers) >= 2:
+                        value['controllers'] = controllers[:2]  # 只取前两个控制器IP
+                processed_data[key] = value
+            else:
+                processed_data[key] = value
+        
+        # 写入TOML文件
+        with open(toml_file_path, 'w', encoding='utf-8') as f:
+            toml.dump(processed_data, f)
+        
+        app.logger.info(f"成功将 {conf_file_path} 转换为 {toml_file_path}")
+        return True
+        
+    except Exception as e:
+        app.logger.error(f"配置文件转换失败: {str(e)}")
+        return False
+
 def get_recent_items(entity_type, limit=5):
     """获取最近访问的实体"""
     access_logs = load_json_db(ACCESS_LOG_DB)
@@ -368,6 +462,47 @@ def unarchive_system(system_id):
     save_json_db(SYSTEMS_DB, systems)
     flash('已解除归档', 'success')
     return redirect(url_for('system_detail', system_id=system_id))
+
+# 删除系统
+@app.route('/systems/<system_id>/delete', methods=['POST'])
+@login_required
+def delete_system(system_id):
+    """删除系统"""
+    systems = get_systems()
+    if system_id not in systems:
+        flash('系统不存在', 'error')
+        return redirect(url_for('systems_list'))
+    
+    # 仅管理员可删除
+    user = get_user(session['username'])
+    if not user or user.get('role') != 'admin':
+        flash('仅管理员可删除系统', 'error')
+        return redirect(url_for('system_detail', system_id=system_id))
+    
+    system = systems[system_id]
+    system_name = system.get('name', 'Unknown System')
+    
+    # 删除系统的YAML文件
+    if system.get('yaml_file') and os.path.exists(system['yaml_file']):
+        try:
+            os.remove(system['yaml_file'])
+        except Exception as e:
+            flash(f'删除系统 {system_name} 的资产文件失败：{str(e)}', 'warning')
+    
+    # 从访问日志中删除系统相关记录
+    access_logs = load_json_db(ACCESS_LOG_DB)
+    if 'systems' in access_logs and system_id in access_logs['systems']:
+        access_logs['systems'].pop(system_id)
+        save_json_db(ACCESS_LOG_DB, access_logs)
+    
+    # 从系统数据库中删除
+    systems.pop(system_id)
+    save_json_db(SYSTEMS_DB, systems)
+    
+    flash(f'系统 {system_name} 已成功删除！', 'success')
+    return redirect(url_for('systems_list'))
+
+def get_customer_yaml_mapping():
     """动态获取客户YAML映射"""
     customers = get_customers()
     mapping = {}
@@ -814,7 +949,7 @@ def new_system():
         
         save_json_db(SYSTEMS_DB, systems)
         flash(f'系统 {name} 创建成功！YAML文件将使用: {yaml_filename}', 'success')
-        return redirect(url_for('systems_list'))
+        return redirect(url_for('customer_detail', customer_id=customer_id))
     
     return render_template('new_system.html', customers=customers, selected_customer_id=selected_customer_id)
 
@@ -830,10 +965,10 @@ def import_config(system_id):
     system = systems[system_id]
     
     if request.method == 'POST':
-        # 处理exascaler.toml文件上传
-        toml_file = request.files.get('toml_file')
-        if not toml_file or toml_file.filename == '':
-            flash('请选择exascaler.toml配置文件', 'error')
+        # 处理exascaler配置文件上传（支持.toml和.conf格式）
+        config_file = request.files.get('toml_file')
+        if not config_file or config_file.filename == '':
+            flash('请选择exascaler配置文件（支持.toml或.conf格式）', 'error')
             return render_template('import_config.html', system=system)
         
         # 处理sfa log文件上传
@@ -850,10 +985,32 @@ def import_config(system_id):
             # 创建临时目录
             temp_dir = tempfile.mkdtemp()
             
-            # 保存TOML文件
-            toml_filename = secure_filename(toml_file.filename)
-            toml_path = os.path.join(temp_dir, toml_filename)
-            toml_file.save(toml_path)
+            # 保存配置文件
+            config_filename = secure_filename(config_file.filename)
+            config_path = os.path.join(temp_dir, config_filename)
+            config_file.save(config_path)
+            
+            # 处理配置文件格式转换
+            if config_filename.lower().endswith('.conf'):
+                # 如果是.conf文件，转换为.toml格式
+                toml_filename = config_filename.rsplit('.', 1)[0] + '.toml'
+                toml_path = os.path.join(temp_dir, toml_filename)
+                
+                if convert_conf_to_toml(config_path, toml_path):
+                    flash('检测到exascaler.conf文件，已自动转换为TOML格式', 'success')
+                    # 使用转换后的TOML文件
+                    config_path = toml_path
+                    config_filename = toml_filename
+                else:
+                    flash('exascaler.conf文件转换失败，请检查文件格式', 'error')
+                    return render_template('import_config.html', system=system)
+            elif not config_filename.lower().endswith('.toml'):
+                flash('不支持的配置文件格式，请上传.toml或.conf文件', 'error')
+                return render_template('import_config.html', system=system)
+            
+            # 现在config_path指向有效的TOML文件
+            toml_path = config_path
+            toml_filename = config_filename
             
             # 保存SFA文件
             sfa_paths = []
@@ -1032,10 +1189,10 @@ def update_system_config(system_id):
         return redirect(url_for('system_detail', system_id=system_id))
     
     if request.method == 'POST':
-        # 处理exascaler.toml文件上传
-        toml_file = request.files.get('toml_file')
-        if not toml_file or toml_file.filename == '':
-            flash('请选择exascaler.toml配置文件', 'error')
+        # 处理exascaler配置文件上传（支持.toml和.conf格式）
+        config_file = request.files.get('toml_file')
+        if not config_file or config_file.filename == '':
+            flash('请选择exascaler配置文件（支持.toml或.conf格式）', 'error')
             return render_template('update_config.html', system=system, system_id=system_id)
         
         # 处理sfa log文件上传
@@ -1051,10 +1208,32 @@ def update_system_config(system_id):
             # 创建临时目录
             temp_dir = tempfile.mkdtemp()
             
-            # 保存TOML文件
-            toml_filename = secure_filename(toml_file.filename)
-            toml_path = os.path.join(temp_dir, toml_filename)
-            toml_file.save(toml_path)
+            # 保存配置文件
+            config_filename = secure_filename(config_file.filename)
+            config_path = os.path.join(temp_dir, config_filename)
+            config_file.save(config_path)
+            
+            # 处理配置文件格式转换
+            if config_filename.lower().endswith('.conf'):
+                # 如果是.conf文件，转换为.toml格式
+                toml_filename = config_filename.rsplit('.', 1)[0] + '.toml'
+                toml_path = os.path.join(temp_dir, toml_filename)
+                
+                if convert_conf_to_toml(config_path, toml_path):
+                    flash('检测到exascaler.conf文件，已自动转换为TOML格式', 'success')
+                    # 使用转换后的TOML文件
+                    config_path = toml_path
+                    config_filename = toml_filename
+                else:
+                    flash('exascaler.conf文件转换失败，请检查文件格式', 'error')
+                    return render_template('update_config.html', system=system, system_id=system_id)
+            elif not config_filename.lower().endswith('.toml'):
+                flash('不支持的配置文件格式，请上传.toml或.conf文件', 'error')
+                return render_template('update_config.html', system=system, system_id=system_id)
+            
+            # 现在config_path指向有效的TOML文件
+            toml_path = config_path
+            toml_filename = config_filename
             
             # 保存SFA文件
             sfa_paths = []

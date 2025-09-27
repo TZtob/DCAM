@@ -25,190 +25,211 @@
             color: white;
             padding: 30px;
             border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .header h1 {
             margin: 0;
+            font-size: 1.8em;
             display: flex;
             align-items: center;
-            gap: 10px;
+        }
+        
+        .header h1 span {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .content {
+            padding: 20px;
         }
         
         .nav-buttons {
-            margin-top: 15px;
             display: flex;
             gap: 10px;
         }
         
         .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
         }
         
-        .btn-light {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        
-        .btn-light:hover {
-            background: rgba(255,255,255,0.3);
+        .btn span {
+            margin-right: 5px;
         }
         
         .btn-primary {
-            background: #007bff;
+            background-color: #007bff;
             color: white;
         }
         
         .btn-primary:hover {
-            background: #0056b3;
+            background-color: #0069d9;
         }
         
-        .btn-sm {
-            padding: 6px 12px;
-            font-size: 0.9em;
+        .btn-light {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            color: #333;
         }
         
-        .content {
-            padding: 30px;
+        .btn-light:hover {
+            background-color: #e2e6ea;
         }
         
-        /* 客户过滤 */
-        .filters {
+        .alert {
+            padding: 15px;
             margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .filters {
             display: flex;
-            flex-wrap: wrap;
             gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
         
         .filter-item {
-            background: #f1f5f9;
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
+            background: #e9ecef;
+            border-radius: 5px;
+            padding: 8px 15px;
             cursor: pointer;
-            color: #4a5568;
-            border: 1px solid transparent;
+            transition: all 0.2s;
+            font-size: 0.9em;
         }
         
         .filter-item:hover {
-            background: #e2e8f0;
+            background: #dee2e6;
         }
         
         .filter-item.active {
-            background: #28a745;
+            background: #007bff;
             color: white;
-        }
-        
-        .customer-badge {
-            background: #ebfbf0;
-            color: #28a745;
-            padding: 4px 10px;
-            border-radius: 50px;
-            font-size: 0.85em;
-            display: inline-block;
-            white-space: nowrap;
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
         
         .systems-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 0.95em;
         }
         
         .systems-table th,
         .systems-table td {
-            padding: 12px;
+            padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #e9ecef;
         }
         
         .systems-table th {
-            background: #f8f9fa;
+            background-color: #f8f9fa;
             font-weight: bold;
-            color: #333;
+            color: #495057;
+            border-top: 1px solid #dee2e6;
         }
         
         .systems-table tr:hover {
-            background: #f8f9fa;
+            background-color: #f1f3f5;
         }
         
         .status-badge {
+            display: inline-block;
             padding: 4px 8px;
-            border-radius: 4px;
+            border-radius: 3px;
             font-size: 0.8em;
             font-weight: bold;
-            text-transform: uppercase;
         }
         
-        .status-created {
-            background: #ffeaa7;
-            color: #d63031;
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
         }
         
-        .status-configured {
-            background: #74b9ff;
-            color: white;
+        .status-archived {
+            background-color: #e2e3e5;
+            color: #383d41;
         }
         
-        .status-imported {
-            background: #00b894;
-            color: white;
+        .action-buttons {
+            display: flex;
+            gap: 5px;
         }
         
-        .status-deployed {
-            background: #6c5ce7;
-            color: white;
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.8em;
         }
         
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
-            color: #666;
+            padding: 50px 0;
+            color: #6c757d;
         }
         
         .empty-state .icon {
-            font-size: 4em;
+            font-size: 3em;
             margin-bottom: 20px;
         }
         
-        .flash-messages {
+        .empty-state h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        .empty-state p {
+            margin-bottom: 25px;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
             margin-bottom: 20px;
+            font-size: 0.95em;
         }
         
-        .alert {
-            padding: 12px 20px;
-            border-radius: 5px;
-            margin-bottom: 10px;
+        .table th,
+        .table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+            max-width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
-        .alert-success {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #495057;
+            border-top: 1px solid #dee2e6;
         }
         
-        .alert-error {
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
+        .table-striped tbody tr:nth-child(odd) {
+            background-color: #f8f9fa;
         }
         
-        .system-actions {
-            display: flex;
-            gap: 5px;
+        .table tbody tr:hover {
+            background-color: #f1f3f5;
         }
     </style>
 </head>
@@ -249,68 +270,6 @@
                 {% endif %}
             {% endwith %}
             
-            <!-- 快速查询接口 -->
-            <div style="margin-bottom: 30px; background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef;">
-                <h3 style="margin-bottom: 15px; font-size: 1.2em; color: #4a5568;">
-                    <span>🔍</span>
-                    快速查询
-                </h3>
-                
-                <form id="globalQueryForm" style="margin-bottom: 20px;">
-                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
-                        <div style="flex: 1; min-width: 200px;">
-                            <label style="display: block; margin-bottom: 8px; color: #4a5568;">客户</label>
-                            <select id="customer_id" name="customer_id" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0;" onchange="updateSystemListByCustomer()">
-                                <option value="">所有客户</option>
-                                <!-- 将由JavaScript动态填充 -->
-                            </select>
-                        </div>
-                        
-                        <div style="flex: 1; min-width: 200px;">
-                            <label style="display: block; margin-bottom: 8px; color: #4a5568;">系统</label>
-                            <select id="system_id" name="system_id" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0;">
-                                <option value="">所有系统</option>
-                                <!-- 将由JavaScript动态填充 -->
-                            </select>
-                        </div>
-                        
-                        <div style="flex: 1; min-width: 200px;">
-                            <label style="display: block; margin-bottom: 8px; color: #4a5568;">查询类型</label>
-                            <select id="query_type" name="query_type" required style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0;">
-                                <option value="">请选择查询类型</option>
-                                <option value="0">所有查询</option>
-                                <option value="1">设备数量统计</option>
-                                <option value="2">SFA版本详情</option>
-                                <option value="3">EXA版本详情</option>
-                                <option value="4">系统配置详情</option>
-                                <option value="5">节点详细信息</option>
-                                <option value="6">磁盘详情</option>
-                                <option value="7">内存详情</option>
-                                <option value="8">网络配置详情</option>
-                                <option value="9">防火墙配置详情</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div style="display: flex; gap: 10px; align-items: flex-end;">
-                        <button type="submit" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-                            <span>🚀</span>
-                            执行查询
-                        </button>
-                        <button type="button" onclick="resetForm()" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer;">
-                            <span>🔄</span>
-                            重置
-                        </button>
-                    </div>
-                </form>
-                
-                <!-- 查询结果区域 -->
-                <div id="queryResults" style="display: none; margin-top: 20px; padding: 15px; background: white; border-radius: 6px; border: 1px solid #e2e8f0;">
-                    <h4 style="margin-top: 0; color: #28a745;">查询结果</h4>
-                    <div id="resultsContent"></div>
-                </div>
-            </div>
-            
             {% if systems %}
                 <!-- 客户过滤器 -->
                 <div class="filters">
@@ -320,72 +279,53 @@
                     {% endfor %}
                 </div>
                 
+                <!-- 系统列表 -->
                 <table class="systems-table">
                     <thead>
                         <tr>
                             <th>系统名称</th>
                             <th>客户</th>
+                            <th>SFA设备数量</th>
+                            <th>创建日期</th>
                             <th>状态</th>
-                            <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for system_id, system in systems.items() %}
                             <tr class="system-row" data-customer="{{ system.customer_id }}">
+                                <td>{{ system.name }}</td>
+                                <td>{{ system.customer_name }}</td>
+                                <td>{{ system.sfa_device_count if system.sfa_device_count is defined else 0 }}</td>
+                                <td>{{ system.created_at }}</td>
                                 <td>
-                                    <strong>{{ system.name }}</strong>
-                                    {% if system.description %}
-                                        <br><small style="color: #666;">{{ system.description }}</small>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <a href="{{ url_for('customer_detail', customer_id=system.customer_id) }}" class="customer-badge">
-                                        {{ system.customer_name }}
-                                    </a>
-                                </td>
-                                <td>
-                                    <span class="status-badge status-{{ system.status }}">
-                                        {% if system.status == 'created' %}
-                                            已创建
-                                        {% elif system.status == 'configured' %}
-                                            已配置
-                                        {% elif system.status == 'imported' %}
-                                            已导入
-                                        {% elif system.status == 'deployed' %}
-                                            已部署
-                                        {% else %}
-                                            {{ system.status }}
-                                        {% endif %}
+                                    <span class="status-badge {% if system.archived %}status-archived{% else %}status-active{% endif %}">
+                                        {{ "已归档" if system.archived else "活跃" }}
                                     </span>
                                 </td>
-                                <td>{{ system.created_at | datetime }}</td>
                                 <td>
-                                    <div class="system-actions">
-                                        <a href="{{ url_for('system_detail', system_id=system_id) }}" class="btn btn-primary btn-sm">
+                                    <div class="action-buttons">
+                                        <a href="{{ url_for('system_detail', system_id=system_id) }}" class="btn btn-sm btn-light">
                                             <span>👁️</span>
                                             查看
                                         </a>
-                                        {% if system.status == 'created' %}
-                                            <a href="{{ url_for('import_config', system_id=system_id) }}" class="btn btn-primary btn-sm">
-                                                <span>📁</span>
-                                                导入配置
-                                            </a>
-                                        {% endif %}
+                                        <a href="{{ url_for('new_system', system_id=system_id) }}" class="btn btn-sm btn-light">
+                                            <span>✏️</span>
+                                            编辑
+                                        </a>
                                         {% if system.archived %}
-                                            <span class="status-badge status-archived" style="background:#adb5bd;color:#fff;">已归档</span>
-                                            {% if session.username and get_user(session.username).role == 'admin' %}
-                                            <form method="post" action="{{ url_for('unarchive_system', system_id=system_id) }}" style="display:inline;">
+                                            <form method="POST" action="{{ url_for('unarchive_system', system_id=system_id) }}" style="display:inline;">
                                                 <button type="submit" class="btn btn-sm btn-light" style="background:#ffc107;color:#333;">解除归档</button>
                                             </form>
-                                            {% endif %}
                                         {% else %}
-                                            {% if session.username and get_user(session.username).role == 'admin' %}
-                                            <form method="post" action="{{ url_for('archive_system', system_id=system_id) }}" style="display:inline;">
+                                            <form method="POST" action="{{ url_for('archive_system', system_id=system_id) }}" style="display:inline;">
                                                 <button type="submit" class="btn btn-sm btn-light" style="background:#adb5bd;color:#fff;">归档系统</button>
                                             </form>
-                                            {% endif %}
                                         {% endif %}
+                                        <button class="btn btn-sm btn-light" style="background:#dc3545;color:white;" onclick="showDeleteModal('{{ system_id }}', '{{ system.name }}')">
+                                            <span>🗑️</span>
+                                            删除
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -393,102 +333,8 @@
                     </tbody>
                 </table>
                 
-                <!-- 客户过滤器脚本和快速查询功能 -->
                 <script>
-                    // 根据客户更新系统下拉菜单 - 全局函数
-                    function updateSystemListByCustomer() {
-                        const customerSelect = document.getElementById('customer_id');
-                        const customerId = customerSelect ? customerSelect.value : '';
-                        console.log('updateSystemListByCustomer 被调用');
-                        console.log('客户选择元素:', customerSelect);
-                        console.log('更新系统列表, 客户ID:', customerId);
-                        
-                        // 如果没有选择客户或选择了"所有客户"，显示所有系统
-                        const url = (customerId && customerId !== '') 
-                            ? `/api/systems_by_customer?customer_id=${encodeURIComponent(customerId)}`
-                            : `/api/all_systems`;
-                            
-                        console.log('请求系统列表URL:', url);
-                        fetch(url)
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error('网络响应不正常');
-                                }
-                                return response.json();
-                            })
-                            .then(data => {
-                                console.log('获取到系统列表:', data);
-                                const select = document.getElementById('system_id');
-                                // 清除现有选项，保留第一个"所有系统"选项
-                                while (select.options.length > 1) {
-                                    select.remove(1);
-                                }
-                                
-                                // 添加新选项
-                                if (Array.isArray(data)) {
-                                    data.forEach(system => {
-                                        console.log('处理系统:', system);
-                                        const option = document.createElement('option');
-                                        option.value = system.id;
-                                        option.textContent = `${system.name} (${system.customer_name || 'Unknown Customer'})`;
-                                        console.log('选项文本:', option.textContent);
-                                        select.appendChild(option);
-                                    });
-                                } else {
-                                    console.error('返回的系统列表数据格式错误:', data);
-                                }
-                            })
-                            .catch(error => console.error('加载系统列表失败:', error));
-                    }
-
-                    // 重置表单
-                    function resetForm() {
-                        document.getElementById('globalQueryForm').reset();
-                        document.getElementById('queryResults').style.display = 'none';
-                        // 重新加载系统列表
-                        updateSystemListByCustomer();
-                    }
-
-                    // 执行查询 - 全局函数
-                    function executeQuery(customerId, systemId, queryType) {
-                        console.log('执行查询:', { customerId, systemId, queryType });
-                        
-                        const resultsDiv = document.getElementById('queryResults');
-                        const contentDiv = document.getElementById('resultsContent');
-                        
-                        // 显示加载状态
-                        resultsDiv.style.display = 'block';
-                        contentDiv.innerHTML = '<div style="text-align: center; padding: 20px;"><span style="font-size: 24px;">⏳</span><br>正在查询中...</div>';
-                        
-                        // 构建查询参数
-                        const params = new URLSearchParams();
-                        if (customerId) params.append('customer_id', customerId);
-                        if (systemId) params.append('system_id', systemId);
-                        params.append('query_type', queryType);
-                        
-                        const queryUrl = `/query?${params.toString()}`;
-                        console.log('查询URL:', queryUrl);
-                        
-                        fetch(queryUrl)
-                            .then(response => response.text())
-                            .then(html => {
-                                // 解析返回的HTML，提取查询结果
-                                const parser = new DOMParser();
-                                const doc = parser.parseFromString(html, 'text/html');
-                                const resultContent = doc.querySelector('.query-results');
-                                
-                                if (resultContent) {
-                                    contentDiv.innerHTML = resultContent.innerHTML;
-                                } else {
-                                    contentDiv.innerHTML = '<div style="color: #dc3545;">查询结果格式错误</div>';
-                                }
-                            })
-                            .catch(error => {
-                                console.error('查询失败:', error);
-                                contentDiv.innerHTML = '<div style="color: #dc3545;">查询失败: ' + error.message + '</div>';
-                            });
-                    }
-
+                    // 仅保留系统管理所需功能
                     document.addEventListener('DOMContentLoaded', function() {
                         const filterItems = document.querySelectorAll('.filter-item');
                         const systemRows = document.querySelectorAll('.system-row');
@@ -518,66 +364,6 @@
                                 });
                             });
                         });
-
-                        // 初始化快速查询功能
-                        console.log('初始化快速查询功能...');
-                        loadCustomers();
-
-                        // 快速查询表单提交处理
-                        const queryForm = document.getElementById('globalQueryForm');
-                        if (queryForm) {
-                            queryForm.addEventListener('submit', function(e) {
-                                e.preventDefault();
-                                
-                                const formData = new FormData(this);
-                                const customerId = formData.get('customer_id');
-                                const systemId = formData.get('system_id');
-                                const queryType = formData.get('query_type');
-                                
-                                if (!queryType) {
-                                    alert('请选择查询类型');
-                                    return;
-                                }
-                                
-                                executeQuery(customerId, systemId, queryType);
-                            });
-                        }
-
-                        // 加载客户列表
-                        function loadCustomers() {
-                            console.log('加载客户列表...');
-                            fetch('/api/customers_list')
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('网络响应不正常');
-                                    }
-                                    return response.json();
-                                })
-                                .then(data => {
-                                    console.log('获取到客户列表:', data);
-                                    const select = document.getElementById('customer_id');
-                                    // 清除现有选项，保留第一个"所有客户"选项
-                                    while (select.options.length > 1) {
-                                        select.remove(1);
-                                    }
-                                    
-                                    // 添加新选项
-                                    if (Array.isArray(data)) {
-                                        data.forEach(customer => {
-                                            const option = document.createElement('option');
-                                            option.value = customer.id;
-                                            option.textContent = customer.name;
-                                            select.appendChild(option);
-                                        });
-                                    } else {
-                                        console.error('返回的客户数据格式错误:', data);
-                                    }
-                                    
-                                    // 初始化系统列表
-                                    updateSystemListByCustomer();
-                                })
-                                .catch(error => console.error('加载客户列表失败:', error));
-                        }
                     });
                 </script>
             {% else %}
@@ -593,5 +379,73 @@
             {% endif %}
         </div>
     </div>
+    
+    <!-- 删除系统确认模态框 -->
+    <div id="deleteModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-content" style="background-color: #fff; margin: 15% auto; padding: 0; border-radius: 10px; width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div class="modal-header" style="background: linear-gradient(135deg, #dc3545, #c82333); color: white; padding: 20px; border-radius: 10px 10px 0 0;">
+                <h2 style="margin: 0; font-size: 1.3em;">⚠️ 确认删除系统</h2>
+            </div>
+            <div class="modal-body" style="padding: 30px 20px;">
+                <p>您确定要删除系统「<span id="systemName" style="font-weight: bold; color: #dc3545;"></span>」吗？</p>
+                <p style="color: #e74c3c; font-weight: bold; margin-top: 15px;">⚠️ 此操作将删除系统及其所有相关数据，包括YAML配置文件，且不可撤销！</p>
+                <div class="checkbox-container" style="margin-top: 20px;">
+                    <input type="checkbox" id="confirmDelete" required>
+                    <label for="confirmDelete" style="margin-left: 8px; cursor: pointer;">我理解此操作不可撤销，并且会删除所有系统数据</label>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 15px 20px; border-top: 1px solid #eee; text-align: right;">
+                <button class="modal-btn modal-btn-secondary" id="cancelDelete" style="background: #6c757d; color: white; border: none; padding: 8px 16px; margin-right: 10px; border-radius: 5px; cursor: pointer;">取消</button>
+                <form id="deleteForm" method="POST" style="display: inline;">
+                    <button type="submit" class="modal-btn modal-btn-danger" id="confirmDeleteBtn" disabled style="background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: not-allowed;">确认删除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 显示删除确认模态框
+        function showDeleteModal(systemId, systemName) {
+            const modal = document.getElementById('deleteModal');
+            const systemNameEl = document.getElementById('systemName');
+            const confirmCheckbox = document.getElementById('confirmDelete');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            const deleteForm = document.getElementById('deleteForm');
+            
+            // 设置系统名称
+            systemNameEl.textContent = systemName;
+            
+            // 设置表单提交地址
+            deleteForm.action = `/systems/${systemId}/delete`;
+            
+            // 显示模态框
+            modal.style.display = 'block';
+            
+            // 重置复选框
+            confirmCheckbox.checked = false;
+            confirmBtn.disabled = true;
+            confirmBtn.style.cursor = 'not-allowed';
+        }
+        
+        // 复选框事件监听
+        document.getElementById('confirmDelete').addEventListener('change', function() {
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            confirmBtn.disabled = !this.checked;
+            confirmBtn.style.cursor = this.checked ? 'pointer' : 'not-allowed';
+        });
+        
+        // 关闭模态框
+        document.getElementById('cancelDelete').addEventListener('click', function() {
+            document.getElementById('deleteModal').style.display = 'none';
+        });
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('deleteModal');
+            if (event.target === modal) {
+                this.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
