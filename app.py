@@ -677,7 +677,7 @@ def index():
 @login_required
 def search():
     """全局搜索功能"""
-    query = request.args.get('query', '').strip().lower()
+    query = request.args.get('q', '').strip().lower()
     
     if not query:
         flash('请输入搜索关键词', 'warning')
@@ -928,24 +928,14 @@ def new_system():
         system_id = str(len(systems) + 1)
         customer_name = customers[customer_id]['name']
         
-        # 处理系统名称和客户名称中的空格和特殊字符，避免路径问题
-        safe_customer_name = customer_name.strip().replace(' ', '_')
-        safe_name = name.strip().replace(' ', '_')
-        
         # 🔧 新的层级化文件路径：data/customers/客户名/系统名/系统名_clusters.yaml
-        yaml_filename = f"data/customers/{safe_customer_name}/{safe_name}/{safe_name}_clusters.yaml"
+        yaml_filename = f"data/customers/{customer_name}/{name}/{name}_clusters.yaml"
         
         # 创建系统目录结构
-        system_dir = f"data/customers/{safe_customer_name}/{safe_name}"
+        system_dir = f"data/customers/{customer_name}/{name}"
         reports_dir = f"{system_dir}/reports"
-        
-        # 确保目录存在，处理可能的路径问题
-        try:
-            os.makedirs(system_dir, exist_ok=True)
-            os.makedirs(reports_dir, exist_ok=True)
-        except Exception as e:
-            flash(f'创建系统目录失败: {str(e)}', 'error')
-            return render_template('new_system.html', customers=customers, selected_customer_id=customer_id)
+        os.makedirs(system_dir, exist_ok=True)
+        os.makedirs(reports_dir, exist_ok=True)
         
         systems[system_id] = {
             'name': name,
