@@ -731,13 +731,13 @@
                 {% endif %}
             </div>
             <div class="nav-buttons">
-                <a href="{{ url_for('systems_list') }}" class="btn btn-light">
-                    <span>↩️</span>
-                    返回系统列表
+                <a href="{{ url_for('index') }}" class="btn btn-light">
+                    <span>🏠</span>
+                    返回首页
                 </a>
                 <a href="{{ url_for('customer_detail', customer_id=system.customer_id) }}" class="btn btn-light">
                     <span>👥</span>
-                    查看客户
+                    返回客户
                 </a>
                 {% if system.status == 'created' %}
                     <a href="{{ url_for('import_config', system_id=system_id) }}" class="btn btn-primary">
@@ -763,6 +763,10 @@
                     <form method="post" action="{{ url_for('archive_system', system_id=system_id) }}" style="display:inline;">
                         <button type="submit" class="btn btn-light" style="background:#adb5bd;color:#fff;">归档系统</button>
                     </form>
+                    <button class="btn btn-light" style="background:#dc3545;color:#fff;" onclick="showDeleteModal('{{ system_id }}', '{{ system.name }}')">
+                        <span>🗑️</span>
+                        删除系统
+                    </button>
                     {% endif %}
                 {% endif %}
             </div>
@@ -876,8 +880,10 @@
                                     <div class="device-info">
                                         <div><strong>容量：</strong>{{ device.Capacity }}</div>
                                         <div><strong>SFA版本：</strong>{{ device['SFA version'] }}</div>
-                                        <div><strong>控制器C0：</strong>{{ device.Controller_c0_ip }} ({{ device.Controller_c0_serial_number }})</div>
-                                        <div><strong>控制器C1：</strong>{{ device.Controller_c1_ip }} ({{ device.Controller_c1_serial_number }})</div>
+                                        <div><strong>控制器C0 IP：</strong>{{ device.Controller_c0_ip }}</div>
+                                        <div><strong>控制器C1 IP：</strong>{{ device.Controller_c1_ip }}</div>
+                                        <div><strong>控制器C0序列号：</strong>{{ device.Controller_c0_serial_number }}</div>
+                                        <div><strong>控制器C1序列号：</strong>{{ device.Controller_c1_serial_number }}</div>
                                         <div><strong>BBU1过期：</strong>{{ device.BBU1_Expired_Date }}</div>
                                         <div><strong>BBU2过期：</strong>{{ device.BBU2_Expired_Date }}</div>
                                     </div>
@@ -890,12 +896,11 @@
                                                     <div class="host-item">
                                                         <div><strong>{{ host.hostname }}</strong></div>
                                                         <div>管理: {{ host.ip.management }}</div>
-                                                        {% if host.ip.lnet1_network %}
-                                                            <div>LNet1: {{ host.ip.lnet1_network }}</div>
-                                                        {% endif %}
-                                                        {% if host.ip.lnet2_network %}
-                                                            <div>LNet2: {{ host.ip.lnet2_network }}</div>
-                                                        {% endif %}
+                                                        {% for key, value in host.ip.items() %}
+                                                            {% if key.startswith('lnet') and value %}
+                                                                <div>{{ key.replace('_network', '').upper() }}: {{ value }}</div>
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     </div>
                                                 {% endfor %}
                                             </div>
@@ -1275,8 +1280,8 @@
                     ]);
                 }
             } else if (data.query_type == 7) {
-                // 集群IP地址查询
-                columns = ["集群名称", "设备名称", "资产所有者", "控制器C0 IP", "控制器C1 IP", "EMF IP"];
+                // 集群IP地址查询（包含主机IP信息）
+                columns = ["集群名称", "设备名称", "资产所有者", "控制器C0 IP", "控制器C1 IP", "EMF IP", "主机名", "主机管理IP", "主机数据网络"];
                 if (data.devices && data.devices.length > 0) {
                     items = data.devices.map(d => [
                         d.Cluster_name || '-',
@@ -1284,7 +1289,10 @@
                         d.Asset_owner || '-',
                         d.Controller_c0_ip || '-',
                         d.Controller_c1_ip || '-',
-                        d.EMF_ip || '-'
+                        d.EMF_ip || '-',
+                        d.Host_name || '-',
+                        d.Host_mgmt_ip || '-',
+                        d.Host_data_networks || '-'
                     ]);
                 }
             } else {
@@ -1456,5 +1464,69 @@ ${JSON.stringify(data, null, 2)}
             </div>
         </div>
     </footer>
+    
+    <!-- 删除系统确认模态框 -->
+    <div id="deleteModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-content" style="background-color: #fff; margin: 15% auto; padding: 0; border-radius: 10px; width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+            <div class="modal-header" style="background: linear-gradient(135deg, #dc3545, #c82333); color: white; padding: 20px; border-radius: 10px 10px 0 0;">
+                <h2 style="margin: 0; font-size: 1.3em;">⚠️ 确认删除系统</h2>
+            </div>
+            <div class="modal-body" style="padding: 30px 20px;">
+                <p>您确定要删除系统「<span id="systemName" style="font-weight: bold; color: #dc3545;">{{ system.name }}</span>」吗？</p>
+                <p style="color: #e74c3c; font-weight: bold; margin-top: 15px;">⚠️ 此操作将删除系统及其所有相关数据，包括YAML配置文件，且不可撤销！</p>
+                <div class="checkbox-container" style="margin-top: 20px;">
+                    <input type="checkbox" id="confirmDelete" required>
+                    <label for="confirmDelete" style="margin-left: 8px; cursor: pointer;">我理解此操作不可撤销，并且会删除所有系统数据</label>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 15px 20px; border-top: 1px solid #eee; text-align: right;">
+                <button class="modal-btn modal-btn-secondary" id="cancelDelete" style="background: #6c757d; color: white; border: none; padding: 8px 16px; margin-right: 10px; border-radius: 5px; cursor: pointer;">取消</button>
+                <form id="deleteForm" method="POST" action="{{ url_for('delete_system', system_id=system_id) }}" style="display: inline;">
+                    <button type="submit" class="modal-btn modal-btn-danger" id="confirmDeleteBtn" disabled style="background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: not-allowed;">确认删除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 显示删除确认模态框
+        function showDeleteModal(systemId, systemName) {
+            const modal = document.getElementById('deleteModal');
+            const confirmCheckbox = document.getElementById('confirmDelete');
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            
+            // 显示模态框
+            modal.style.display = 'block';
+            
+            // 重置复选框
+            confirmCheckbox.checked = false;
+            confirmBtn.disabled = true;
+            confirmBtn.style.cursor = 'not-allowed';
+        }
+        
+        // 复选框事件监听
+        document.getElementById('confirmDelete').addEventListener('change', function() {
+            const confirmBtn = document.getElementById('confirmDeleteBtn');
+            if (this.checked) {
+                confirmBtn.disabled = false;
+                confirmBtn.style.cursor = 'pointer';
+            } else {
+                confirmBtn.disabled = true;
+                confirmBtn.style.cursor = 'not-allowed';
+            }
+        });
+        
+        // 关闭模态框
+        document.getElementById('cancelDelete').addEventListener('click', function() {
+            document.getElementById('deleteModal').style.display = 'none';
+        });
+        
+        // 点击模态框外部关闭
+        document.getElementById('deleteModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
