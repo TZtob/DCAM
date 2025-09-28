@@ -24,6 +24,11 @@ app = Flask(__name__)
 app.secret_key = 'dcam-secret-key-2025'  # 用于flash消息
 app.debug = True  # 开启调试模式，方便查看错误
 
+# 确保使用统一的文件上传目录结构
+def get_system_uploads_dir(customer_name, system_name):
+    """获取系统上传文件目录路径"""
+    return f"data/customers/{customer_name}/{system_name}/uploads"
+
 # 添加错误处理器
 @app.errorhandler(500)
 def internal_server_error(e):
@@ -40,14 +45,8 @@ def log_request_info():
     # 在控制台中也输出请求信息
     print(f"DEBUG - 请求路径: {request.path}, 方法: {request.method}, 参数: {request.args}")
 
-# 配置上传文件夹
-UPLOAD_FOLDER = 'data/uploads'
+# 配置允许的文件扩展名
 ALLOWED_EXTENSIONS = {'toml', 'conf', 'gz', 'tar.gz'}
-
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # 数据存储文件
 CUSTOMERS_DB = 'customers.json'
@@ -481,6 +480,7 @@ def delete_system(system_id):
     
     system = systems[system_id]
     system_name = system.get('name', 'Unknown System')
+    customer_name = system.get('customer_name', '')
     
     # 删除系统的YAML文件
     if system.get('yaml_file') and os.path.exists(system['yaml_file']):
@@ -488,6 +488,38 @@ def delete_system(system_id):
             os.remove(system['yaml_file'])
         except Exception as e:
             flash(f'删除系统 {system_name} 的资产文件失败：{str(e)}', 'warning')
+    
+    # 删除系统的上传文件目录（配置文件和日志文件）
+    if customer_name and system_name:
+        system_uploads_dir = get_system_uploads_dir(customer_name, system_name)
+        if os.path.exists(system_uploads_dir):
+            try:
+                # 先尝试删除只读文件属性
+                import stat
+                for root, dirs, files in os.walk(system_uploads_dir):
+                    for file in files:
+                        file_path = os.path.join(root, file)
+                        try:
+                            os.chmod(file_path, stat.S_IWRITE)
+                        except Exception:
+                            pass  # 忽略权限错误，继续处理
+                
+                # 等待一小段时间，允许可能的文件锁释放
+                import time
+                time.sleep(0.5)
+                
+                # 现在尝试删除目录
+                import shutil
+                shutil.rmtree(system_uploads_dir, ignore_errors=True)
+                print(f"已删除系统上传文件目录: {system_uploads_dir}")
+                
+                # 如果目录仍然存在，则提示用户
+                if os.path.exists(system_uploads_dir):
+                    print(f"警告：系统上传目录仍然存在: {system_uploads_dir}，可能需要手动删除")
+                    flash(f'系统 {system_name} 的上传目录可能需要手动删除', 'warning')
+            except Exception as e:
+                flash(f'删除系统 {system_name} 的上传文件目录失败：{str(e)}', 'warning')
+                print(f"删除系统上传文件目录失败: {str(e)}")
     
     # 从访问日志中删除系统相关记录
     access_logs = load_json_db(ACCESS_LOG_DB)
@@ -850,19 +882,81 @@ def delete_customer(customer_id):
     for system_id, system in systems.items():
         if system.get('customer_id') == customer_id:
             systems_to_delete.append(system_id)
+            system_name = system.get('name', '')
             
             # 删除系统的YAML文件
             if system.get('yaml_file') and os.path.exists(system['yaml_file']):
                 try:
                     os.remove(system['yaml_file'])
                 except Exception as e:
-                    flash(f'删除系统 {system["name"]} 的资产文件失败：{str(e)}', 'warning')
+                    flash(f'删除系统 {system_name} 的资产文件失败：{str(e)}', 'warning')
+            
+            # 删除系统的上传文件目录
+            if customer_name and system_name:
+                system_uploads_dir = get_system_uploads_dir(customer_name, system_name)
+                if os.path.exists(system_uploads_dir):
+                    try:
+                        # 先尝试删除只读文件属性
+                        import stat
+                        for root, dirs, files in os.walk(system_uploads_dir):
+                            for file in files:
+                                file_path = os.path.join(root, file)
+                                try:
+                                    os.chmod(file_path, stat.S_IWRITE)
+                                except Exception:
+                                    pass  # 忽略权限错误，继续处理
+                        
+                        # 等待一小段时间，允许可能的文件锁释放
+                        import time
+                        time.sleep(0.5)
+                        
+                        # 现在尝试删除目录
+                        shutil.rmtree(system_uploads_dir, ignore_errors=True)
+                        print(f"已删除系统上传文件目录: {system_uploads_dir}")
+                        
+                        # 如果目录仍然存在，则提示用户
+                        if os.path.exists(system_uploads_dir):
+                            print(f"警告：系统上传目录仍然存在: {system_uploads_dir}，可能需要手动删除")
+                            flash(f'系统 {system_name} 的上传目录可能需要手动删除', 'warning')
+                    except Exception as e:
+                        flash(f'删除系统 {system_name} 的上传文件目录失败：{str(e)}', 'warning')
+                        print(f"删除系统上传文件目录失败: {str(e)}")
     
     # 从系统数据库中删除
     for system_id in systems_to_delete:
         systems.pop(system_id)
     
     save_json_db(SYSTEMS_DB, systems)
+    
+    # 删除客户目录
+    customer_dir = f"data/customers/{customer_name}"
+    if os.path.exists(customer_dir):
+        try:
+            # 先尝试删除只读文件属性
+            import stat
+            for root, dirs, files in os.walk(customer_dir):
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    try:
+                        os.chmod(file_path, stat.S_IWRITE)
+                    except Exception:
+                        pass  # 忽略权限错误，继续处理
+
+            # 等待一小段时间，允许可能的文件锁释放
+            import time
+            time.sleep(0.5)
+            
+            # 现在尝试删除整个目录树
+            shutil.rmtree(customer_dir, ignore_errors=True)
+            print(f"已删除客户目录: {customer_dir}")
+            
+            # 双重检查，如果目录仍然存在则通知用户
+            if os.path.exists(customer_dir):
+                print(f"警告：客户目录仍然存在: {customer_dir}，可能需要手动删除")
+                flash(f'客户 {customer_name} 的某些文件可能需要手动删除', 'warning')
+        except Exception as e:
+            flash(f'删除客户 {customer_name} 的目录失败：{str(e)}', 'warning')
+            print(f"删除客户目录失败: {str(e)}")
     
     # 从访问日志中删除
     access_logs = load_json_db(ACCESS_LOG_DB)
@@ -1038,7 +1132,7 @@ def import_config(system_id):
             os.makedirs(output_dir, exist_ok=True)
             
             # 创建系统专用的uploads目录
-            system_uploads_dir = f"data/customers/{customer_name}/{system['name']}/uploads"
+            system_uploads_dir = get_system_uploads_dir(customer_name, system['name'])
             os.makedirs(system_uploads_dir, exist_ok=True)
             
             output_path = os.path.join(os.path.dirname(__file__), output_filename)
@@ -1777,9 +1871,37 @@ def edit_yaml(system_id):
                          system_id=system_id,
                          yaml_content=yaml_content)
 
+def cleanup_old_upload_structure():
+    """清理旧的上传目录结构，迁移到新的层级化结构"""
+    old_upload_dir = 'data/uploads'
+    if os.path.exists(old_upload_dir):
+        try:
+            # 检查是否有文件
+            has_files = False
+            for _, _, files in os.walk(old_upload_dir):
+                if files:
+                    has_files = True
+                    break
+            
+            if has_files:
+                # 如果有文件，为安全起见，重命名目录而不是删除
+                backup_dir = f"{old_upload_dir}_archived_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+                print(f"发现旧上传目录中有文件，将目录重命名为 {backup_dir} 以备份")
+                os.rename(old_upload_dir, backup_dir)
+            else:
+                # 如果没有文件，直接删除目录
+                import shutil
+                shutil.rmtree(old_upload_dir)
+                print(f"已删除空的旧上传目录: {old_upload_dir}")
+        except Exception as e:
+            print(f"清理旧上传目录时出错: {str(e)}")
+
 if __name__ == '__main__':
     # 初始化默认用户
     init_default_user()
+    
+    # 清理旧的上传目录结构
+    cleanup_old_upload_structure()
     
     # 输出所有注册的路由，便于调试
     print("\n所有注册的路由:")
