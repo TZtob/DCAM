@@ -1333,32 +1333,7 @@
             
             html += '</table>';
             
-            // 添加版本摘要（如果有）
-            if (data.version_summary) {
-                html += `
-                <div style="margin-top:15px;padding:10px;background:#f7fafc;border:1px solid #e2e8f0;border-radius:4px;">
-                    <h4 style="margin-bottom:10px;">版本统计</h4>
-                    <table style="width:100%;border-collapse:collapse;">
-                        <tr>
-                            <th style="text-align:left;padding:5px;">版本</th>
-                            <th style="text-align:left;padding:5px;">数量</th>
-                        </tr>
-                `;
-                
-                for (const version in data.version_summary) {
-                    html += `
-                        <tr>
-                            <td style="padding:5px;">${version}</td>
-                            <td style="padding:5px;">${data.version_summary[version]}</td>
-                        </tr>
-                    `;
-                }
-                
-                html += `
-                    </table>
-                </div>
-                `;
-            }
+            // 版本摘要已移除
             
             return html;
         }

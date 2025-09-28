@@ -101,15 +101,6 @@
                 </div>
             {% endif %}
             
-            {% if result.version_summary is defined %}
-                <div class="summary">
-                    <strong>版本统计：</strong>
-                    {% for version, count in result.version_summary.items() %}
-                        {{ version }}: {{ count }} 个 &nbsp;&nbsp;
-                    {% endfor %}
-                </div>
-            {% endif %}
-            
             <!-- 表格显示结果 -->
             {% if result.clusters is defined %}
                 <table>

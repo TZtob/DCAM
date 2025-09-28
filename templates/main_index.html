@@ -1107,8 +1107,8 @@
                     ]);
                 }
             } else if (data.query_type == 7) {
-                // 集群IP地址查询
-                columns = ["集群名称", "设备名称", "资产所有者", "控制器C0 IP", "控制器C1 IP", "EMF IP"];
+                // 集群IP地址查询（包含主机IP信息）
+                columns = ["集群名称", "设备名称", "资产所有者", "控制器C0 IP", "控制器C1 IP", "EMF IP", "主机名", "主机管理IP", "主机数据网络"];
                 if (data.devices && data.devices.length > 0) {
                     items = data.devices.map(d => [
                         d.Cluster_name || '-',
@@ -1116,7 +1116,10 @@
                         d.Asset_owner || '-',
                         d.Controller_c0_ip || '-',
                         d.Controller_c1_ip || '-',
-                        d.EMF_ip || '-'
+                        d.EMF_ip || '-',
+                        d.Host_name || '-',
+                        d.Host_mgmt_ip || '-',
+                        d.Host_data_networks || '-'
                     ]);
                 }
             } else {
@@ -1163,18 +1166,7 @@
             
             html += '</tbody></table>';
             
-            // 添加版本摘要信息（如果有）
-            if (data.version_summary) {
-                html += '<div style="margin-top:20px;padding:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;">';
-                html += '<h4 style="margin:0 0 10px 0;font-size:1em;">版本统计摘要:</h4>';
-                html += '<ul style="margin:0;padding-left:20px;">';
-                
-                Object.entries(data.version_summary).forEach(([version, count]) => {
-                    html += `<li>${version || 'N/A'}: ${count} 个</li>`;
-                });
-                
-                html += '</ul></div>';
-            }
+            // 版本统计摘要已移除
             
             resultsContainer.innerHTML = html;
         }
@@ -1241,10 +1233,7 @@
                             ])
                         );
                         
-                        // 添加版本摘要
-                        if (queryData.version_summary) {
-                            resultHtml += createSummaryHTML('SFA版本统计', queryData.version_summary, '设备');
-                        }
+                        // SFA版本摘要已移除
                     }
                     // 处理查询类型3：EXA版本详情
                     else if (parseInt(queryType) === 3) {
@@ -1257,10 +1246,7 @@
                             ])
                         );
                         
-                        // 添加版本摘要
-                        if (queryData.version_summary) {
-                            resultHtml += createSummaryHTML('EXA版本统计', queryData.version_summary, '集群');
-                        }
+                        // EXA版本摘要已移除
                     }
                     // 处理查询类型4：BBU过期日期
                     else if (parseInt(queryType) === 4) {
@@ -1304,17 +1290,20 @@
                             ])
                         );
                     }
-                    // 处理查询类型7：集群IP地址查询
+                    // 处理查询类型7：集群IP地址查询（包含主机IP信息）
                     else if (parseInt(queryType) === 7) {
                         resultHtml = createTableHTML(
-                            ['集群名称', '设备名称', '资产所有者', '控制器C0 IP', '控制器C1 IP', 'EMF IP'],
+                            ['集群名称', '设备名称', '资产所有者', '控制器C0 IP', '控制器C1 IP', 'EMF IP', '主机名', '主机管理IP', '主机数据网络'],
                             (queryData.devices || []).map(d => [
                                 d.Cluster_name || '-',
                                 d.Device_name || '-',
                                 d.Asset_owner || '-',
                                 d.Controller_c0_ip || '-',
                                 d.Controller_c1_ip || '-',
-                                d.EMF_ip || '-'
+                                d.EMF_ip || '-',
+                                d.Host_name || '-',
+                                d.Host_mgmt_ip || '-',
+                                d.Host_data_networks || '-'
                             ])
                         );
                     }
