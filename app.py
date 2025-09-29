@@ -6,12 +6,22 @@ import os
 import json
 import yaml
 import logging
+import copy
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 import tempfile
 import shutil
 from generate_cluster_yaml import generate_cluster_yaml
+
+# 定义应用路径常量
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+DB_DIR = os.path.join(DATA_DIR, 'db')
+CUSTOMERS_DB = os.path.join(DB_DIR, 'customers.json')
+SYSTEMS_DB = os.path.join(DB_DIR, 'systems.json')
+ACCESS_LOG_DB = os.path.join(DB_DIR, 'access_log.json')
+USERS_DB = os.path.join(DB_DIR, 'users.json')
 
 # 配置日志记录
 logging.basicConfig(
@@ -23,6 +33,104 @@ logging.basicConfig(
 app = Flask(__name__)
 app.secret_key = 'dcam-secret-key-2025'  # 用于flash消息
 app.debug = True  # 开启调试模式，方便查看错误
+
+# 应用初始化函数
+def init_application_environment():
+    """初始化应用环境，确保工作目录和文件权限正确"""
+    # 记录当前工作目录
+    current_dir = os.getcwd()
+    print(f"[系统初始化] 当前工作目录: {current_dir}")
+    
+    # 获取应用所在的绝对路径
+    app_dir = os.path.abspath(os.path.dirname(__file__))
+    print(f"[系统初始化] 应用目录: {app_dir}")
+    
+    # 在非Docker环境下，可能需要切换工作目录
+    # 在Docker中，通常已经在正确的目录(/app)下
+    is_docker = os.path.exists('/.dockerenv')
+    print(f"[系统初始化] 是否在Docker环境中运行: {is_docker}")
+    
+    if not is_docker and current_dir != app_dir:
+        try:
+            os.chdir(app_dir)
+            print(f"[系统初始化] 已切换工作目录: {os.getcwd()}")
+        except Exception as e:
+            print(f"[系统初始化] 切换工作目录失败: {str(e)}")
+    
+    # 确保目录结构存在
+    os.makedirs(DATA_DIR, exist_ok=True)
+    os.makedirs(DB_DIR, exist_ok=True)
+    
+    # 处理旧数据库文件迁移 (如果数据库文件在旧位置，移动到新位置)
+    old_db_files = {
+        os.path.join(BASE_DIR, 'customers.json'): CUSTOMERS_DB,
+        os.path.join(BASE_DIR, 'systems.json'): SYSTEMS_DB,
+        os.path.join(BASE_DIR, 'access_log.json'): ACCESS_LOG_DB,
+        os.path.join(BASE_DIR, 'users.json'): USERS_DB
+    }
+    
+    for old_path, new_path in old_db_files.items():
+        if os.path.exists(old_path) and not os.path.exists(new_path):
+            try:
+                print(f"[系统初始化] 迁移旧数据库文件: {old_path} -> {new_path}")
+                # 先复制，成功后再删除，确保数据安全
+                import shutil
+                shutil.copy2(old_path, new_path)
+                os.remove(old_path)
+            except Exception as e:
+                print(f"[系统初始化] 迁移数据库文件失败: {str(e)}")
+    
+    # 检查数据库文件的存在和权限
+    for db_file in [CUSTOMERS_DB, SYSTEMS_DB, ACCESS_LOG_DB, USERS_DB]:
+        # 如果文件不存在，创建一个空的JSON文件
+        if not os.path.exists(db_file):
+            try:
+                with open(db_file, 'w', encoding='utf-8') as f:
+                    json.dump({}, f)
+                print(f"[系统初始化] 创建空数据库文件: {db_file}")
+            except Exception as e:
+                print(f"[系统初始化] 创建数据库文件失败: {db_file} - {str(e)}")
+        
+        # 检查文件是否可读写
+        try:
+            with open(db_file, 'a+') as test_file:
+                test_file.seek(0)
+                test_file.read(1)  # 测试读取
+            print(f"[系统初始化] 数据库文件可读写: {db_file}")
+        except Exception as e:
+            print(f"[系统初始化] 数据库文件访问异常: {db_file} - {str(e)}")
+            # 尝试修复权限
+            try:
+                import stat
+                os.chmod(db_file, stat.S_IWRITE | stat.S_IREAD)
+                print(f"[系统初始化] 已尝试修复文件权限: {db_file}")
+            except Exception as perm_e:
+                print(f"[系统初始化] 修复权限失败: {str(perm_e)}")
+    
+    # Docker环境下的特殊处理
+    if is_docker:
+        print("[系统初始化] 正在进行Docker环境特殊配置")
+        # 确保数据目录有正确的权限
+        try:
+            for dir_path in [DATA_DIR, DB_DIR]:
+                # Docker中可能以非root用户运行，确保有足够权限
+                os.chmod(dir_path, 0o777)  # 所有用户可读写执行
+                print(f"[系统初始化] 已设置目录权限: {dir_path}")
+        except Exception as e:
+            print(f"[系统初始化] 设置目录权限失败: {str(e)}")
+            
+        # 打印卷挂载信息，帮助排查
+        print("\n[系统初始化] Docker卷挂载信息:")
+        try:
+            with open('/proc/mounts', 'r') as f:
+                mounts = [line for line in f if '/app' in line]
+                for mount in mounts:
+                    print(f"  {mount.strip()}")
+        except Exception as e:
+            print(f"  无法读取挂载信息: {str(e)}")
+
+# 在应用启动时初始化环境
+init_application_environment()
 
 # 确保使用统一的文件上传目录结构
 def get_system_uploads_dir(customer_name, system_name):
@@ -48,11 +156,24 @@ def log_request_info():
 # 配置允许的文件扩展名
 ALLOWED_EXTENSIONS = {'toml', 'conf', 'gz', 'tar.gz'}
 
-# 数据存储文件
-CUSTOMERS_DB = 'customers.json'
-SYSTEMS_DB = 'systems.json'
-ACCESS_LOG_DB = 'access_log.json'  # 新增: 访问记录数据库
-USERS_DB = 'users.json'  # 用户认证数据库
+# 数据存储文件 - 使用Docker友好的路径，确保数据持久化
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+DB_DIR = os.path.join(DATA_DIR, 'db')  # 数据库文件专用目录
+os.makedirs(DATA_DIR, exist_ok=True)  # 确保数据目录存在
+os.makedirs(DB_DIR, exist_ok=True)  # 确保数据库目录存在
+
+# 数据库文件路径 - 存储在挂载的data/db目录下以确保Docker持久化
+CUSTOMERS_DB = os.path.join(DB_DIR, 'customers.json')
+SYSTEMS_DB = os.path.join(DB_DIR, 'systems.json')
+ACCESS_LOG_DB = os.path.join(DB_DIR, 'access_log.json')
+USERS_DB = os.path.join(DB_DIR, 'users.json')
+
+# 打印数据库文件路径，便于调试
+print(f"数据库文件位置:")
+print(f"CUSTOMERS_DB: {CUSTOMERS_DB}")
+print(f"SYSTEMS_DB: {SYSTEMS_DB}")
+print(f"当前工作目录: {os.getcwd()}")
 
 # 注册自定义过滤器
 @app.template_filter('datetime')
@@ -90,20 +211,157 @@ def load_json_db(filename):
     return {}
 
 def save_json_db(filename, data):
-    """保存JSON数据库文件"""
-    with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+    """保存JSON数据库文件，返回操作是否成功"""
+    print(f"\n[DB操作] 开始保存数据库文件: {filename}")
+    print(f"[DB操作] 文件绝对路径: {os.path.abspath(filename)}")
+    print(f"[DB操作] 当前工作目录: {os.getcwd()}")
+    
+    # 检查是否在Docker环境中运行
+    is_docker = os.path.exists('/.dockerenv')
+    if is_docker:
+        print(f"[DB操作] 在Docker环境中运行，数据应持久化到挂载卷")
+        
+        # 检查文件是否在挂载的卷内
+        if '/app/data' in os.path.abspath(filename):
+            print(f"[DB操作] 文件位于挂载卷中，持久化应正常")
+        else:
+            print(f"[DB操作] 警告: 文件不在挂载卷中，可能会导致数据丢失")
+    
+    try:
+        # 确保目标目录存在
+        directory = os.path.dirname(filename)
+        if directory and not os.path.exists(directory):
+            print(f"[DB操作] 创建目录: {directory}")
+            os.makedirs(directory, exist_ok=True)
+            
+            # 在Docker环境中设置正确的目录权限
+            if is_docker:
+                try:
+                    os.chmod(directory, 0o777)  # 确保所有用户都有读写权限
+                    print(f"[DB操作] 在Docker中设置目录权限: {directory}")
+                except Exception as perm_e:
+                    print(f"[DB操作] 设置目录权限失败: {str(perm_e)}")
+        
+        # 检查文件权限
+        if os.path.exists(filename):
+            try:
+                # 测试文件是否可写
+                with open(filename, 'a') as test:
+                    pass
+                print(f"[DB操作] 文件存在且可写: {filename}")
+            except PermissionError:
+                print(f"[DB操作] 警告: 文件权限错误，尝试修改权限: {filename}")
+                try:
+                    import stat
+                    os.chmod(filename, stat.S_IWRITE | stat.S_IREAD)
+                except Exception as perm_e:
+                    print(f"[DB操作] 修改权限失败: {str(perm_e)}")
+            except Exception as access_e:
+                print(f"[DB操作] 文件访问异常: {str(access_e)}")
+        
+        # 先写入临时文件，成功后再重命名，避免写入过程中的中断导致文件损坏
+        temp_filename = f"{filename}.tmp"
+        print(f"[DB操作] 写入临时文件: {temp_filename}")
+        with open(temp_filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+            f.flush()  # 确保数据写入磁盘
+            os.fsync(f.fileno())  # 在Linux上强制同步文件系统
+        
+        # 备份现有文件（如果存在）
+        if os.path.exists(filename):
+            backup_filename = f"{filename}.bak"
+            if os.path.exists(backup_filename):
+                print(f"[DB操作] 删除旧备份: {backup_filename}")
+                os.remove(backup_filename)
+            print(f"[DB操作] 创建新备份: {filename} -> {backup_filename}")
+            os.rename(filename, backup_filename)
+        
+        # 将临时文件重命名为正式文件
+        print(f"[DB操作] 重命名临时文件为正式文件: {temp_filename} -> {filename}")
+        os.rename(temp_filename, filename)
+        
+        # 验证文件是否写入成功
+        if os.path.exists(filename):
+            print(f"[DB操作] 验证成功: 文件已写入 {filename}, 大小: {os.path.getsize(filename)} 字节")
+            return True
+        else:
+            print(f"[DB操作] 验证失败: 文件不存在 {filename}")
+            return False
+    except Exception as e:
+        print(f"[DB操作] 错误: 保存数据库文件 {filename} 失败: {str(e)}")
+        # 如果临时文件存在，清理它
+        if 'temp_filename' in locals() and os.path.exists(temp_filename):
+            try:
+                os.remove(temp_filename)
+            except Exception as clean_e:
+                print(f"[DB操作] 清理临时文件失败: {str(clean_e)}")
+        
+        # 尝试使用备用方法写入文件
+        try:
+            print(f"[DB操作] 尝试备用方法写入文件: {filename}")
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            
+            if os.path.exists(filename):
+                print(f"[DB操作] 备用方法成功: 文件已写入 {filename}")
+                return True
+            else:
+                print(f"[DB操作] 备用方法失败: 文件不存在 {filename}")
+        except Exception as backup_e:
+            print(f"[DB操作] 备用方法失败: {str(backup_e)}")
+        
+        return False
 
 def get_customers():
     """获取所有客户"""
-    customers_data = load_json_db(CUSTOMERS_DB)
-    return customers_data
+    try:
+        customers_data = load_json_db(CUSTOMERS_DB)
+        # 检查是否成功加载
+        if customers_data is None:
+            print(f"[警告] 无法加载客户数据，返回空字典")
+            return {}
+        return customers_data
+    except Exception as e:
+        print(f"[错误] 获取客户数据失败: {str(e)}")
+        # 尝试使用备份文件
+        try:
+            backup_file = f"{CUSTOMERS_DB}.bak"
+            if os.path.exists(backup_file):
+                print(f"[恢复] 尝试从备份恢复客户数据: {backup_file}")
+                with open(backup_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+        except:
+            pass
+        # 如果都失败了，返回空字典
+        return {}
 
 def get_systems(customer_id=None):
     """获取系统列表，可选择按客户过滤"""
-    systems_data = load_json_db(SYSTEMS_DB)
-    # 兼容旧数据，补充archived字段
+    systems_data = {}
+    
+    # 尝试加载系统数据
+    try:
+        systems_data = load_json_db(SYSTEMS_DB)
+        if systems_data is None:
+            print(f"[警告] 无法加载系统数据，返回空字典")
+            return {}
+    except Exception as e:
+        print(f"[错误] 加载系统数据失败: {str(e)}")
+        
+        # 尝试从备份恢复
+        try:
+            backup_file = f"{SYSTEMS_DB}.bak"
+            if os.path.exists(backup_file):
+                print(f"[恢复] 尝试从备份恢复系统数据: {backup_file}")
+                with open(backup_file, 'r', encoding='utf-8') as f:
+                    systems_data = json.load(f)
+        except Exception as backup_e:
+            print(f"[错误] 从备份恢复失败: {str(backup_e)}")
+            return {}
+    
+    # 处理系统数据
     for system_id, sys in systems_data.items():
+        # 兼容旧数据，补充archived字段
         if 'archived' not in sys:
             sys['archived'] = False
         
@@ -118,15 +376,25 @@ def get_systems(customer_id=None):
                     if yaml_data and 'clusters' in yaml_data:
                         for cluster in yaml_data['clusters']:
                             if 'devices' in cluster:
-                                sfa_device_count += len(cluster['devices'])
+                                devices = cluster['devices']
+                                if isinstance(devices, list):
+                                    sfa_device_count += len(devices)
+                                elif isinstance(devices, dict):  # 处理可能的字典形式
+                                    sfa_device_count += 1
             except Exception as e:
                 print(f"计算系统 {system_id} 的SFA设备数量出错: {str(e)}")
         
         # 添加SFA设备数量
         sys['sfa_device_count'] = sfa_device_count
-        
+    
+    # 如果指定了客户ID，按客户过滤
     if customer_id:
-        return {k: v for k, v in systems_data.items() if v.get('customer_id') == customer_id}
+        filtered_systems = {}
+        for system_id, system in systems_data.items():
+            if system.get('customer_id') == customer_id:
+                filtered_systems[system_id] = system
+        return filtered_systems
+    
     return systems_data
 
 def log_access(entity_type, entity_id):
@@ -360,12 +628,7 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'username' not in session:
-            # 使用硬编码路径，确保前缀正确
-            if request.path.startswith('/dcam'):
-                return redirect(f'/dcam/login?next={request.path}')
-            else:
-                # 如果请求的不是DCAM路径，重定向到DCAM应用
-                return redirect('/dcam/login?next=/dcam/')
+            return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -482,56 +745,83 @@ def delete_system(system_id):
     system_name = system.get('name', 'Unknown System')
     customer_name = system.get('customer_name', '')
     
-    # 删除系统的YAML文件
-    if system.get('yaml_file') and os.path.exists(system['yaml_file']):
-        try:
-            os.remove(system['yaml_file'])
-        except Exception as e:
-            flash(f'删除系统 {system_name} 的资产文件失败：{str(e)}', 'warning')
-    
-    # 删除系统的上传文件目录（配置文件和日志文件）
-    if customer_name and system_name:
-        system_uploads_dir = get_system_uploads_dir(customer_name, system_name)
-        if os.path.exists(system_uploads_dir):
+    try:
+        # 1. 保存删除前的数据（用于回滚）
+        old_systems = copy.deepcopy(systems)
+        old_access_logs = None
+        
+        # 2. 从系统数据库中删除
+        systems.pop(system_id)
+        success = save_json_db(SYSTEMS_DB, systems)
+        if not success:
+            flash('系统数据库更新失败，操作已取消', 'error')
+            return redirect(url_for('system_detail', system_id=system_id))
+        
+        # 3. 从访问日志中删除系统相关记录
+        access_logs = load_json_db(ACCESS_LOG_DB)
+        old_access_logs = copy.deepcopy(access_logs)
+        if 'systems' in access_logs and system_id in access_logs['systems']:
+            access_logs['systems'].pop(system_id)
+            success = save_json_db(ACCESS_LOG_DB, access_logs)
+            if not success:
+                # 如果访问日志更新失败，回滚系统数据库
+                save_json_db(SYSTEMS_DB, old_systems)
+                flash('访问日志更新失败，操作已取消', 'error')
+                return redirect(url_for('system_detail', system_id=system_id))
+        
+        # 4. 在数据库更新成功后，尝试删除文件（即使失败也不影响数据库操作）
+        # 删除系统的YAML文件
+        if system.get('yaml_file') and os.path.exists(system['yaml_file']):
             try:
-                # 先尝试删除只读文件属性
-                import stat
-                for root, dirs, files in os.walk(system_uploads_dir):
-                    for file in files:
-                        file_path = os.path.join(root, file)
-                        try:
-                            os.chmod(file_path, stat.S_IWRITE)
-                        except Exception:
-                            pass  # 忽略权限错误，继续处理
-                
-                # 等待一小段时间，允许可能的文件锁释放
-                import time
-                time.sleep(0.5)
-                
-                # 现在尝试删除目录
-                import shutil
-                shutil.rmtree(system_uploads_dir, ignore_errors=True)
-                print(f"已删除系统上传文件目录: {system_uploads_dir}")
-                
-                # 如果目录仍然存在，则提示用户
-                if os.path.exists(system_uploads_dir):
-                    print(f"警告：系统上传目录仍然存在: {system_uploads_dir}，可能需要手动删除")
-                    flash(f'系统 {system_name} 的上传目录可能需要手动删除', 'warning')
+                os.remove(system['yaml_file'])
             except Exception as e:
-                flash(f'删除系统 {system_name} 的上传文件目录失败：{str(e)}', 'warning')
-                print(f"删除系统上传文件目录失败: {str(e)}")
+                flash(f'删除系统 {system_name} 的资产文件失败：{str(e)}', 'warning')
+                print(f"删除YAML文件失败: {str(e)}")
+        
+        # 删除系统的上传文件目录（配置文件和日志文件）
+        if customer_name and system_name:
+            system_uploads_dir = get_system_uploads_dir(customer_name, system_name)
+            if os.path.exists(system_uploads_dir):
+                try:
+                    # 先尝试删除只读文件属性
+                    import stat
+                    for root, dirs, files in os.walk(system_uploads_dir):
+                        for file in files:
+                            file_path = os.path.join(root, file)
+                            try:
+                                os.chmod(file_path, stat.S_IWRITE)
+                            except Exception:
+                                pass  # 忽略权限错误，继续处理
+                    
+                    # 等待一小段时间，允许可能的文件锁释放
+                    import time
+                    time.sleep(0.5)
+                    
+                    # 现在尝试删除目录
+                    import shutil
+                    shutil.rmtree(system_uploads_dir, ignore_errors=True)
+                    print(f"已删除系统上传文件目录: {system_uploads_dir}")
+                    
+                    # 如果目录仍然存在，则提示用户
+                    if os.path.exists(system_uploads_dir):
+                        print(f"警告：系统上传目录仍然存在: {system_uploads_dir}，可能需要手动删除")
+                        flash(f'系统 {system_name} 的上传目录可能需要手动删除', 'warning')
+                except Exception as e:
+                    flash(f'删除系统 {system_name} 的上传文件目录失败：{str(e)}', 'warning')
+                    print(f"删除系统上传文件目录失败: {str(e)}")
+                    # 目录删除失败但数据库已更新，所以系统数据仍然被成功删除了
+        
+        flash(f'系统 {system_name} 已成功删除！', 'success')
+    except Exception as e:
+        # 捕获所有未处理的异常，并尝试回滚
+        print(f"删除系统时发生未处理的异常: {str(e)}")
+        if 'old_systems' in locals():
+            save_json_db(SYSTEMS_DB, old_systems)
+        if 'old_access_logs' in locals() and old_access_logs is not None:
+            save_json_db(ACCESS_LOG_DB, old_access_logs)
+        flash(f'删除系统 {system_name} 时发生错误：{str(e)}', 'error')
     
-    # 从访问日志中删除系统相关记录
-    access_logs = load_json_db(ACCESS_LOG_DB)
-    if 'systems' in access_logs and system_id in access_logs['systems']:
-        access_logs['systems'].pop(system_id)
-        save_json_db(ACCESS_LOG_DB, access_logs)
-    
-    # 从系统数据库中删除
-    systems.pop(system_id)
-    save_json_db(SYSTEMS_DB, systems)
-    
-    flash(f'系统 {system_name} 已成功删除！', 'success')
+    # 确保重定向，即使发生异常
     return redirect(url_for('systems_list'))
 
 def get_customer_yaml_mapping():
@@ -875,21 +1165,77 @@ def delete_customer(customer_id):
     
     customer_name = customers[customer_id]['name']
     
-    # 删除关联的系统
-    systems = get_systems()
-    systems_to_delete = []
-    
-    for system_id, system in systems.items():
-        if system.get('customer_id') == customer_id:
-            systems_to_delete.append(system_id)
-            system_name = system.get('name', '')
+    try:
+        # 1. 保存删除前的数据（用于回滚）
+        old_customers = copy.deepcopy(customers)
+        old_systems = copy.deepcopy(get_systems())
+        old_access_logs = copy.deepcopy(load_json_db(ACCESS_LOG_DB))
+        
+        # 2. 收集需要删除的系统信息
+        systems = old_systems  # 使用复制的系统数据
+        systems_to_delete = []
+        affected_systems_info = []  # 存储需要处理文件的系统信息
+        
+        for system_id, system in systems.items():
+            if system.get('customer_id') == customer_id:
+                systems_to_delete.append(system_id)
+                system_name = system.get('name', '')
+                yaml_file = system.get('yaml_file')
+                
+                affected_systems_info.append({
+                    'id': system_id,
+                    'name': system_name,
+                    'yaml_file': yaml_file
+                })
+        
+        # 3. 更新系统数据库
+        for system_id in systems_to_delete:
+            systems.pop(system_id)
+        
+        if not save_json_db(SYSTEMS_DB, systems):
+            flash('系统数据库更新失败，操作已取消', 'error')
+            return redirect(url_for('customer_detail', customer_id=customer_id))
+        
+        # 4. 更新访问日志
+        access_logs = load_json_db(ACCESS_LOG_DB)
+        if 'customers' in access_logs and customer_id in access_logs['customers']:
+            access_logs['customers'].pop(customer_id)
+        
+        # 同时删除相关系统的访问记录
+        if 'systems' in access_logs:
+            for system_id in systems_to_delete:
+                if system_id in access_logs['systems']:
+                    access_logs['systems'].pop(system_id)
+        
+        if not save_json_db(ACCESS_LOG_DB, access_logs):
+            # 回滚系统数据库
+            save_json_db(SYSTEMS_DB, old_systems)
+            flash('访问日志更新失败，操作已取消', 'error')
+            return redirect(url_for('customer_detail', customer_id=customer_id))
+        
+        # 5. 更新客户数据库
+        customers.pop(customer_id)
+        if not save_json_db(CUSTOMERS_DB, customers):
+            # 回滚之前的更改
+            save_json_db(SYSTEMS_DB, old_systems)
+            save_json_db(ACCESS_LOG_DB, old_access_logs)
+            flash('客户数据库更新失败，操作已取消', 'error')
+            return redirect(url_for('customer_detail', customer_id=customer_id))
+        
+        # 6. 数据库更新成功后，处理文件删除操作（这些操作失败不会影响数据库更新）
+        # 删除系统文件
+        for system_info in affected_systems_info:
+            system_name = system_info['name']
+            yaml_file = system_info['yaml_file']
             
             # 删除系统的YAML文件
-            if system.get('yaml_file') and os.path.exists(system['yaml_file']):
+            if yaml_file and os.path.exists(yaml_file):
                 try:
-                    os.remove(system['yaml_file'])
+                    os.remove(yaml_file)
+                    print(f"已删除系统YAML文件: {yaml_file}")
                 except Exception as e:
                     flash(f'删除系统 {system_name} 的资产文件失败：{str(e)}', 'warning')
+                    print(f"删除系统YAML文件失败: {str(e)}")
             
             # 删除系统的上传文件目录
             if customer_name and system_name:
@@ -921,54 +1267,53 @@ def delete_customer(customer_id):
                     except Exception as e:
                         flash(f'删除系统 {system_name} 的上传文件目录失败：{str(e)}', 'warning')
                         print(f"删除系统上传文件目录失败: {str(e)}")
+        
+        # 删除客户目录
+        customer_dir = f"data/customers/{customer_name}"
+        if os.path.exists(customer_dir):
+            try:
+                # 先尝试删除只读文件属性
+                import stat
+                for root, dirs, files in os.walk(customer_dir):
+                    for file in files:
+                        file_path = os.path.join(root, file)
+                        try:
+                            os.chmod(file_path, stat.S_IWRITE)
+                        except Exception:
+                            pass  # 忽略权限错误，继续处理
+                
+                # 等待一小段时间，允许可能的文件锁释放
+                import time
+                time.sleep(0.5)
+                
+                # 现在尝试删除整个目录树
+                shutil.rmtree(customer_dir, ignore_errors=True)
+                print(f"已删除客户目录: {customer_dir}")
+                
+                # 双重检查，如果目录仍然存在则通知用户
+                if os.path.exists(customer_dir):
+                    print(f"警告：客户目录仍然存在: {customer_dir}，可能需要手动删除")
+                    flash(f'客户 {customer_name} 的某些文件可能需要手动删除', 'warning')
+            except Exception as e:
+                flash(f'删除客户 {customer_name} 的目录失败：{str(e)}', 'warning')
+                print(f"删除客户目录失败: {str(e)}")
+                # 目录删除失败但数据库已更新，所以客户数据仍然被成功删除了
+        
+        flash(f'客户 {customer_name} 及其所有系统已成功删除！', 'success')
     
-    # 从系统数据库中删除
-    for system_id in systems_to_delete:
-        systems.pop(system_id)
+    except Exception as e:
+        # 捕获所有未处理的异常，并尝试回滚
+        print(f"删除客户时发生未处理的异常: {str(e)}")
+        # 尝试回滚所有数据库操作
+        if 'old_customers' in locals():
+            save_json_db(CUSTOMERS_DB, old_customers)
+        if 'old_systems' in locals():
+            save_json_db(SYSTEMS_DB, old_systems)
+        if 'old_access_logs' in locals():
+            save_json_db(ACCESS_LOG_DB, old_access_logs)
+        flash(f'删除客户 {customer_name} 时发生错误：{str(e)}', 'error')
     
-    save_json_db(SYSTEMS_DB, systems)
-    
-    # 删除客户目录
-    customer_dir = f"data/customers/{customer_name}"
-    if os.path.exists(customer_dir):
-        try:
-            # 先尝试删除只读文件属性
-            import stat
-            for root, dirs, files in os.walk(customer_dir):
-                for file in files:
-                    file_path = os.path.join(root, file)
-                    try:
-                        os.chmod(file_path, stat.S_IWRITE)
-                    except Exception:
-                        pass  # 忽略权限错误，继续处理
-
-            # 等待一小段时间，允许可能的文件锁释放
-            import time
-            time.sleep(0.5)
-            
-            # 现在尝试删除整个目录树
-            shutil.rmtree(customer_dir, ignore_errors=True)
-            print(f"已删除客户目录: {customer_dir}")
-            
-            # 双重检查，如果目录仍然存在则通知用户
-            if os.path.exists(customer_dir):
-                print(f"警告：客户目录仍然存在: {customer_dir}，可能需要手动删除")
-                flash(f'客户 {customer_name} 的某些文件可能需要手动删除', 'warning')
-        except Exception as e:
-            flash(f'删除客户 {customer_name} 的目录失败：{str(e)}', 'warning')
-            print(f"删除客户目录失败: {str(e)}")
-    
-    # 从访问日志中删除
-    access_logs = load_json_db(ACCESS_LOG_DB)
-    if 'customers' in access_logs and customer_id in access_logs['customers']:
-        access_logs['customers'].pop(customer_id)
-    save_json_db(ACCESS_LOG_DB, access_logs)
-    
-    # 删除客户
-    customers.pop(customer_id)
-    save_json_db(CUSTOMERS_DB, customers)
-    
-    flash(f'客户 {customer_name} 及其所有系统已成功删除！', 'success')
+    # 确保重定向，即使发生异常
     return redirect(url_for('customers_list'))
 
 @app.route('/systems')
@@ -1897,6 +2242,13 @@ def cleanup_old_upload_structure():
             print(f"清理旧上传目录时出错: {str(e)}")
 
 if __name__ == '__main__':
+    # 设置应用根目录为工作目录，确保文件操作一致性
+    script_dir = os.path.abspath(os.path.dirname(__file__))
+    print(f"脚本目录: {script_dir}")
+    print(f"切换工作目录前: {os.getcwd()}")
+    os.chdir(script_dir)
+    print(f"切换工作目录后: {os.getcwd()}")
+    
     # 初始化默认用户
     init_default_user()
     
@@ -1907,5 +2259,13 @@ if __name__ == '__main__':
     print("\n所有注册的路由:")
     for rule in app.url_map.iter_rules():
         print(f"{rule} -> {rule.endpoint}")
+    
+    # 检查并记录数据库文件状态
+    print("\n数据库文件状态:")
+    for db_file in [CUSTOMERS_DB, SYSTEMS_DB, ACCESS_LOG_DB, USERS_DB]:
+        if os.path.exists(db_file):
+            print(f"- {os.path.basename(db_file)}: 存在, 大小: {os.path.getsize(db_file)} 字节")
+        else:
+            print(f"- {os.path.basename(db_file)}: 不存在")
     
     app.run(debug=True, host='0.0.0.0', port=5000)
