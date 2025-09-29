@@ -34,6 +34,11 @@ app = Flask(__name__)
 app.secret_key = 'dcam-secret-key-2025'  # 用于flash消息
 app.debug = True  # 开启调试模式，方便查看错误
 
+# 配置应用URL设置，防止与其他应用混淆
+app.config['SERVER_NAME'] = None  # 不限制服务器名，允许通过IP访问
+app.config['APPLICATION_ROOT'] = '/'  # 应用根路径
+app.config['PREFERRED_URL_SCHEME'] = 'http'  # 默认URL方案
+
 # 应用初始化函数
 def init_application_environment():
     """初始化应用环境，确保工作目录和文件权限正确"""
@@ -152,6 +157,27 @@ def log_request_info():
     
     # 在控制台中也输出请求信息
     print(f"DEBUG - 请求路径: {request.path}, 方法: {request.method}, 参数: {request.args}")
+
+# 配置响应安全头
+@app.after_request
+def add_security_headers(response):
+    """添加安全响应头，防止被其他应用影响"""
+    # 防止点击劫持
+    response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+    
+    # 防止XSS攻击
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    
+    # 防止MIME类型嗅探
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    
+    # 引用者策略
+    response.headers['Referrer-Policy'] = 'same-origin'
+    
+    # 内容安全策略（基本版）
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'"
+    
+    return response
 
 # 配置允许的文件扩展名
 ALLOWED_EXTENSIONS = {'toml', 'conf', 'gz', 'tar.gz'}
@@ -621,15 +647,36 @@ def get_user(username):
     return users.get(username)
 
 def is_safe_url(target):
-    """检查重定向URL是否安全（仅允许相对URL或同域名URL）"""
+    """检查重定向URL是否安全（仅允许DCAM应用内部的相对URL）"""
     if not target:
         return False
     
-    # 只允许相对路径（以/开头但不以//开头）
-    if target.startswith('/') and not target.startswith('//'):
-        return True
+    # 检查是否包含外部域名或协议
+    if any(target.startswith(scheme) for scheme in ['http://', 'https://', 'ftp://', '//']):
+        return False
     
-    # 不允许绝对URL（http://、https://等）
+    # 检查是否包含可能的恶意字符
+    if any(char in target for char in ['@', '\\', '\n', '\r', '\t']):
+        return False
+    
+    # 只允许以/开头的相对路径，且必须是DCAM应用的路径
+    if target.startswith('/') and not target.startswith('//'):
+        # 额外检查：确保路径看起来像DCAM应用的路径
+        # 允许的路径模式：/, /login, /customers, /systems, /search等
+        allowed_patterns = [
+            '/', '/login', '/logout', '/change_password',
+            '/customers', '/systems', '/search',
+            '/api/', '/customer/', '/systems/'
+        ]
+        
+        # 检查是否匹配允许的路径模式
+        for pattern in allowed_patterns:
+            if target.startswith(pattern):
+                return True
+        
+        # 如果不匹配任何已知模式，返回False
+        return False
+    
     return False
 
 # 注册get_user为Jinja2模板全局函数
