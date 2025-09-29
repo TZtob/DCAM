@@ -620,6 +620,18 @@ def get_user(username):
     users = load_users()
     return users.get(username)
 
+def is_safe_url(target):
+    """检查重定向URL是否安全（仅允许相对URL或同域名URL）"""
+    if not target:
+        return False
+    
+    # 只允许相对路径（以/开头但不以//开头）
+    if target.startswith('/') and not target.startswith('//'):
+        return True
+    
+    # 不允许绝对URL（http://、https://等）
+    return False
+
 # 注册get_user为Jinja2模板全局函数
 app.jinja_env.globals['get_user'] = get_user
 
@@ -868,13 +880,14 @@ def login():
             session['user_role'] = get_user(username)['role']
             flash('登录成功', 'success')
             
-            # 重定向到登录前访问的页面
+            # 重定向到登录前访问的页面，但只允许内部URL
             next_page = request.args.get('next')
             
-            if next_page:
+            # 检查next_page是否是安全的内部URL
+            if next_page and is_safe_url(next_page):
                 return redirect(next_page)
             else:
-                # 没有next参数，重定向到主页
+                # 没有next参数或不安全，重定向到主页
                 return redirect(url_for('index'))
         else:
             flash('用户名或密码错误', 'error')
