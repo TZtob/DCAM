@@ -927,7 +927,7 @@ def login():
             session['user_role'] = get_user(username)['role']
             flash('登录成功', 'success')
             
-            # 重定向到登录前访问的页面，但只允许内部URL
+            # 重定向到登录前访问的页面，但只允许安全的内部URL
             next_page = request.args.get('next')
             
             # 检查next_page是否是安全的内部URL
